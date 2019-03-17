@@ -28,7 +28,7 @@ class AssignSubCodeController extends Controller
                     $datum->shop_id=$shop_id;
                     $datum->status=1;
                     $datum->shop_date = Carbon::now()->isoFormat('x');
-                    $datum->expiration_date = Carbon::now()->addDays($datum->expiration_day)->isoFormat('x');
+                    $datum->expiration_date = Carbon::now()->addDays($datum->expiration_day)->setHour(23)->setMinute(59)->setSecond(59)->isoFormat('x');
                     $datum->save();
                 }
             });
