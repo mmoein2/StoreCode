@@ -100,6 +100,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="/shop">
+                        <i class="fa fa-shopping-cart"></i> <span>فروشگاه</span>
+                    </a>
+                </li>
+
+
             </ul>
         </section>
         <!-- /.sidebar -->

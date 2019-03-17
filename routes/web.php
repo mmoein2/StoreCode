@@ -17,3 +17,6 @@ Route::post('/subcode','SubCodeController@store');
 
 Route::get('/assign','AssignSubCodeController@index');
 Route::post('/assign','AssignSubCodeController@store');
+
+Route::resource('/shop','ShopController');
+
