@@ -1,5 +1,30 @@
 @extends('layout')
 
+@section('css')
+    <style>
+        th{
+            text-align: center;
+        }
+        td{
+            text-align: center;
+
+        }
+    </style>
+@endsection
+@section('css')
+@endsection
+
+@section('js')
+    <link href="/css/Mh1PersianDatePicker.css" rel="stylesheet">
+
+    <script src="/js/Mh1PersianDatePicker.js"></script>
+    <script>
+        function showDateTimepicker(t) {
+            Mh1PersianDatePicker.Show(t,'{{\Morilog\Jalali\Jalalian::now()->format('Y/m/d')}}'); //parameter1: input, parameter2: today
+
+        }
+    </script>
+@endsection
 @section('content')
     @include('error')
     @if(session()->has('message'))
@@ -30,9 +55,72 @@
                 -->
 
             </div>
-            <div class="box-body">
+            <hr>
 
+            <h3 >
+                لیست کد ها
+                <button onclick="searchForm.submit()" class="btn btn-default"><i class="fa fa-search"></i></button>
+                <a href="/subcode" class="btn btn-default"><i class="fa fa-close"></i></a>
+            </h3>
+            <div class="box-body" >
+                <form autocomplete="off" id="searchForm" action="/subcode" method="get">
 
+                <div class="row" style="margin: 10px">
+                    <div class="col-md-3">
+                        <label>کد :</label><input value="{{$_GET['code']??''}}" name="code" class="form-control" type="text">
+                    </div>
+                    <div class="col-md-3">
+                        <label>سریال از :</label><input value="{{$_GET['serialFrom']??''}}" name="serialFrom" class="form-control" type="text">
+                        <label> تا </label><input value="{{$_GET['serialTo']??''}}" class="form-control" name="serialTo" type="text">
+
+                    </div>
+                    <div class="col-md-3">
+                        <label> وضعیت </label>
+                        <select name="status" class="form-control">
+                            <option value="0" @if(isset($_GET['status'])&&$_GET['status']==0) selected @endif>
+انتخاب کنید
+                            </option>
+                            <option value="-1" @if(isset($_GET['status'])&&$_GET['status']==-1) selected @endif>
+                                استفاده نشده
+                            </option>
+                            <option value="1" @if(isset($_GET['status'])&&$_GET['status']==1) selected @endif>
+در اختیار فروشگاه
+                            </option>
+                            <option value="2" @if(isset($_GET['status'])&&$_GET['status']==2) selected @endif>
+استفاده شده توسط مشتری
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>تاریخ انقضا از :</label><input onclick="showDateTimepicker(this)" id="dateFrom" class="form-control" value="{{$_GET['dateFrom']??''}}" name="dateFrom" type="text">
+                        <label> تا </label><input value="{{$_GET['dateTo']??''}}" class="form-control" name="dateTo" type="text" onclick="showDateTimepicker(this)">
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-hover">
+                    <thead>
+                    <tr style="background-color: rgba(227,227,227,0.28)">
+                        <th>کد فرعی</th>
+                        <th>سریال</th>
+                        <th>امتیاز</th>
+                        <th>وضعیت</th>
+                        <th>تاریخ انقضا</th>
+                    </tr>
+                    <thead>
+<tbody>
+                    @foreach($codes as $c)
+                    <tr>
+                        <td>{{$c->code}}</td>
+                        <td>{{$c->serial}}</td>
+                        <td>{{$c->score}}</td>
+                        <td class="{{$c->getColorForStatus()}}">{{$c->getStatus()}}</td>
+                        <td>{{$c->getPerisanExpireDate()}}</td>
+                    </tr>
+                   @endforeach
+                    </tbody>
+                </table>
+                {{$codes->links()}}
             </div>
         </div>
     </div>

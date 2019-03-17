@@ -3,8 +3,41 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Morilog\Jalali\Jalalian;
 
 class SubCode extends Model
 {
     protected $guarded=[];
+    public function getPerisanExpireDate()
+    {
+        if($this->expiration_date==0)
+            return "";
+        $date = Jalalian::forge($this->expiration_date/1000);
+        $y=$date->getYear();
+        $m=$date->getMonth();
+        $d=$date->getDay();
+        return "$y/$m/$d";
+    }
+    public function getStatus()
+    {
+        if($this->status==0)
+            return "استفاده نشده";
+
+        if($this->status==1)
+            return "در اختیار فروشگاه";
+
+        if($this->status==2)
+            return "استفاده شده";
+    }
+    public function getColorForStatus()
+    {
+        if($this->status==0)
+            return "";
+
+        if($this->status==1)
+            return "success";
+
+        if($this->status==2)
+            return "danger";
+    }
 }
