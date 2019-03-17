@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SubCode;
 use Carbon\Carbon;
+use foo\bar;
 use Illuminate\Http\Request;
 
 class AssignSubCodeController extends Controller
@@ -19,6 +20,11 @@ class AssignSubCodeController extends Controller
             'serialTo' =>"required|numeric",
             'shop_id' =>"required|numeric",
         ]);
+        if(SubCode::where('serial','>=',$request->serialFrom)->where('serial','<=',$request->serialTo)->where('status','!=',0)->exists())
+        {
+            return back()->withErrors(['محدوده سریال انتخابی قبلا استفاده شده است']);
+        }
+
         $shop_id = $request->shop_id;
         SubCode::where('serial','>=',$request->serialFrom)->where('serial','<=',$request->serialTo)
             ->chunk(100,function ($data) use ($shop_id){
@@ -32,5 +38,6 @@ class AssignSubCodeController extends Controller
                     $datum->save();
                 }
             });
+        return back()->with('message','کدهای فرعی با موفقیت تخصیص داده شد');
     }
 }
