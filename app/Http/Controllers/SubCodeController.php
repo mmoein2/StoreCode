@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\InvoiceSubCode;
 use App\Imports\SubCodeImport;
 use App\SubCode;
 use Illuminate\Http\Request;
@@ -60,5 +61,9 @@ class SubCodeController extends Controller
 
         Excel::import(new SubCodeImport, $file);
         return back()->with('message','کدهای فرعی با موفقیت ایجاد شدند');
+    }
+    public function excel()
+    {
+        return Excel::download(new InvoiceSubCode,'subcode_template.xls');
     }
 }

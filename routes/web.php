@@ -12,4 +12,5 @@
 */
 
 Route::get('/subcode','SubCodeController@index');
+Route::get('/subcode/excel','SubCodeController@excel');
 Route::post('/subcode','SubCodeController@store');

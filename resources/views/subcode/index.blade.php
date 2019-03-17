@@ -42,7 +42,8 @@
                     <form enctype="multipart/form-data" method="post" action="/subcode">
                         {{csrf_field()}}
                     <label >وارد گردن اطلاعات</label>
-                    <button type="button" style="margin-right: 5px" id="btnUpload" class="btn btn-danger" onclick="fileUpload.click()"><i class="fa fa-upload"></i></button>
+                        <a href="/subcode/excel" style="margin-right: 5px"  class="btn btn-success" ><i class="fa fa-file-excel-o"></i></a>
+                        <button type="button" style="margin-right: 5px" id="btnUpload" class="btn btn-danger" onclick="fileUpload.click()"><i class="fa fa-upload"></i></button>
                     <input name="file" id="fileUpload" type="file" onchange="btnUpload.classList.remove('btn-danger')" style="display: none">
                     <button type="submit" style="margin-right: 2px" class="btn btn-primary">ارسال اطلاعات</button>
                     </form>
