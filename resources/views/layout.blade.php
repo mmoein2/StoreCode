@@ -33,7 +33,7 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- Messages: style can be found in dropdown.less-->
-                    
+
                     <!-- Notifications: style can be found in dropdown.less -->
 
                     <li class="dropdown user user-menu">
@@ -94,6 +94,12 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">منو</li>
+                <li>
+                    <a href="/subcode">
+                        <i class="fa fa-code"></i> <span>کدهای فرعی</span>
+                    </a>
+                </li>
+
                 <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-dashboard"></i> <span>داشبرد</span>

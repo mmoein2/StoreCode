@@ -20,7 +20,7 @@ class CreateSubCodesTable extends Migration
             $table->integer('score');
 
             //0>not used  1->shop 2->burned
-            $table->smallInteger('status');
+            $table->smallInteger('status')->default(0);
 
             $table->integer('customer_id')->unsigned()->default(0);
             $table->integer('store_id')->unsigned()->default(0);

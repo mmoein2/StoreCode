@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/subcode','SubCodeController@index');
+Route::post('/subcode','SubCodeController@store');
