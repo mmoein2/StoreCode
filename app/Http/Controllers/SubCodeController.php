@@ -21,5 +21,6 @@ class SubCodeController extends Controller
         $file = $request->file('file');
 
         Excel::import(new SubCodeImport, $file);
+        return back()->with('message','کدهای فرعی با موفقیت ایجاد شدند');
     }
 }
