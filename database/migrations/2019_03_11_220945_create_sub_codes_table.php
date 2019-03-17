@@ -23,7 +23,7 @@ class CreateSubCodesTable extends Migration
             $table->smallInteger('status')->default(0);
 
             $table->integer('customer_id')->unsigned()->default(0);
-            $table->integer('store_id')->unsigned()->default(0);
+            $table->integer('shop_id')->unsigned()->default(0);
 
             $table->integer('expiration_day')->default(0);
             $table->bigInteger('shop_date')->default(0);
