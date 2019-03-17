@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class SubCodeImport implements ToModel,WithHeadingRow
 {
+    public $day=0;
     /**
     * @param array $row
     *
@@ -19,6 +20,11 @@ class SubCodeImport implements ToModel,WithHeadingRow
             'code'=>$row['code'],
             'serial'=>$row['serial'],
             'score'=>$row['score'],
+            'expiration_day' =>$this->day,
         ]);
+    }
+    public function __construct($day)
+    {
+        $this->day=$day;
     }
 }

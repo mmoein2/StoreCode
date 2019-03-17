@@ -55,11 +55,14 @@ class SubCodeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file'=>'required'
+            'file'=>'required',
+            'day' =>'required|min:0|numeric'
         ]);
         $file = $request->file('file');
 
-        Excel::import(new SubCodeImport, $file);
+        $day = $request->day;
+
+        Excel::import(new SubCodeImport($day), $file);
         return back()->with('message','کدهای فرعی با موفقیت ایجاد شدند');
     }
     public function excel()
