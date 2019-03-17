@@ -107,6 +107,7 @@
                         <th>سریال</th>
                         <th>امتیاز</th>
                         <th>وضعیت</th>
+                        <th>اعتبار کد (روز)</th>
                         <th>تاریخ انقضا</th>
                     </tr>
                     <thead>
@@ -117,6 +118,7 @@
                         <td>{{$c->serial}}</td>
                         <td>{{$c->score}}</td>
                         <td class="{{$c->getColorForStatus()}}">{{$c->getStatus()}}</td>
+                        <td>{{$c->expiration_day}}</td>
                         <td>{{$c->getPerisanExpireDate()}}</td>
                     </tr>
                    @endforeach

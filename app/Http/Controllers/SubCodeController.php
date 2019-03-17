@@ -24,7 +24,7 @@ class SubCodeController extends Controller
         }
         if($request->serialTo)
         {
-            $codes=$codes->where('code','<=',$request->serialTo);
+            $codes=$codes->where('serial','<=',$request->serialTo);
         }
         if($request->status)
         {
