@@ -14,3 +14,6 @@
 Route::get('/subcode','SubCodeController@index');
 Route::get('/subcode/excel','SubCodeController@excel');
 Route::post('/subcode','SubCodeController@store');
+
+Route::get('/assign','AssignSubCodeController@index');
+Route::post('/assign','AssignSubCodeController@store');
