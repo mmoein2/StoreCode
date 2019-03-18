@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="box box-info">
                 <div class="box-header">
-                    <i class="fa fa-shopping-cart"></i>
+                    <i class="fa fa-users"></i>
                     <h3 class="box-title">مدیریت مشتریان</h3>
 
                 </div>
