@@ -109,12 +109,13 @@
                         <th>وضعیت</th>
                         <th>اعتبار کد (روز)</th>
                         <th>تاریخ انقضا</th>
+                        <th>عملیات</th>
                     </tr>
                     <thead>
 <tbody>
                     @foreach($codes as $c)
                     <tr>
-                        <td>{{$c->code}}</td>
+                        <td><a href="/subcode/show?id={{$c->id}}"> {{$c->code}} </a></td>
                         <td>{{$c->serial}}</td>
                         <td>{{$c->score}}</td>
                         <td class="{{$c->getColorForStatus()}}">{{$c->getStatus()}}</td>

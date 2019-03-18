@@ -50,4 +50,32 @@ class SubCode extends Model
         $d=$date->getDay();
         return "$y/$m/$d";
     }
+    public function getPerisanCustomerDate()
+    {
+        if($this->customer_date==0)
+            return "";
+        $date = Jalalian::forge($this->customer_date/1000);
+        $y=$date->getYear();
+        $m=$date->getMonth();
+        $d=$date->getDay();
+        return "$y/$m/$d";
+    }
+    public function getCustomerTime()
+    {
+        if($this->customer_date==0)
+            return "";
+        $date = Jalalian::forge($this->customer_date/1000);
+        $h=$date->getHour();
+        $m=$date->getMinute();
+        $s=$date->getSecond();
+        return "$h:$m:$s";
+    }
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class,'shop_id','id');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'customer_id','id');
+    }
 }

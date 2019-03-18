@@ -65,6 +65,13 @@ class SubCodeController extends Controller
         Excel::import(new SubCodeImport($day), $file);
         return back()->with('message','کدهای فرعی با موفقیت ایجاد شدند');
     }
+    public function show(Request $request)
+    {
+        $id = $request->id;
+        $subcode = SubCode::find($id);
+        return view('subcode.show',compact('subcode'));
+
+    }
     public function excel()
     {
         return Excel::download(new InvoiceSubCode,'subcode_template.xls');
