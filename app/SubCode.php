@@ -40,4 +40,14 @@ class SubCode extends Model
         if($this->status==2)
             return "danger";
     }
+    public function getPerisanShopDate()
+    {
+        if($this->shop_date==0)
+            return "";
+        $date = Jalalian::forge($this->shop_date/1000);
+        $y=$date->getYear();
+        $m=$date->getMonth();
+        $d=$date->getDay();
+        return "$y/$m/$d";
+    }
 }

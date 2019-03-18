@@ -79,7 +79,7 @@
                         @foreach($shops as $c)
                             <tr>
                                 <td>{{$c->id}}</td>
-                                <td>{{$c->name}}</td>
+                                <td><a href="/shop/show?id={{$c->id}}">{{$c->name}}</a></td>
                                 <td>{{$c->mobile}}</td>
                                 <td>{{$c->category->name}}</td>
                                 <td>{{$c->score}}</td>

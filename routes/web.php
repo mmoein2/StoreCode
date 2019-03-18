@@ -18,5 +18,10 @@ Route::post('/subcode','SubCodeController@store');
 Route::get('/assign','AssignSubCodeController@index');
 Route::post('/assign','AssignSubCodeController@store');
 
-Route::resource('/shop','ShopController');
+Route::get('/shop','ShopController@index');
+Route::get('/shop/create','ShopController@create');
+Route::post('/shop','ShopController@store');
+Route::get('/shop/show','ShopController@show');
+
+Route::post('/shop/category/modify','ShopController@modifyCategory');
 
