@@ -15,7 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('mobile');
+            $table->string('mobile');
             $table->bigInteger('score');
             $table->bigInteger('used_score');
             $table->bigInteger('registration_date');

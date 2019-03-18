@@ -24,6 +24,7 @@ class CreateMainCodesTable extends Migration
             $table->bigInteger('prize_id')->unsigned();
             $table->foreign('prize_id')->references('id')->on('prizes');
 
+            //true when used
             $table->boolean('status')->default(false);
 
 
