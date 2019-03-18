@@ -105,6 +105,11 @@
                         <i class="fa fa-shopping-cart"></i> <span>فروشگاه</span>
                     </a>
                 </li>
+                <li>
+                    <a href="/customer">
+                        <i class="fa fa-users"></i> <span>مشتریان</span>
+                    </a>
+                </li>
 
 
             </ul>
