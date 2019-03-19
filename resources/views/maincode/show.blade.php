@@ -74,7 +74,7 @@
 
                 <div class="col-md-6">
                     <label class="title">مشخصات مشتری :</label>
-                    {{$maincode->customer->fullname}}
+                    {{$maincode->customer->fullname ??''}}
 
                 </div>
 
@@ -86,7 +86,7 @@
                 <hr>
                 <div class="col-md-6">
                     <label class="title">تاریخ فعالسازی:</label>
-                    {{$maincode->getPerisanCustomerDate()}}
+                    {{$maincode->getPerisanCustomerDate() ??''}}
 
                 </div>
                 <div class="col-md-6">

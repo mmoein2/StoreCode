@@ -27,6 +27,7 @@ class MainCodeImport implements ToModel,WithHeadingRow
             'code'=>$row['code'],
             'serial'=>$row['serial'],
             'prize_id' =>$prize->id,
+            'expiration_day'=>$this->day
         ]);
     }
     public function __construct($day)
