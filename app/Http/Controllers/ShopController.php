@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Shop;
 use App\ShopCategory;
 use App\SubCode;
+use foo\bar;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
 
@@ -146,6 +147,39 @@ class ShopController extends Controller
             }
         }
         return back();
+
+    }
+    public function delete(Request $request)
+    {
+        try {
+            Shop::destroy($request->id);
+        }
+        catch (\Exception $exception)
+        {
+            return back()->withErrors(['امکان حذف وجود ندارد']);
+        }
+        return back();
+    }
+    public function edit(Request $request)
+    {
+        $shop_categories = ShopCategory::get();
+
+        $shop = Shop::find($request->id);
+        return view('shop.edit',compact('shop','shop_categories'));
+
+    }
+    public function update(Request $request)
+    {
+        $shop = Shop::find($request->id);
+        $shop->shop_category_id=$request->shop_category_id;
+        $shop->name=$request->name;
+        $shop->mobile=$request->mobile;
+        $shop->phone=$request->phone;
+        $shop->person=$request->person;
+        $shop->address=$request->address;
+
+        $shop->save();
+        return redirect('/shop');
 
     }
 }

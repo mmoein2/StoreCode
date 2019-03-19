@@ -73,6 +73,7 @@
                             <th>مجموع امتیازات</th>
                             <th>امتیازات مصرف شده</th>
                             <th>تخصیص کد</th>
+                            <th>عملیات</th>
                         </tr>
                         <thead>
                         <tbody>
@@ -85,6 +86,10 @@
                                 <td>{{$c->score}}</td>
                                 <td>{{$c->used_score}}</td>
                                 <td><a href="/assign?shop_id={{$c->id}}&shop_name={{$c->name}}">تخصیص کد</a></td>
+                                <td>
+                                    <a href="/shop/edit?id={{$c->id}}" class="btn btn-success btn-sm">ویرایش</a>
+                                    <a href="/shop/delete?id={{$c->id}}" class="btn btn-danger btn-sm">حذف</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
