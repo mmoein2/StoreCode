@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCustomerIdToMainCodes extends Migration
+class ChangePrizeInMainCodes extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,9 @@ class AddCustomerIdToMainCodes extends Migration
     public function up()
     {
         Schema::table('main_codes', function (Blueprint $table) {
-            $table->bigInteger('customer_id')->unsigned()->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->dropColumn('prize');
+            $table->bigInteger('prize_id')->nullable()->unsigned();
+            $table->foreign('prize_id')->references('id')->on('prizes');
         });
     }
 
@@ -27,8 +28,7 @@ class AddCustomerIdToMainCodes extends Migration
     public function down()
     {
         Schema::table('main_codes', function (Blueprint $table) {
-            $table->dropForeign('main_codes_customer_id_foreign');
-            $table->dropColumn('customer_id');
+            //
         });
     }
 }

@@ -110,7 +110,7 @@ class CustomerController extends Controller
 
         $subcodes->setPageName('subcode_page');
 
-        $maincodes = MainCode::with('shop')->with('customer')->where('status',true)->where('customer_id',$id);
+        $maincodes = MainCode::with('shop')->with('customer')->with('prize')->where('status',true)->where('customer_id',$id);
 
         if($request->m_code)
         {

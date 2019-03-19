@@ -30,3 +30,7 @@ Route::get('/customer','CustomerController@index');
 Route::get('/customer/show','CustomerController@show');
 
 
+Route::get('/maincode','MainCodeController@index');
+Route::get('/maincode/excel','MainCodeController@excel');
+Route::post('/maincode','MainCodeController@store');
+Route::get('/maincode/show','MainCodeController@show');

@@ -196,7 +196,7 @@
                         <tr>
                             <td>{{$s->code}}</td>
                             <td>{{$s->serial}}</td>
-                            <td>{{$s->prize}}</td>
+                            <td>{{$s->prize->name}}</td>
                             <td>{{$s->getPerisanCustomerDate()}}</td>
                         </tr>
                     @endforeach
