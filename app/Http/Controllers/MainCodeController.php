@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\InvoiceMainCode;
+use App\Imports\MainCodeImport;
 use App\MainCode;
 use App\Prize;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Morilog\Jalali\Jalalian;
 
 class MainCodeController extends Controller
@@ -69,8 +73,18 @@ class MainCodeController extends Controller
 
         $day = $request->day;
 
-        Excel::import(new SubCodeImport($day), $file);
-        return back()->with('message','کدهای فرعی با موفقیت ایجاد شدند');
+        $import=new MainCodeImport($day);
+        DB::beginTransaction();
+        Excel::import($import, $file);
+
+
+        if( count($import->errors)>0)
+        {
+            return back()->withErrors($import->errors);
+
+        }
+        DB::commit();
+        return back()->with('message','کدهای اصلی با موفقیت ایجاد شدند');
     }
     public function show(Request $request)
     {
@@ -81,6 +95,6 @@ class MainCodeController extends Controller
     }
     public function excel()
     {
-        return Excel::download(new InvoiceSubCode,'subcode_template.xls');
+        return Excel::download(new InvoiceMainCode,'maincode_template.xls');
     }
 }

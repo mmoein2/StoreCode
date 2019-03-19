@@ -34,3 +34,11 @@ Route::get('/maincode','MainCodeController@index');
 Route::get('/maincode/excel','MainCodeController@excel');
 Route::post('/maincode','MainCodeController@store');
 Route::get('/maincode/show','MainCodeController@show');
+
+Route::get('/prize','PrizeController@index');
+Route::get('/prize/create','PrizeController@create');
+Route::post('/prize','PrizeController@store');
+Route::get('/prize/edit','PrizeController@edit');
+Route::patch('/prize','PrizeController@update');
+Route::get('/prize/delete','PrizeController@delete');
+

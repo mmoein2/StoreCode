@@ -112,10 +112,14 @@
                 </li>
                 <li>
                     <a href="/customer">
-                        <i class="fa fa-users"></i> <span>مشتریان</span>
+                        <i class="fa fa-user"></i> <span>مشتریان</span>
                     </a>
                 </li>
-
+                <li>
+                    <a href="/prize">
+                        <i class="fa fa-star"></i> <span>جوایز</span>
+                    </a>
+                </li>
 
             </ul>
         </section>

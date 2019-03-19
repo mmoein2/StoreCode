@@ -17,7 +17,7 @@ class CreateMainCodesTable extends Migration
             $table->bigIncrements('id');
             $table->string('code');
             $table->integer('serial');
-            $table->integer('score');
+            $table->integer('score')->default(0);
             $table->integer('expiration_day')->default(0);
             $table->bigInteger('customer_date')->default(0);
 

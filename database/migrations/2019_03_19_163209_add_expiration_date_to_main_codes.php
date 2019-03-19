@@ -14,7 +14,7 @@ class AddExpirationDateToMainCodes extends Migration
     public function up()
     {
         Schema::table('main_codes', function (Blueprint $table) {
-            $table->bigInteger('expiration_date');
+            $table->bigInteger('expiration_date')->default(0);
         });
     }
 
