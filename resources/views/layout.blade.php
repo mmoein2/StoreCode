@@ -99,6 +99,11 @@
                         <i class="fa fa-code"></i> <span>کدهای فرعی</span>
                     </a>
                 </li>
+                <li>
+                    <a href="/maincode">
+                        <i class="fa fa-users"></i> <span>کدهای اصلی</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="/shop">

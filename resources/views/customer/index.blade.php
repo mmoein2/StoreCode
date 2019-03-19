@@ -30,7 +30,7 @@
                                 <label>کد :</label><input value="{{$_GET['id']??''}}" name="id" class="form-control" type="text">
                             </div>
                             <div class="col-md-2">
-                                <label>شماره همراه :</label><input value="{{$_GET['mobile']??''}}" name="name" class="form-control" type="text">
+                                <label>شماره همراه :</label><input value="{{$_GET['mobile']??''}}" name="mobile" class="form-control" type="text">
                             </div>
 
                         <div class="col-md-2">
