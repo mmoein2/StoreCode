@@ -76,4 +76,15 @@ class SubCodeController extends Controller
     {
         return Excel::download(new InvoiceSubCode,'subcode_template.xls');
     }
+    public function delete(Request $request)
+    {
+        try {
+            SubCode::where('id',$request->id)->where('status',0)->delete();
+        }
+        catch (\Exception $exception)
+        {
+            return back()->withErrors(['امکان حذف وجود ندارد']);
+        }
+        return back();
+    }
 }

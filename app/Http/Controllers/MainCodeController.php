@@ -97,4 +97,16 @@ class MainCodeController extends Controller
     {
         return Excel::download(new InvoiceMainCode,'maincode_template.xls');
     }
+    public function delete(Request $request)
+    {
+        try {
+            MainCode::where('id',$request->id)->where('status',false)->delete();
+        }
+        catch (\Exception $exception)
+        {
+            return back()->withErrors(['امکان حذف وجود ندارد']);
+        }
+        return back();
+    }
+
 }

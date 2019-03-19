@@ -15,6 +15,7 @@ Route::get('/subcode','SubCodeController@index');
 Route::get('/subcode/excel','SubCodeController@excel');
 Route::post('/subcode','SubCodeController@store');
 Route::get('/subcode/show','SubCodeController@show');
+Route::get('/subcode/delete','SubCodeController@delete');
 
 Route::get('/assign','AssignSubCodeController@index');
 Route::post('/assign','AssignSubCodeController@store');
@@ -34,6 +35,8 @@ Route::get('/maincode','MainCodeController@index');
 Route::get('/maincode/excel','MainCodeController@excel');
 Route::post('/maincode','MainCodeController@store');
 Route::get('/maincode/show','MainCodeController@show');
+Route::get('/maincode/delete','MainCodeController@delete');
+
 
 Route::get('/prize','PrizeController@index');
 Route::get('/prize/create','PrizeController@create');

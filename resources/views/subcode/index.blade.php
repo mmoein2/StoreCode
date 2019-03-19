@@ -121,6 +121,11 @@
                         <td class="{{$c->getColorForStatus()}}">{{$c->getStatus()}}</td>
                         <td>{{$c->expiration_day}}</td>
                         <td>{{$c->getPerisanExpireDate()}}</td>
+                        <td>
+                            @if($c->status==0)
+                                <a class="btn btn-sm btn-danger" href="/subcode/delete?id={{$c->id}}">حذف</a>
+                            @endif
+                        </td>
                     </tr>
                    @endforeach
                     </tbody>
