@@ -41,10 +41,44 @@
 
         }
     </script>
+    <script>
+        function clearTheForm(c) {
+            if(c=='sub')
+            {
+                document.getElementsByName('s_code')[0].value='';
+                document.getElementsByName('s_serialFrom')[0].value='';
+                document.getElementsByName('s_serialTo')[0].value='';
+                document.getElementsByName('s_scoreFrom')[0].value='';
+                document.getElementsByName('s_scoreTo')[0].value='';
+                document.getElementsByName('s_dateFrom')[0].value='';
+                document.getElementsByName('s_dateTo')[0].value='';
+                document.getElementsByName('shop_name')[0].value='';
+                searchForm.submit();
+
+            }else if(c=='main')
+            {
+                document.getElementsByName('m_code')[0].value='';
+                document.getElementsByName('m_serialFrom')[0].value='';
+                document.getElementsByName('m_serialTo')[0].value='';
+                document.getElementsByName('m_prize')[0].value='';
+                document.getElementsByName('m_dateFrom')[0].value='';
+                document.getElementsByName('m_dateTo')[0].value='';
+            }
+        }
+    </script>
 @endsection
 @section('content')
     @include('error')
     <div class="row">
+        <form autocomplete="off" action="/customer/show" method="get" id="searchForm">
+
+                @if(isset($_GET['maincode_page']))
+                    <input type="hidden" value="{{$_GET['maincode_page']}}" name="maincode_page">
+                @endif
+
+            @if(isset($_GET['subcode_page']))
+                <input type="hidden" value="{{$_GET['subcode_page']}}" name="subcode_page">
+            @endif
         <div class="box" style="text-align: center">
             <div class="box-header">
 
@@ -89,10 +123,9 @@
                     <span style="font-size: 15px">جستجو
                     </span>
                 <button onclick="searchForm.submit()" class="btn btn-default"><i class="fa fa-search"></i></button>
-                <a href="/customer/show?id={{$customer->id}}" class="btn btn-default"><i class="fa fa-close"></i></a>
+                <button onclick="clearTheForm('sub')" type="button" class="btn btn-default"><i class="fa fa-close"></i></button>
                 </div>
 
-                <form autocomplete="off" action="/customer/show" method="get" id="searchForm">
                     <input type="hidden" value="{{$customer->id}}" name="id">
                     <div  class="row" style="margin: 10px;text-align: right">
 
@@ -120,7 +153,6 @@
                         </div>
                     </div>
                     <hr>
-                </form>
                 <h3>کدهای فرعی استفاده شده</h3>
 
                 <table class="table table-hover">
@@ -151,11 +183,10 @@
                 <div style="text-align: right;padding: 10px">
                     <span style="font-size: 15px">جستجو
                     </span>
-                    <button onclick="searchForm2.submit()" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    <button onclick="searchForm.submit()" class="btn btn-default"><i class="fa fa-search"></i></button>
                     <a href="/customer/show?id={{$customer->id}}" class="btn btn-default"><i class="fa fa-close"></i></a>
                 </div>
 
-                <form autocomplete="off" action="/customer/show" method="get" id="searchForm2">
                     <input type="hidden" value="{{$customer->id}}" name="id">
                     <div  class="row" style="margin: 10px;text-align: right">
 
@@ -180,7 +211,6 @@
 
                     </div>
                     <hr>
-                </form>
             </div>
             <div class="box-body">
                 <h3>کدهای اصلی استفاده شده</h3>
@@ -204,6 +234,8 @@
                 {{$maincodes->appends($_GET)->links()}}
             </div>
         </div>
+        </form>
+
     </div>
 
 @endsection

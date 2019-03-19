@@ -127,7 +127,7 @@ class CustomerController extends Controller
         }
         if($request->m_prize)
         {
-            $maincodes = $maincodes->where('prize',$request->m_prize);
+            $maincodes = $maincodes->where('prize_name',$request->m_prize);
         }
 
 
