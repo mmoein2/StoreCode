@@ -58,7 +58,7 @@ class MainCodeController extends Controller
             $ts =Jalalian::fromFormat('Y/m/d H:i:s',$request->dateTo.' 23:59:59')->getTimestamp()*1000;
             $codes=$codes->where('expiration_date','<=',$ts);
         }
-        $codes=$codes->latest()->paginate(10);
+        $codes=$codes->orderByDesc('id')->paginate(10);
         return view('maincode.index',compact('codes','prizes'));
     }
 

@@ -122,7 +122,7 @@ class ShopController extends Controller
             $ts =Jalalian::fromFormat('Y/m/d H:i:s',$request->shopDateTo.' 23:59:59')->getTimestamp()*1000;
             $codes=$codes->where('shop_date','<=',$ts);
         }
-        $codes = $codes->paginate();
+        $codes = $codes->orderByDesc('id')->paginate();
         return view('shop.show',compact('shop','codes'));
     }
 

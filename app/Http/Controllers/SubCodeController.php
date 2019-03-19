@@ -6,6 +6,7 @@ use App\Exports\InvoiceSubCode;
 use App\Imports\SubCodeImport;
 use App\SubCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Morilog\Jalali\Jalalian;
 
@@ -49,7 +50,7 @@ class SubCodeController extends Controller
             $ts =Jalalian::fromFormat('Y/m/d H:i:s',$request->dateTo.' 23:59:59')->getTimestamp()*1000;
             $codes=$codes->where('expiration_date','<=',$ts);
         }
-        $codes=$codes->latest()->paginate(10);
+        $codes=$codes->orderByDesc('id')->paginate(10);
         return view('subcode.index',compact('codes'));
     }
     public function store(Request $request)
@@ -62,7 +63,9 @@ class SubCodeController extends Controller
 
         $day = $request->day;
 
+        DB::beginTransaction();
         Excel::import(new SubCodeImport($day), $file);
+        DB::commit();
         return back()->with('message','کدهای فرعی با موفقیت ایجاد شدند');
     }
     public function show(Request $request)
