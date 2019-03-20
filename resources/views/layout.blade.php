@@ -121,6 +121,16 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="/message">
+                        <i class="fa fa-star"></i> <span>پیام ها</span>
+                        @if($message_count>0)
+                        <small style="font-size: 14px" class="label pull-left bg-yellow">
+                            <b> {{$message_count}}</b>
+                        </small>
+                        @endif
+                    </a>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->

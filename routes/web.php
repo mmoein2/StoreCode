@@ -48,3 +48,7 @@ Route::get('/prize/edit','PrizeController@edit');
 Route::patch('/prize','PrizeController@update');
 Route::get('/prize/delete','PrizeController@delete');
 
+Route::get('/message','MessageController@index');
+Route::get('/message/show','MessageController@show');
+
+
