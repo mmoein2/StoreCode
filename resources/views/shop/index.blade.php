@@ -15,7 +15,6 @@
                     <h3 class="box-title">مدیریت فروشگاه ها</h3>
 
                     <a href="/shop/create" class="btn btn-primary" style="margin-right: 10px">ایجاد فروشگاه</a>
-                </div>
                 <hr>
 
                 <h3 >
@@ -24,7 +23,6 @@
                     <a href="/shop" class="btn btn-default"><i class="fa fa-close"></i></a>
                 </h3>
 
-                <div class="box-body" >
                     <form autocomplete="off" id="searchForm" action="/shop" method="get">
 
                         <div class="row" style="margin: 10px">
@@ -62,6 +60,9 @@
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <div class="box-body table-responsive no-padding" >
 
                     <table class="table table-hover">
                         <thead>

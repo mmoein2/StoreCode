@@ -14,7 +14,6 @@
                     <i class="fa fa-users"></i>
                     <h3 class="box-title">مدیریت مشتریان</h3>
 
-                </div>
                 <hr>
 
                 <h3 >
@@ -23,7 +22,6 @@
                     <a href="/customer" class="btn btn-default"><i class="fa fa-close"></i></a>
                 </h3>
 
-                <div class="box-body" >
                     <form autocomplete="off" id="searchForm" action="/customer" method="get">
 
                             <div class="col-md-2">
@@ -52,7 +50,10 @@
                     </form>
                 </div>
 
-                    <table class="table table-hover">
+            <div class="box-body table-responsive no-padding" >
+
+
+            <table class="table table-hover">
                         <thead>
                         <tr style="background-color: rgba(227,227,227,0.28)">
                             <th>کد مشتری</th>
@@ -76,11 +77,11 @@
                         @endforeach
                         </tbody>
                     </table>
+            </div>
                     {{$customers->links()}}
                 </div>
             </div>
-        </div>
-
+    </div>
 
 @endsection
 

@@ -78,8 +78,7 @@
                             {{$shop->phone}}
 
                         </div>
-                    </div>
-<div class="box-body">
+
     <div style="margin-top: 10px">
 
         <form autocomplete="off" id="searchForm" action="/shop/show" method="get">
@@ -122,11 +121,14 @@
                     <a href="/shop/show?id={{$shop->id}}" class="btn btn-default"><i class="fa fa-close"></i></a>
 
                 </div>
-
             </div>
         </form>
     </div>
-                <table style="margin-top: 20px" class="table table-hover">
+            </div>
+
+            <div class="box-body table-responsive no-padding">
+
+            <table style="margin-top: 20px" class="table table-hover">
                     <thead>
                     <tr style="background-color: rgba(227,227,227,0.28)">
                         <th>کد فرعی</th>
@@ -148,9 +150,9 @@
                     @endforeach
                     </tbody>
                 </table>
+            </div>
                 {{$codes->appends($_GET)->links()}}
 </div>
-    </div>
     </div>
 
 @endsection

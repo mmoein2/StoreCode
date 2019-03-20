@@ -117,7 +117,7 @@
 
             </div>
 <hr>
-            <div class="box-body">
+            <div class="box-body table-responsive no-padding">
 
                 <div style="text-align: right;padding: 10px">
                     <span style="font-size: 15px">جستجو
@@ -212,7 +212,7 @@
                     </div>
                     <hr>
             </div>
-            <div class="box-body">
+            <div class="box-body table-responsive no-padding">
                 <h3>کدهای اصلی استفاده شده</h3>
 
                 <table class="table table-hover">

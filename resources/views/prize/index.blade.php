@@ -54,7 +54,7 @@
                     لیست جوایز
 
                 </h3>
-                <div class="box-body" >
+                <div class="box-body table-responsive no-padding" >
 
 
                     <table class="table table-hover">

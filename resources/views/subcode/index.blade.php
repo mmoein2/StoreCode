@@ -56,7 +56,6 @@
                 </div>
                 -->
 
-            </div>
             <hr>
 
             <h3 >
@@ -64,7 +63,7 @@
                 <button onclick="searchForm.submit()" class="btn btn-default"><i class="fa fa-search"></i></button>
                 <a href="/subcode" class="btn btn-default"><i class="fa fa-close"></i></a>
             </h3>
-            <div class="box-body" >
+
                 <form autocomplete="off" id="searchForm" action="/subcode" method="get">
 
                 <div class="row" style="margin: 10px">
@@ -99,6 +98,8 @@
                     </div>
                 </div>
             </form>
+            </div>
+            <div class="box-body table-responsive no-padding" >
 
             <table class="table table-hover">
                     <thead>
@@ -130,10 +131,10 @@
                    @endforeach
                     </tbody>
                 </table>
-                {{$codes->links()}}
             </div>
         </div>
-    </div>
+                {{$codes->links()}}
+            </div>
 </div>
 
 @endsection
