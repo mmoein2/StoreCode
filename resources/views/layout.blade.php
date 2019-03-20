@@ -94,34 +94,34 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">منو</li>
-                <li>
+                <li  @if(request()->route()->uri=="subcode") class="active" @endif>
                     <a href="/subcode">
                         <i class="fa fa-code"></i> <span>کدهای فرعی</span>
                     </a>
                 </li>
-                <li>
+                <li  @if(request()->route()->uri=="maincode") class="active" @endif>
                     <a href="/maincode">
                         <i class="fa fa-users"></i> <span>کدهای اصلی</span>
                     </a>
                 </li>
 
-                <li>
+                <li  @if(request()->route()->uri=="shop") class="active" @endif>
                     <a href="/shop">
                         <i class="fa fa-shopping-cart"></i> <span>فروشگاه</span>
                     </a>
                 </li>
-                <li>
+                <li @if(request()->route()->uri=="customer") class="active" @endif>
                     <a href="/customer">
                         <i class="fa fa-user"></i> <span>مشتریان</span>
                     </a>
                 </li>
-                <li>
+                <li @if(request()->route()->uri=="prize") class="active" @endif>
                     <a href="/prize">
                         <i class="fa fa-star"></i> <span>جوایز</span>
                     </a>
                 </li>
 
-                <li>
+                <li @if(request()->route()->uri=="message") class="active" @endif>
                     <a href="/message">
                         <i class="fa fa-star"></i> <span>پیام ها</span>
                         @if($message_count>0)
