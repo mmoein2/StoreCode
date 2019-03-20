@@ -47,7 +47,26 @@ class ShopController extends Controller
         {
             $shops=$shops->where('used_score','<=',$request->usedscoreTo);
         }
-        $shops=$shops->with('category')->orderBy($request->sort_field??'created_at',$request->sort??'desc')->paginate();
+        $shops=$shops->orderBy($request->sort_field??'created_at',$request->sort??'desc');
+        if($request->command)
+        {
+
+            $message = ($request->message);
+            if($request->command=="message")
+            {
+                dd('send message');
+            }
+            elseif($request->command=="notification")
+            {
+                if($shops->where('play_id',null)->exists())
+                {
+                    return  back()->withErrors(['امکان ارسال نوتیفیکیشن برای تعدادی از مشتریان وجود ندارد']);
+                }
+                dd('send notification');
+
+            }
+        }
+        $shops = $shops->with('category')->paginate();
         return view('shop.index',compact('shops','shop_categories'));
     }
     public function create()

@@ -63,9 +63,35 @@ class CustomerController extends Controller
 
             $customers = $customers->orderBy($request->sort_field??'created_at',$request->sort??'desc');
         }
+
+        if($request->command)
+        {
+
+            $message = ($request->message);
+            if($request->command=="message")
+            {
+                dd('send message');
+            }
+            elseif($request->command=="notification")
+            {
+                if($customers->where('play_id',null)->exists())
+                {
+                    return  back()->withErrors(['امکان ارسال نوتیفیکیشن برای تعدادی از مشتریان وجود ندارد']);
+                }
+                dd('send notification');
+
+            }
+
+
+        }
+        else
+        {
+
         $customers=$customers->paginate();
 
         return view('customer.index',compact('customers'));
+        }
+
     }
 
     public function show(Request $request)

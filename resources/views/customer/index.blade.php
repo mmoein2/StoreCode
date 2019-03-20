@@ -18,13 +18,15 @@
 
                 <h3 >
                     لیست مشتریان
-                    <button onclick="searchForm.submit()" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    <button onclick="command.value=0;searchForm.submit()" class="btn btn-default"><i class="fa fa-search"></i></button>
                     <a href="/customer" class="btn btn-default"><i class="fa fa-close"></i></a>
                 </h3>
 
                     <form autocomplete="off" id="searchForm" action="/customer" method="get">
+                        <input type="hidden" id="command" name="command" value="0">
+                        <input type="hidden" id="message" name="message" value="0">
                         <input type="hidden" name="sort" value="{{$_GET['sort'] ?? 'desc'}}">
-                        <input type="hidden" name="sort_field" value="{{$_GET['sort_field'] ?? 'code'}}">
+                        <input type="hidden" name="sort_field" value="{{$_GET['sort_field'] ?? 'created_at'}}">
 
                             <div class="col-md-2">
                                 <label>کد :</label><input value="{{$_GET['id']??''}}" name="id" class="form-control" type="text">
@@ -54,9 +56,17 @@
 
             <div class="box-body table-responsive no-padding" >
 
+            <div class="col-md-12" style="text-align: left">
+                <div class="btn-group">
+                    <a class="btn btn-warning" onclick="showModal('message')">ارسال پیامک</a>
+                <a class="btn btn-info" onclick="showModal('notification')">ارسال نوتیفیکیشن</a>
+                </div>
+
+            </div>
 
             <table class="table table-hover">
                         <thead>
+
                         <tr style="background-color: rgba(227,227,227,0.28)">
                             <th>کد مشتری</th>
                             <th>شماره همراه</th>
@@ -64,6 +74,7 @@
                             <th><a href="#" onclick="sortForm('available_score')">امتیاز فعلی</a></th>
                             <th><a href="#" onclick="sortForm('used_score')">امتیاز مصرف شده</a></th>
                             <th><a href="#" onclick="sortForm('registration_date')">تاریخ عضویت</a></th>
+                            <th>امکان ارسال نوتیفیکیشن</th>
                         </tr>
                         <thead>
                         <tbody>
@@ -75,6 +86,7 @@
                                 <td>{{$c->score-$c->used_score}}</td>
                                 <td>{{$c->used_score}}</td>
                                 <td>{{$c->getPersianRegistrationDate()}}</td>
+                                <td class="@if($c->play_id!=null)success @else danger @endif">@if($c->play_id!=null) <i class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -86,6 +98,32 @@
     </div>
 
 @endsection
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4  id="modal_title" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="modal_body" style="width: 100%;height: 110px"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button onclick="message.value=modal_body.value;searchForm.submit()" type="button" class="btn btn-success" data-dismiss="modal">ارسال
+                <i class="fa fa-send"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 @section('css')
     <style>
@@ -120,7 +158,16 @@
                 d.value="desc";
 
             }
+            command.value='';
             searchForm.submit();
+        }
+        function showModal(c) {
+
+            command.value=c;
+            message.value='';
+            modal_title.innerHTML=c;
+            $('#myModal').modal();
+
         }
     </script>
 @endsection

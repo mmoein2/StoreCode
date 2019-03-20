@@ -14,7 +14,17 @@
                 d.value="desc";
 
             }
+            command.value='';
+
             searchForm.submit();
+        }
+        function showModal(c) {
+
+            command.value=c;
+            message.value='';
+            modal_title.innerHTML=c;
+            $('#myModal').modal();
+
         }
     </script>
     @endsection
@@ -45,11 +55,13 @@
 
                 <h3 >
                     لیست فروشگاه  ها
-                    <button onclick="searchForm.submit()" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    <button onclick="command.value=0;searchForm.submit()" class="btn btn-default"><i class="fa fa-search"></i></button>
                     <a href="/shop" class="btn btn-default"><i class="fa fa-close"></i></a>
                 </h3>
 
                     <form autocomplete="off" id="searchForm" action="/shop" method="get">
+                        <input type="hidden" id="command" name="command" value="0">
+                        <input type="hidden" id="message" name="message" value="0">
                         <input type="hidden" name="sort" value="{{$_GET['sort'] ?? ''}}">
                         <input type="hidden" name="sort_field" value="{{$_GET['sort_field'] ?? ''}}">
                         <div class="row" style="margin: 10px">
@@ -90,6 +102,13 @@
                 </div>
 
                 <div class="box-body table-responsive no-padding" >
+                    <div class="col-md-12" style="text-align: left">
+                        <div class="btn-group">
+                            <a class="btn btn-warning" onclick="showModal('message')">ارسال پیامک</a>
+                            <a class="btn btn-info" onclick="showModal('notification')">ارسال نوتیفیکیشن</a>
+                        </div>
+
+                    </div>
 
                     <table class="table table-hover">
                         <thead>
@@ -101,6 +120,7 @@
                             <th><a href="#" onclick="sortForm('score')">مجموع امتیازات</a></th>
                             <th><a href="#" onclick="sortForm('used_score')">امتیازات مصرف شده</a></th>
                             <th>تخصیص کد</th>
+                            <th>امکان ارسال نوتیفیکیشن</th>
                             <th>عملیات</th>
                         </tr>
                         <thead>
@@ -114,6 +134,7 @@
                                 <td>{{$c->score}}</td>
                                 <td>{{$c->used_score}}</td>
                                 <td><a href="/assign?shop_id={{$c->id}}&shop_name={{$c->name}}">تخصیص کد</a></td>
+                                <td class="@if($c->play_id!=null)success @else danger @endif">@if($c->play_id!=null) <i class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif</td>
                                 <td>
                                     <a href="/shop/edit?id={{$c->id}}" class="btn btn-success btn-sm">ویرایش</a>
                                     <a href="/shop/delete?id={{$c->id}}" class="btn btn-danger btn-sm">حذف</a>
@@ -129,3 +150,27 @@
     </div>
 
 @endsection
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4  id="modal_title" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="modal_body" style="width: 100%;height: 110px"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button onclick="message.value=modal_body.value;searchForm.submit()" type="button" class="btn btn-success" data-dismiss="modal">ارسال
+                    <i class="fa fa-send"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

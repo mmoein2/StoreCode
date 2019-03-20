@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropTablePrizes extends Migration
+class AddPlayIdToShops extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class DropTablePrizes extends Migration
      */
     public function up()
     {
-        Schema::drop('prizes');
+        Schema::table('shops', function (Blueprint $table) {
+            $table->string('play_id',500)->nullable();
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class DropTablePrizes extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('shops', function (Blueprint $table) {
+            $table->dropColumn('play_id');
+        });
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePrizesTable extends Migration
+class AddPlayIdToCustomers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreatePrizesTable extends Migration
      */
     public function up()
     {
-        Schema::create('prizes', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('customers', function (Blueprint $table) {
+            $table->string('play_id',500)->nullable();
+
         });
     }
 
@@ -27,6 +26,9 @@ class CreatePrizesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prizes');
+        Schema::table('customers', function (Blueprint $table) {
+            $table->dropColumn('play_id');
+
+        });
     }
 }
