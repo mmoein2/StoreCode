@@ -21,9 +21,13 @@
             font-size: 15px;
 
         }
-
+        a[href="#"]
+        {
+            color: #2d31ad;
+        }
     </style>
     @endsection
+
 @section('content')
     @include('error')
     <div class="row">
@@ -82,6 +86,8 @@
     <div style="margin-top: 10px">
 
         <form autocomplete="off" id="searchForm" action="/shop/show" method="get">
+            <input type="hidden" name="sort" value="{{$_GET['sort'] ?? 'desc'}}">
+            <input type="hidden" name="sort_field" value="{{$_GET['sort_field'] ?? 'code'}}">
             <input type="hidden" name="id" value="{{$shop->id}}">
 
             <div class="row" style="margin: 10px">
@@ -131,10 +137,10 @@
             <table style="margin-top: 20px" class="table table-hover">
                     <thead>
                     <tr style="background-color: rgba(227,227,227,0.28)">
-                        <th>کد فرعی</th>
-                        <th>سریال کد</th>
-                        <th>امتیاز</th>
-                        <th>تاریخ تخصیص</th>
+                        <th> <a href="#" onclick="sortForm('code')">کد فرعی</a></th>
+                        <th><a href="#" onclick="sortForm('serial')">سریال</a></th>
+                        <th><a href="#" onclick="sortForm('score')">امتیاز</a></th>
+                        <th><a href="#" onclick="sortForm('shop_date')">تاریخ تخصیص</a></th>
                         <th>وضعیت</th>
                     </tr>
                     <thead>
@@ -167,6 +173,23 @@
         function showDateTimepicker(t) {
             Mh1PersianDatePicker.Show(t,'{{\Morilog\Jalali\Jalalian::now()->format('Y/m/d')}}'); //parameter1: input, parameter2: today
 
+        }
+    </script>
+    <script>
+        function sortForm(field) {
+
+            document.getElementsByName('sort_field')[0].value=field;
+            var d = document.getElementsByName('sort')[0];
+            if(d.value=="desc")
+            {
+                d.value="asc";
+            }
+            else
+            {
+                d.value="desc";
+
+            }
+            searchForm.submit();
         }
     </script>
 @endsection

@@ -47,7 +47,7 @@ class ShopController extends Controller
         {
             $shops=$shops->where('used_score','<=',$request->usedscoreTo);
         }
-        $shops=$shops->with('category')->latest()->paginate();
+        $shops=$shops->with('category')->orderBy($request->sort_field??'created_at',$request->sort??'desc')->paginate();
         return view('shop.index',compact('shops','shop_categories'));
     }
     public function create()
@@ -122,7 +122,7 @@ class ShopController extends Controller
             $ts =Jalalian::fromFormat('Y/m/d H:i:s',$request->shopDateTo.' 23:59:59')->getTimestamp()*1000;
             $codes=$codes->where('shop_date','<=',$ts);
         }
-        $codes = $codes->orderByDesc('id')->paginate();
+        $codes = $codes->orderBy($request->sort_field??'code',$request->sort??'desc')->paginate();
         return view('shop.show',compact('shop','codes'));
     }
 

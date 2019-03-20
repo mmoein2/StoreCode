@@ -53,7 +53,17 @@ class CustomerController extends Controller
             $ts =Jalalian::fromFormat('Y/m/d H:i:s',$request->registrationDateTo.' 23:59:59')->getTimestamp()*1000;
             $customers=$customers->where('registration_date','<=',$ts);
         }
-        $customers = $customers->paginate();
+        if($request->sort_field=='available_score')
+        {
+            $customers = $customers->orderBy(DB::raw('score - used_score'),$request->sort??'desc');
+
+        }
+        else
+        {
+
+            $customers = $customers->orderBy($request->sort_field??'created_at',$request->sort??'desc');
+        }
+        $customers=$customers->paginate();
 
         return view('customer.index',compact('customers'));
     }
@@ -144,7 +154,7 @@ class CustomerController extends Controller
             $maincodes=$maincodes->where('customer_date','<=',$ts);
         }
 
-        $maincodes = $maincodes->orderByDesc('id')->paginate(null,['*'],'maincode_page');
+        $maincodes = $maincodes->orderBy($request->sort_field??'created_at',$request->sort??'desc')->paginate(null,['*'],'maincode_page');
 
         $maincodes->setPageName('maincode_page');
 

@@ -1,5 +1,31 @@
 @extends('layout')
+@section('js')
+    <script>
+        function sortForm(field) {
 
+            document.getElementsByName('sort_field')[0].value=field;
+            var d = document.getElementsByName('sort')[0];
+            if(d.value=="desc")
+            {
+                d.value="asc";
+            }
+            else
+            {
+                d.value="desc";
+
+            }
+            searchForm.submit();
+        }
+    </script>
+    @endsection
+@section('css')
+    <style>
+        a[href="#"]
+        {
+            color: #2d31ad;
+        }
+    </style>
+    @endsection
 @section('content')
     @include('error')
     @if(session()->has('message'))
@@ -24,7 +50,8 @@
                 </h3>
 
                     <form autocomplete="off" id="searchForm" action="/shop" method="get">
-
+                        <input type="hidden" name="sort" value="{{$_GET['sort'] ?? ''}}">
+                        <input type="hidden" name="sort_field" value="{{$_GET['sort_field'] ?? ''}}">
                         <div class="row" style="margin: 10px">
                             <div class="col-md-2">
                                 <label> رده : </label>
@@ -71,8 +98,8 @@
                             <th>نام فروشگاه</th>
                             <th>تلفن همراه</th>
                             <th>رده</th>
-                            <th>مجموع امتیازات</th>
-                            <th>امتیازات مصرف شده</th>
+                            <th><a href="#" onclick="sortForm('score')">مجموع امتیازات</a></th>
+                            <th><a href="#" onclick="sortForm('used_score')">امتیازات مصرف شده</a></th>
                             <th>تخصیص کد</th>
                             <th>عملیات</th>
                         </tr>

@@ -23,6 +23,8 @@
                 </h3>
 
                     <form autocomplete="off" id="searchForm" action="/customer" method="get">
+                        <input type="hidden" name="sort" value="{{$_GET['sort'] ?? 'desc'}}">
+                        <input type="hidden" name="sort_field" value="{{$_GET['sort_field'] ?? 'code'}}">
 
                             <div class="col-md-2">
                                 <label>کد :</label><input value="{{$_GET['id']??''}}" name="id" class="form-control" type="text">
@@ -58,10 +60,10 @@
                         <tr style="background-color: rgba(227,227,227,0.28)">
                             <th>کد مشتری</th>
                             <th>شماره همراه</th>
-                            <th>میزان امتیاز کلی</th>
-                            <th>امتیاز فعلی</th>
-                            <th>امتیاز مصرف شده</th>
-                            <th>تاریخ عضویت</th>
+                            <th><a href="#" onclick="sortForm('score')">میزان امتیاز کلی</a></th>
+                            <th><a href="#" onclick="sortForm('available_score')">امتیاز فعلی</a></th>
+                            <th><a href="#" onclick="sortForm('used_score')">امتیاز مصرف شده</a></th>
+                            <th><a href="#" onclick="sortForm('registration_date')">تاریخ عضویت</a></th>
                         </tr>
                         <thead>
                         <tbody>
@@ -86,6 +88,12 @@
 @endsection
 
 @section('css')
+    <style>
+        a[href="#"]
+        {
+            color: #2d31ad;
+        }
+    </style>
 @endsection
 
 @section('js')
@@ -96,6 +104,23 @@
         function showDateTimepicker(t) {
             Mh1PersianDatePicker.Show(t,'{{\Morilog\Jalali\Jalalian::now()->format('Y/m/d')}}'); //parameter1: input, parameter2: today
 
+        }
+    </script>
+    <script>
+        function sortForm(field) {
+
+            document.getElementsByName('sort_field')[0].value=field;
+            var d = document.getElementsByName('sort')[0];
+            if(d.value=="desc")
+            {
+                d.value="asc";
+            }
+            else
+            {
+                d.value="desc";
+
+            }
+            searchForm.submit();
         }
     </script>
 @endsection

@@ -28,7 +28,10 @@
         th{
            text-align: center;
         }
-
+        a[href="#"]
+        {
+            color: #2d31ad;
+        }
     </style>
 @endsection
 @section('js')
@@ -71,7 +74,6 @@
     @include('error')
     <div class="row">
         <form autocomplete="off" action="/customer/show" method="get" id="searchForm">
-
                 @if(isset($_GET['maincode_page']))
                     <input type="hidden" value="{{$_GET['maincode_page']}}" name="maincode_page">
                 @endif
