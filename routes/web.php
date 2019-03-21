@@ -32,6 +32,7 @@ Route::post('/shop/category/modify','ShopController@modifyCategory');
 
 Route::get('/customer','CustomerController@index');
 Route::get('/customer/show','CustomerController@show');
+Route::get('/customer/delete','CustomerController@delete');
 
 
 Route::get('/maincode','MainCodeController@index');

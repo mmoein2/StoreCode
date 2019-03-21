@@ -75,6 +75,8 @@
                             <th><a href="#" onclick="sortForm('used_score')">امتیاز مصرف شده</a></th>
                             <th><a href="#" onclick="sortForm('registration_date')">تاریخ عضویت</a></th>
                             <th>امکان ارسال نوتیفیکیشن</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
                         </tr>
                         <thead>
                         <tbody>
@@ -87,6 +89,10 @@
                                 <td>{{$c->used_score}}</td>
                                 <td>{{$c->getPersianRegistrationDate()}}</td>
                                 <td class="@if($c->play_id!=null)success @else danger @endif">@if($c->play_id!=null) <i class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif</td>
+                                <td class="{{$c->getColorForStatus()}}">{{$c->getStatus()}}</td>
+                                <td>
+                                    <a href="/customer/delete?id={{$c->id}}" class="btn btn-<?php if($c->status==true){ echo 'danger '; }else{ echo 'success ';}?>btn-sm">@if($c->status==true) غیرفعالسازی @else فعالسازی @endif</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

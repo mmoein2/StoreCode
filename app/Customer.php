@@ -18,4 +18,23 @@ class Customer extends Model
         $d=$date->getDay();
         return "$y/$m/$d";
     }
+
+    public function getStatus()
+    {
+        if($this->status==false)
+            return "غیر فعال";
+
+        if($this->status==true)
+            return "فعال";
+
+    }
+    public function getColorForStatus()
+    {
+        if($this->status==false)
+            return "danger";
+
+        if($this->status==true)
+            return "success";
+
+    }
 }

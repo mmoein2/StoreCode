@@ -186,4 +186,11 @@ class CustomerController extends Controller
 
         return view('customer.show',compact('customer','subcodes','maincodes'));
     }
+    public function delete(Request $request)
+    {
+        $c= Customer::find($request->id);
+        $c->status=!($c->status);
+        $c->save();
+        return back();
+    }
 }
