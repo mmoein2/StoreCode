@@ -23,7 +23,17 @@
                         <div style="margin-top: 10px" class="form-group">
                             <label for="">متن پیام</label>
                             <p>{{$message->text}}</p>
-                        </div>
+
+
+                            <div style="margin-top: 10px" class="form-group">
+                                <label for="">نام فروشگاه</label>
+                                <p>{{$message->shop->name}}</p>
+                            </div>
+
+                            <div style="margin-top: 10px" class="form-group">
+                                <label for="">شماره تماس</label>
+                                <p>{{$message->shop->mobile}}</p>
+                            </div>
 
                     </div>
                     <!-- /.box-body -->

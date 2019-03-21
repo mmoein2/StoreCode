@@ -14,7 +14,7 @@ class AddStatusToCustomer extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->index()->default(true);
         });
     }
 

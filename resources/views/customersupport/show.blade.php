@@ -24,6 +24,14 @@
                         <label for="">متن پیام</label>
                         <p>{{$customer->text}}</p>
                     </div>
+                    <div style="margin-top: 10px" class="form-group">
+                        <label for="">نام و نام خانوادگی</label>
+                        <p>{{$customer->customer->fullname}}</p>
+                    </div>
+                    <div style="margin-top: 10px" class="form-group">
+                        <label for="">شماره تماس</label>
+                        <p>{{$customer->customer->mobile}}</p>
+                    </div>
 
                 </div>
                 <!-- /.box-body -->

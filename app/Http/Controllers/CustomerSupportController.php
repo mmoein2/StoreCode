@@ -34,7 +34,7 @@ class CustomerSupportController extends Controller
     }
     public function show(Request $request)
     {
-        $customer = CustomerSupport::find($request->id);
+        $customer = CustomerSupport::with('customer')->find($request->id);
         $customer->status=true;
         $customer->save();
         return view('customersupport.show',compact('customer'));
