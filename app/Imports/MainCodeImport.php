@@ -4,10 +4,12 @@ namespace App\Imports;
 
 use App\MainCode;
 use App\Prize;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class MainCodeImport implements ToModel,WithHeadingRow
+class MainCodeImport implements ToModel,WithHeadingRow,WithValidation
 {
     private $day=0;
     public $errors=[];
@@ -33,5 +35,11 @@ class MainCodeImport implements ToModel,WithHeadingRow
     public function __construct($day)
     {
         $this->day=$day;
+    }
+    public function rules(): array
+    {
+        return [
+            'code' => Rule::unique('main_codes','code'),
+        ];
     }
 }

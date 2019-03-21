@@ -84,6 +84,7 @@ class ShopController extends Controller
             'phone' => 'required|numeric',
             'person' => 'required',
             'address' => 'required',
+            'city' => 'required',
         ]);
 
         $shop = new Shop($request->all());
@@ -196,6 +197,7 @@ class ShopController extends Controller
         $shop->phone=$request->phone;
         $shop->person=$request->person;
         $shop->address=$request->address;
+        $shop->city=$request->city;
 
         $shop->save();
         return redirect('/shop');

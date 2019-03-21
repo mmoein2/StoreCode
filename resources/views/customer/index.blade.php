@@ -70,6 +70,7 @@
                         <tr style="background-color: rgba(227,227,227,0.28)">
                             <th>کد مشتری</th>
                             <th>شماره همراه</th>
+                            <th>شهر</th>
                             <th><a href="#" onclick="sortForm('score')">میزان امتیاز کلی</a></th>
                             <th><a href="#" onclick="sortForm('available_score')">امتیاز فعلی</a></th>
                             <th><a href="#" onclick="sortForm('used_score')">امتیاز مصرف شده</a></th>
@@ -84,6 +85,7 @@
                             <tr>
                                 <td><a href="/customer/show?id={{$c->id}}">{{$c->id}}</a></td>
                                 <td> <a href="/customer/show?id={{$c->id}}"> {{$c->mobile}}</a></td>
+                                <td>{{$c->city}}</td>
                                 <td>{{$c->score}}</td>
                                 <td>{{$c->score-$c->used_score}}</td>
                                 <td>{{$c->used_score}}</td>

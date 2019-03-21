@@ -45,6 +45,10 @@
                             <input name="person"  class="form-control" id="exampleInputPassword1" >
                         </div>
                         <div class="form-group">
+                            <label for="">شهر</label>
+                            <input name="city"  class="form-control" id="exampleInputPassword1" >
+                        </div>
+                        <div class="form-group">
                             <label for="">آدرس</label>
                             <textarea class="form-control" style="height: 200px" name="address"></textarea>
                         </div>
@@ -53,7 +57,7 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit"  class="btn btn-success">تخصیص کد</button>
+                        <button type="submit"  class="btn btn-success">ثبت فروشگاه</button>
                     </div>
                 </form>
             </div>

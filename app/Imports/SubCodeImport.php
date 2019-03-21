@@ -3,11 +3,16 @@
 namespace App\Imports;
 
 use App\SubCode;
+use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class SubCodeImport implements ToModel,WithHeadingRow
+class SubCodeImport implements ToModel,WithValidation,WithHeadingRow
 {
+    use Importable;
+
     public $day=0;
     /**
     * @param array $row
@@ -27,4 +32,11 @@ class SubCodeImport implements ToModel,WithHeadingRow
     {
         $this->day=$day;
     }
+    public function rules(): array
+    {
+        return [
+            'code' => Rule::unique('sub_codes','code'),
+        ];
+    }
+
 }

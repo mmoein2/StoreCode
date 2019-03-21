@@ -64,7 +64,14 @@ class SubCodeController extends Controller
         $day = $request->day;
 
         DB::beginTransaction();
-        Excel::import(new SubCodeImport($day), $file);
+        try{
+            Excel::import(new SubCodeImport($day), $file);
+
+
+        }
+        catch(\Maatwebsite\Excel\Validators\ValidationException $e) {
+            return back()->withErrors($e->errors());
+        }
         DB::commit();
         return back()->with('message','کدهای فرعی با موفقیت ایجاد شدند');
     }

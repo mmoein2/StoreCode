@@ -45,6 +45,10 @@
                             <input value="{{$shop->person}}" name="person"  class="form-control" id="exampleInputPassword1" >
                         </div>
                         <div class="form-group">
+                            <label for="">شهر</label>
+                            <input value="{{$shop->city}}" name="city"  class="form-control" id="exampleInputPassword1" >
+                        </div>
+                        <div class="form-group">
                             <label for="">آدرس</label>
                             <textarea  class="form-control" style="height: 200px" name="address">{{$shop->address}}</textarea>
                         </div>
