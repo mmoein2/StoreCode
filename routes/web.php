@@ -52,4 +52,7 @@ Route::get('/prize/delete','PrizeController@delete');
 Route::get('/message','MessageController@index');
 Route::get('/message/show','MessageController@show');
 
+Route::get('/customersupport','CustomerSupportController@index');
+Route::get('/customersupport/show','CustomerSupportController@show');
+
 

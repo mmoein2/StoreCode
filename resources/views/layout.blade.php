@@ -94,40 +94,50 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">منو</li>
-                <li  @if(request()->route()->uri=="subcode") class="active" @endif>
+                <li @if(strpos(request()->route()->uri,"subcode")!==false) class="active" @endif>
                     <a href="/subcode">
                         <i class="fa fa-code"></i> <span>کدهای فرعی</span>
                     </a>
                 </li>
-                <li  @if(request()->route()->uri=="maincode") class="active" @endif>
+                <li @if(strpos(request()->route()->uri,"maincode")!==false) class="active" @endif>
                     <a href="/maincode">
                         <i class="fa fa-users"></i> <span>کدهای اصلی</span>
                     </a>
                 </li>
 
-                <li  @if(request()->route()->uri=="shop") class="active" @endif>
+                <li @if(strpos(request()->route()->uri,"shop")!==false) class="active" @endif>
                     <a href="/shop">
                         <i class="fa fa-shopping-cart"></i> <span>فروشگاه</span>
                     </a>
                 </li>
-                <li @if(request()->route()->uri=="customer") class="active" @endif>
+                <li @if(strpos(request()->route()->uri,"customer")!==false) class="active" @endif>
                     <a href="/customer">
                         <i class="fa fa-user"></i> <span>مشتریان</span>
                     </a>
                 </li>
-                <li @if(request()->route()->uri=="prize") class="active" @endif>
+                <li @if(strpos(request()->route()->uri,"prize")!==false) class="active" @endif>
                     <a href="/prize">
                         <i class="fa fa-star"></i> <span>جوایز</span>
                     </a>
                 </li>
 
-                <li @if(request()->route()->uri=="message") class="active" @endif>
+                <li @if(strpos(request()->route()->uri,"message")!==false) class="active" @endif>
                     <a href="/message">
-                        <i class="fa fa-star"></i> <span>پیام ها</span>
+                        <i class="fa fa-paper-plane"></i> <span>پیام های فروشگاه</span>
                         @if($message_count>0)
                         <small style="font-size: 14px" class="label pull-left bg-yellow">
                             <b> {{$message_count}}</b>
                         </small>
+                        @endif
+                    </a>
+                </li>
+                <li @if(strpos(request()->route()->uri,"customersupport")!==false) class="active" @endif>
+                    <a href="/customersupport">
+                        <i class="fa fa-hand-paper-o"></i> <span>پشتیبانی کاربران</span>
+                        @if($customersupport_count>0)
+                            <small style="font-size: 14px" class="label pull-left bg-yellow">
+                                <b> {{$customersupport_count}}</b>
+                            </small>
                         @endif
                     </a>
                 </li>

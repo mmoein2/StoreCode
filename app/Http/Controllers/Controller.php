@@ -15,7 +15,9 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        View::share('message_count',\App\Message::where('isMessage',false)->count());
+        View::share('message_count',\App\Message::where('IsMessage',false)->count());
+        View::share('customersupport_count',\App\CustomerSupport::where('status',false)->count());
+
     }
 
 }
