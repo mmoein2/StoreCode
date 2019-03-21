@@ -55,4 +55,8 @@ Route::get('/message/show','MessageController@show');
 Route::get('/customersupport','CustomerSupportController@index');
 Route::get('/customersupport/show','CustomerSupportController@show');
 
+Route::get('/slider','SliderController@index');
+Route::get('/slider/create','SliderController@create');
+Route::post('/slider','SliderController@store');
+Route::get('/slider/delete/{id}','SliderController@delete');
 
