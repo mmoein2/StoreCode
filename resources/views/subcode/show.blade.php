@@ -36,7 +36,7 @@
             <div class="box-header">
 
                 <div class="col-md-6">
-                    <label class="title">کد فروشگاه :</label>
+                    <label class="title">کد فرعی :</label>
                     {{$subcode->code}}
                 </div>
                 <div class="col-md-6">
