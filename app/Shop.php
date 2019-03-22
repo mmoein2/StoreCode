@@ -11,6 +11,7 @@ class Shop extends Authenticatable implements JWTSubject
     use Notifiable;
 
     protected $guarded=[];
+    protected $hidden=['shop_category_id','created_at','updated_at','play_id','password'];
     protected $casts=[
         'images'=>'array'
     ];

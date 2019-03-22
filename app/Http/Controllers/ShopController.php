@@ -88,6 +88,7 @@ class ShopController extends Controller
         ]);
 
         $shop = new Shop($request->all());
+        $shop->password= substr(md5(uniqid(rand(), true)),0,4);
         $shop->score=0;
         $shop->used_score=0;
         $shop->save();

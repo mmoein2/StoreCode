@@ -20,8 +20,8 @@ class CreateShopsTable extends Migration
             $table->bigInteger('shop_category_id')->unsigned();
             $table->foreign('shop_category_id')->references('id')->on('shop_categories');
 
-            $table->integer('mobile');
-            $table->integer('phone');
+            $table->string('mobile')->unique();
+            $table->string('phone');
             $table->text('address');
             $table->string('person');
 

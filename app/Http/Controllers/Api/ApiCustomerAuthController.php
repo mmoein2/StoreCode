@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\ConfirmCustomer;
 use App\Customer;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +18,7 @@ class ApiCustomerAuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:customer_api', ['except' => ['login']]);
+        $this->middleware('auth:customer_api', ['except' => ['login','loginConfirm']]);
     }
 
     /**
@@ -23,18 +26,64 @@ class ApiCustomerAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+
+    public function login(Request $request)
     {
 
-        Auth::shouldUse('customer_api');
-        $credentials = request(['mobile', 'fullname']);
-       $token = (auth()->login(Customer::first()));
-        //if (! $token = auth()->attempt($credentials)) {
-        //    return response()->json(['error' => 'Unauthorized'], 401);
-       // }
+        $request->validate([
+            'mobile'=>'required|min:11|max:11'
+        ]);
 
-        return $this->respondWithToken($token);
+        $mobile = $request->mobile;
+        $customer = Customer::where('mobile',$mobile)->first();
+        if($customer==null)
+        {
+            return [
+                'status_code'=>1,
+                'message'=>'شماره موبایل در سیستم وجود ندارد'
+            ];
+
+        }
+
+        $cc = new ConfirmCustomer();
+        $cc->token=substr(md5(uniqid(rand(), true)),0,4);
+        $cc->customer_id=$customer->id;
+        $cc->save();
+
+        return [
+            'status_code' =>0,
+        ];
+
+
     }
+    public function loginConfirm(Request $request)
+    {
+        $request->validate([
+            'token'=>'required'
+        ]);
+
+        $token= $request->token;
+        $cc = ConfirmCustomer::with('customer')->where('token',$token)->where('created_at','>=',Carbon::now()->subHours(24))->where('is_burned',false)->latest()->first();
+        if($cc==null)
+        {
+            return [
+                'status_code' =>1,
+                'message' =>'کد ارسالی اشتباه است'
+            ];
+        }
+        $cc->is_burned=true;
+        $cc->save();
+        $customer = $cc->customer;
+        Auth::shouldUse('customer_api');
+        $token = auth()->login($customer);
+
+        return [
+            'status_code' =>0,
+            'access_token' =>$token
+        ];
+    }
+
+
 
     /**
      * Get the authenticated User.

@@ -15,9 +15,12 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'auth/customer','namespace'=>'Api'], function ($router) {
 
     Route::post('login', 'ApiCustomerAuthController@login');
+    Route::post('login/confirm', 'ApiCustomerAuthController@loginConfirm');
+
     Route::post('logout', 'ApiCustomerAuthController@logout');
    // Route::post('refresh', 'ApiCustomerAuthController@refresh');
     Route::post('me', 'ApiCustomerAuthController@me');
+
 
 });
 
@@ -27,5 +30,7 @@ Route::group(['prefix' => 'auth/shop','namespace'=>'Api'], function ($router) {
     Route::post('logout', 'ApiShopAuthController@logout');
   //  Route::post('refresh', 'ApiShopAuthController@refresh');
     Route::post('me', 'ApiShopAuthController@me');
+    Route::post('password/recovery', 'ApiShopAuthController@passwordRecovery');
+    Route::post('confirm/password/recovery', 'ApiShopAuthController@confirmPasswordRecovery');
 
 });
