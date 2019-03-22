@@ -3,10 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Morilog\Jalali\Jalalian;
 
-class Customer extends Model
+class Customer extends Authenticatable implements JWTSubject
 {
+    use Notifiable;
+
     protected $guarded=[];
     public function getPersianRegistrationDate()
     {
@@ -36,5 +41,25 @@ class Customer extends Model
         if($this->status==true)
             return "success";
 
+    }
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
