@@ -35,12 +35,21 @@ Route::group(['prefix' => 'auth/shop','namespace'=>'Api'], function ($router) {
 
 });
 
+//api for sms
 Route::group(['namespace'=>'Api'], function ($router) {
-    Route::post('subcode/register', 'SubCodeController@register');
+    Route::get('subcode/register', 'SubCodeController@register');
 
 });
 
+//api for customer
 Route::group(['namespace'=>'Api','middleware'=>'auth:customer_api'], function ($router) {
 
     Route::post('maincode/register', 'MainCodeController@register');
+});
+
+//api for shop
+Route::group(['namespace'=>'Api','prefix'=>'shop','middleware'=>'auth:shop_api'], function ($router) {
+
+    Route::post('subcode/index', 'ShopController@getSubCodes');
+    Route::post('message/store', 'ShopController@storeMessage');
 });

@@ -7,6 +7,8 @@ use Morilog\Jalali\Jalalian;
 
 class Message extends Model
 {
+    protected $guarded=[];
+    protected $hidden=['isMessage','shop_id','created_at','updated_at'];
     public function shop()
     {
         return $this->belongsTo(Shop::class,'shop_id','id');
