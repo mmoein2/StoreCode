@@ -25,7 +25,10 @@
         {
             font-size: 18px;
         }
-
+body
+{
+    direction: rtl;
+}
     </style>
 @endsection
 
@@ -42,31 +45,31 @@
                 <div class="col-md-6">
                     <label class="title">نوع :</label>
                     @if($maincode->status==false)
-                        {{$maincode->prize->name}}
+                       <label> {{$maincode->prize->name}}</label>
                     @else
-                        {{$maincode->prize_name}}
+                    </label>{{$maincode->prize_name}}</div>
                     @endif
                 </div>
 
 
                 <div class="col-md-4">
                     <label class="title">سریال :</label>
-                    {{$maincode->serial}}
+                    <label>{{$maincode->serial}}</label>
                 </div>
                 <div class="col-md-4">
                     <label class="title">مدت اعتبار (روز):</label>
-                    {{$maincode->expiration_day}}
+                    <label>{{$maincode->expiration_day}}</label>
                     <label> روز پس از فعالسازی </label>
                 </div>
                 <div class="col-md-4">
                     <label class="title">تاریخ انقضا :</label>
-                    {{$maincode->getPerisanExpireDate()}}
+                    <label>{{$maincode->getPerisanExpireDate()}}</label>
                 </div>
 
 
                 <div class="col-md-12">
                     <label class="title">وضعیت :</label>
-                    {{$maincode->getStatus()}}
+                    <label>{{$maincode->getStatus()}}</label>
                 </div>
 
                     <hr>
@@ -74,24 +77,24 @@
 
                 <div class="col-md-6">
                     <label class="title">مشخصات مشتری :</label>
-                    {{$maincode->customer->fullname ??''}}
+                    <label>{{$maincode->customer->fullname ??''}}</label>
 
                 </div>
 
                 <div class="col-md-6">
                     <label class="title">کد مشتری: </label>
-                    {{$maincode->customer->id ?? ''}}
+                    <label>{{$maincode->customer->id ?? ''}}</label>
 
                 </div>
                 <hr>
                 <div class="col-md-6">
                     <label class="title">تاریخ فعالسازی:</label>
-                    {{$maincode->getPerisanCustomerDate() ??''}}
+                    <label>{{$maincode->getPerisanCustomerDate() ??''}}</label>
 
                 </div>
                 <div class="col-md-6">
                     <label class="title">ساعت فعالسازی :</label>
-                    {{$maincode->getCustomerTime() ?? ''}}
+                    <label>{{$maincode->getCustomerTime() ?? ''}}</label>
                 </div>
             </div>
         </div>

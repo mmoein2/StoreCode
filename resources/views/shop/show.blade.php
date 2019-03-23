@@ -25,6 +25,10 @@
         {
             color: #2d31ad;
         }
+        body
+        {
+            direction: rtl;
+        }
     </style>
     @endsection
 
@@ -36,50 +40,50 @@
 
                 <div class="col-md-3">
                     <label>کد فروشگاه :</label>
-                    {{$shop->id}}
+                   <label>{{$shop->id}}</label>
                 </div>
 
                 <div class="col-md-3">
                     <label>نام فروشگاه :</label>
-                    {{$shop->name}}
+                    <label> {{$shop->name}}</label>
 
                 </div>
                 <div class="col-md-3">
                     <label>صنف فروشگاه :</label>
-                    {{$shop->category->name}}
+                    <label>{{$shop->category->name}}</label>
 
                 </div>
 
                 <div class="col-md-3">
                     <label>متصدی فروشگاه :</label>
-                    {{$shop->person}}
+                    <label> {{$shop->person}}</label>
 
                 </div>
 
                         <div class="col-md-12">
                             <label>آدرس :</label>
-                            {{$shop->address}}
+                            <p> {{$shop->address}}</p>
 
                         </div>
                         <div class="col-md-12">
                             <label>شماره همراه :</label>
-                            {{$shop->mobile}}
+                            <label>  {{$shop->mobile}}</label>
 
                         </div>
                         <div class="col-md-12">
                             <label>شماره تلفن ثابت :</label>
-                            {{$shop->phone}}
+                            <label> {{$shop->phone}}</label>
 
                         </div>
 
                         <div class="col-md-12">
                             <label>امتیازات گرفته شده :</label>
-                            {{$shop->phone}}
+                            <label> {{$shop->phone}} </label>
 
                         </div>
                         <div class="col-md-12">
                             <label>امتیازات مصرف شده :</label>
-                            {{$shop->phone}}
+                            <label> {{$shop->phone}}</label>
 
                         </div>
 

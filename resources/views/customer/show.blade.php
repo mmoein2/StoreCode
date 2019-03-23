@@ -32,6 +32,10 @@
         {
             color: #2d31ad;
         }
+        body
+        {
+            direction: rtl;
+        }
     </style>
 @endsection
 @section('js')
@@ -86,33 +90,33 @@
 
                 <div class="col-md-4">
                     <label class="title">کد مشتری :</label>
-                    {{$customer->id}}
+                    <label>{{$customer->id}}</label>
                 </div>
                 <div class="col-md-4">
                     <label class="title">نام مشتری :</label>
-                    {{$customer->fullname}}
+                    <label>{{$customer->fullname}}</label>
                 </div>
                 <div class="col-md-4">
                     <label class="title">شماره همراه :</label>
-                    {{$customer->mobile}}
+                    <label> {{$customer->mobile}}</label>
                 </div>
 
 
                 <div class="col-md-3">
                     <label class="title">امتیاز کلی :</label>
-                    {{$customer->score}}
+                    <label> {{$customer->score}}</label>
                 </div>
                 <div class="col-md-3">
                     <label class="title">امتیاز فعلی :</label>
-                    {{$customer->score-$customer->used_score}}
+                    <label>{{$customer->score-$customer->used_score}}</label>
                 </div>
                 <div class="col-md-3">
                     <label class="title">امتیاز مصرف شده :</label>
-                    {{$customer->used_score}}
+                    <label> {{$customer->used_score}}</label>
                 </div>
                 <div class="col-md-3">
                     <label class="title">تاریخ عضویت :</label>
-                    {{$customer->getPersianRegistrationDate()}}
+                    <label>{{$customer->getPersianRegistrationDate()}}</label>
                 </div>
 
 
