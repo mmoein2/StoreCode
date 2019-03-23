@@ -40,7 +40,7 @@ class MainCodeController extends Controller
             ];
         }
 
-        if($customer->score<$maincode->score)
+        if($customer->score-$customer->used_score  <  $maincode->score)
         {
             return [
                 'status_code'=>'2',
@@ -53,7 +53,6 @@ class MainCodeController extends Controller
         $maincode->prize_name = $maincode->prize->name;
 
         $customer->used_score += $maincode->score;
-        $customer->score  -= $maincode->score;
 
         $customer->save();
         $maincode->save();
