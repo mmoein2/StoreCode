@@ -145,6 +145,7 @@
                         <td>{{$c->getPerisanExpireDate()}}</td>
                         <td>
                             @if($c->status==0)
+                                <a class="btn btn-sm btn-success" href="/subcode/edit?id={{$c->id}}">ویرایش</a>
                                 <a class="btn btn-sm btn-danger" href="/subcode/delete?id={{$c->id}}">حذف</a>
                             @endif
                         </td>
