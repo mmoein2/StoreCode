@@ -14,13 +14,13 @@ class SubCodeController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'code'=>'required',
-            'mobile'=>'required',
+            'from'=>'required',
+            'text'=>'required',
         ]);
         $current_timestamp = Carbon::now()->isoFormat('x');
 
         DB::beginTransaction();
-        $subcode = SubCode::with('shop')->where('code',$request->code)
+        $subcode = SubCode::with('shop')->where('code',$request->text)
             ->where('status',1)->where('customer_id',null)
             ->where('expiration_date','>=',$current_timestamp)->first();
 
@@ -33,7 +33,7 @@ class SubCodeController extends Controller
                 'message'=>'کد وارد شده در سیستم پیدا نشد'
             ];
         }
-        $customer = Customer::where('mobile',$request->mobile)->first();
+        $customer = Customer::where('mobile',$request->from)->first();
         if($customer->status==false)
         {
             return [
@@ -44,7 +44,7 @@ class SubCodeController extends Controller
         if($customer==null)
         {
             $customer = new Customer();
-            $customer->mobile=$request->mobile;
+            $customer->mobile=$request->from;
             $customer->score=0;
             $customer->used_score=0;
             $customer->registration_date=$current_timestamp;
