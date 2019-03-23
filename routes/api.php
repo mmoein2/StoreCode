@@ -56,4 +56,6 @@ Route::group(['namespace'=>'Api','prefix'=>'shop','middleware'=>'auth:shop_api']
     Route::post('subcode/index', 'ShopController@getSubCodes');
     Route::post('message/store', 'ShopController@storeMessage');
     Route::post('post/store', 'PostController@storePost');
+    Route::post('profile/update', 'ShopController@updateProfile');
+    Route::post('profile/images/update', 'ShopController@updateImages');
 });
