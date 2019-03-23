@@ -20,9 +20,11 @@ class SubCodeController extends Controller
         $current_timestamp = Carbon::now()->isoFormat('x');
 
         DB::beginTransaction();
-        $subcode = SubCode::where('code',$request->code)
+        $subcode = SubCode::with('shop')->where('code',$request->code)
             ->where('status',1)->where('customer_id',null)
             ->where('expiration_date','>=',$current_timestamp)->first();
+
+        $shop = $subcode->shop;
 
         if($subcode==null)
         {
@@ -51,13 +53,16 @@ class SubCodeController extends Controller
         }
 
         $customer->score+=$subcode->score;
+        $shop->used_score+=$subcode->score;
 
         $subcode->status=2;
         $subcode->customer_id=$customer->id;
         $subcode->customer_date=$current_timestamp;
 
+
         $customer->save();
         $subcode->save();
+        $shop->save();
 
         DB::commit();
 

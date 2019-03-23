@@ -77,15 +77,20 @@
                         </div>
 
                         <div class="col-md-12">
-                            <label>امتیازات گرفته شده :</label>
-                            <label> {{$shop->phone}} </label>
+                            <label>امتیازات گرفته شده (کل):</label>
+                            <label> {{$shop->score}} </label>
 
                         </div>
                         <div class="col-md-12">
                             <label>امتیازات مصرف شده :</label>
-                            <label> {{$shop->phone}}</label>
+                            <label> {{$shop->used_score}}</label>
 
                         </div>
+                <div class="col-md-12">
+                    <label>امتیازات مصرف نشده :</label>
+                    <label> {{$shop->score - $shop->used_score}}</label>
+
+                </div>
 
     <div style="margin-top: 10px">
 
