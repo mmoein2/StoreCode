@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Customer;
+use App\CustomerShop;
 use App\SubCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,13 +35,7 @@ class SubCodeController extends Controller
             ];
         }
         $customer = Customer::where('mobile',$request->from)->first();
-        if($customer->status==false)
-        {
-            return [
-                'status_code'=>'1',
-                'message' =>'خدمات سایت برای شما غیر فعال شده است'
-            ];
-        }
+
         if($customer==null)
         {
             $customer = new Customer();
@@ -48,10 +43,17 @@ class SubCodeController extends Controller
             $customer->score=0;
             $customer->used_score=0;
             $customer->registration_date=$current_timestamp;
+            $customer->status=true;
             $customer->save();
             //send sms
         }
-
+        if($customer->status==false)
+        {
+            return [
+                'status_code'=>'1',
+                'message' =>'خدمات سایت برای شما غیر فعال شده است'
+            ];
+        }
         $customer->score+=$subcode->score;
         $shop->used_score+=$subcode->score;
 
@@ -59,10 +61,21 @@ class SubCodeController extends Controller
         $subcode->customer_id=$customer->id;
         $subcode->customer_date=$current_timestamp;
 
+        //customer didn't follow the shop
+        if(!CustomerShop::where('shop_id',$shop->id)->where('customer_id',$customer->id)->exists())
+        {
+           $cs = new CustomerShop();
+           $cs->customer_id = $customer->id;
+           $cs->shop_id= $shop->id;
+
+        }
 
         $customer->save();
         $subcode->save();
         $shop->save();
+
+        if(isset($cs))
+            $cs->save();
 
         DB::commit();
 
