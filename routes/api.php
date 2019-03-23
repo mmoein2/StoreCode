@@ -42,9 +42,10 @@ Route::group(['namespace'=>'Api'], function ($router) {
 });
 
 //api for customer
-Route::group(['namespace'=>'Api','middleware'=>'auth:customer_api'], function ($router) {
+Route::group(['namespace'=>'Api','prefix'=>'customer','middleware'=>'auth:customer_api'], function ($router) {
 
     Route::post('maincode/register', 'MainCodeController@register');
+    Route::post('posts/show', 'CustomerController@showPosts');
 });
 
 //api for shop
@@ -52,4 +53,5 @@ Route::group(['namespace'=>'Api','prefix'=>'shop','middleware'=>'auth:shop_api']
 
     Route::post('subcode/index', 'ShopController@getSubCodes');
     Route::post('message/store', 'ShopController@storeMessage');
+    Route::post('post/store', 'PostController@storePost');
 });

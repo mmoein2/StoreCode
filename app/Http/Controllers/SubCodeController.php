@@ -97,4 +97,22 @@ class SubCodeController extends Controller
         }
         return back();
     }
+    public function edit(Request $request)
+    {
+        $subcode = SubCode::find($request->id);
+        return view('subcode.edit',compact('subcode'));
+    }
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id'=>'required',
+            'day'=>'required|numeric',
+            'score'=>'required|numeric',
+        ]);
+        $subcode = SubCode::where('id',$request->id)->where('status',0)->first();
+        $subcode->expiration_day=$request->day;
+        $subcode->score=$request->score;
+        $subcode->save();
+        return redirect('/subcode');
+    }
 }
