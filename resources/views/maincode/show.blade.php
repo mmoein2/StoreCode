@@ -47,7 +47,7 @@ body
                     @if($maincode->status==false)
                        <label> {{$maincode->prize->name}}</label>
                     @else
-                    </label>{{$maincode->prize_name}}</div>
+                    <label>{{$maincode->prize_name}}</label>
                     @endif
                 </div>
 
@@ -98,6 +98,4 @@ body
                 </div>
             </div>
         </div>
-    </div>
-
 @endsection

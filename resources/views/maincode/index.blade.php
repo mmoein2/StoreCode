@@ -140,6 +140,7 @@
                         <tr style="background-color: rgba(227,227,227,0.28)">
                             <th><a href="#" onclick="sortForm('code')">کد اصلی</a></th>
                             <th><a href="#" onclick="sortForm('serial')">سریال</a></th>
+                            <th><a href="#" onclick="sortForm('score')">امتیاز</a></th>
                             <th>نوع جوایز</th>
                             <th>وضعیت</th>
                             <th><a href="#" onclick="sortForm('expiration_day')">اعتبار کد (روز)</a></th>
@@ -152,6 +153,7 @@
                             <tr>
                                 <td><a href="/maincode/show?id={{$c->id}}"> {{$c->code}} </a></td>
                                 <td>{{$c->serial}}</td>
+                                <td>{{$c->score}}</td>
                                 <td>
                                     @if($c->status==false)
                                         {{$c->prize->name}}
