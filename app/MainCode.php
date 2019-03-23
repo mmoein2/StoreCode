@@ -62,7 +62,7 @@ class MainCode extends Model
     {
         if($this->customer_date==0)
             return "";
-        $date = Jalalian::forge($this->customer_date/1000);
+        $date = Jalalian::forge($this->customer_date/1000,new \DateTimeZone('Asia/Tehran'));
         $h=$date->getHour();
         $m=$date->getMinute();
         $s=$date->getSecond();

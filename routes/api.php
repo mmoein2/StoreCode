@@ -34,3 +34,13 @@ Route::group(['prefix' => 'auth/shop','namespace'=>'Api'], function ($router) {
     Route::post('confirm/password/recovery', 'ApiShopAuthController@confirmPasswordRecovery');
 
 });
+
+Route::group(['namespace'=>'Api'], function ($router) {
+    Route::post('subcode/register', 'SubCodeController@register');
+
+});
+
+Route::group(['namespace'=>'Api','middleware'=>'auth:customer_api'], function ($router) {
+
+    Route::post('maincode/register', 'MainCodeController@register');
+});
