@@ -25,7 +25,10 @@
         {
             font-size: 18px;
         }
-
+body
+{
+    direction: rtl;
+}
     </style>
 @endsection
 
@@ -60,18 +63,18 @@
                 </div>
                 <div class="col-md-12">
                     <label class="title">مشخصات فروشگاه :</label>
-                    {{$subcode->shop->name ?? ''}}
+                    <label>{{$subcode->shop->name ?? ''}}</label>
                     <label>کد </label>
-                    {{$subcode->shop->id ?? ''}}
+                    <lable>{{$subcode->shop->id ?? ''}}</lable>
 
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" style="direction: rtl;text-align: right">
                     <label class="title">مشخصات مشتری :</label>
-                    {{$subcode->customer->name ?? ''}}
+                    <label>{{$subcode->customer->fullname ?? ''}} |</label>
                     <label>کد </label>
-                    {{$subcode->customer->id ?? ''}}
-                    <label> - امتیاز کل </label>
-                    {{$subcode->customer->score ?? ''}}
+                    <lable>{{$subcode->customer->id ?? ''}} |</lable>
+                    <label> امتیاز کل </label>
+                    <lable>{{$subcode->customer->score ?? ''}}</lable>
 
                 </div>
                 <hr>
@@ -82,11 +85,12 @@
                 </div>
                 <div class="col-md-6">
                     <label class="title">تاریخ فعالسازی توسط مشتری :</label>
-                    {{$subcode->getPerisanCustomerDate() ?? ''}}
+                    <label>{{$subcode->getPerisanCustomerDate() ?? ''}}</label>
                     <label>کد </label>
-                    {{$subcode->customer->id ?? ''}}
-                    <label> - امتیاز کل </label>
-                    {{$subcode->getCustomerTime() ?? ''}}
+                    <label>{{$subcode->customer->id ?? ''}}</label>
+                    |
+                    <label>  ساعت </label>
+                    <label>{{$subcode->getCustomerTime() ?? ''}}</label>
 
                 </div>
             </div>
