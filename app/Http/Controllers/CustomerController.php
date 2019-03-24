@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Utility\FireBase;
 use App\MainCode;
 use App\SubCode;
 use Illuminate\Http\Request;
@@ -68,20 +69,25 @@ class CustomerController extends Controller
         {
 
             $message = ($request->message);
+
             if($request->command=="message")
             {
                 dd('send message');
+
             }
             elseif($request->command=="notification")
             {
-                if($customers->where('play_id',null)->exists())
+                $customers = $customers->where('play_id','!=',null);
+                $customers= $customers->pluck('play_id');
+                $firebase = new FireBase();
+
+                foreach ($customers as $c)
                 {
-                    return  back()->withErrors(['امکان ارسال نوتیفیکیشن برای تعدادی از مشتریان وجود ندارد']);
+                    $firebase->send($c,$message);
                 }
-                dd('send notification');
 
             }
-
+            return back()->with(['message'=>'نوتیفیکیشن ارسال شد']);
 
         }
         else

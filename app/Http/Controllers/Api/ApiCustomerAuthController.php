@@ -74,6 +74,14 @@ class ApiCustomerAuthController extends Controller
         $cc->is_burned=true;
         $cc->save();
         $customer = $cc->customer;
+        if($request->play_id)
+        {
+
+            $play_id = $request->play_id;
+            $customer->play_id=$play_id;
+            $customer->save();
+        }
+
         Auth::shouldUse('customer_api');
         $token = auth()->login($customer);
 

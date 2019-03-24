@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Shop;
 use App\ShopCategory;
 use App\SubCode;
+use App\Utility\FireBase;
 use foo\bar;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
@@ -58,11 +59,16 @@ class ShopController extends Controller
             }
             elseif($request->command=="notification")
             {
-                if($shops->where('play_id',null)->exists())
+                $shops = $shops->where('play_id','!=',null);
+                $shops = $shops->pluck('play_id');
+
+                $firebase = new FireBase();
+
+                foreach ($shops as $c)
                 {
-                    return  back()->withErrors(['امکان ارسال نوتیفیکیشن برای تعدادی از مشتریان وجود ندارد']);
+                    $firebase->send($c,$message);
                 }
-                dd('send notification');
+                return back()->with(['message'=>'نوتیفیکیشن ارسال شد']);
 
             }
         }

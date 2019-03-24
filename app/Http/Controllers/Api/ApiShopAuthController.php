@@ -40,6 +40,14 @@ class ApiShopAuthController extends Controller
                 'message'=>'شماره موبایل یا پسورد صحیح نیست'
             ];
         }
+
+        if($request->play_id)
+        {
+
+            $play_id = $request->play_id;
+            $shop->play_id=$play_id;
+            $shop->save();
+        }
         $token = (auth()->login($shop));
         return [
             'status_code'=>0,
