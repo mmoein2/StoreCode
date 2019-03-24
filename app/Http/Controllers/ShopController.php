@@ -204,4 +204,10 @@ class ShopController extends Controller
         return redirect('/shop');
 
     }
+    public function detail(Request $request)
+    {
+        $shop = Shop::find($request->id);
+        return view('shop.detail',compact('shop'));
+
+    }
 }

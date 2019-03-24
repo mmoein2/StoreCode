@@ -138,8 +138,11 @@
                                 <td><a href="/assign?shop_id={{$c->id}}&shop_name={{$c->name}}">تخصیص کد</a></td>
                                 <td class="@if($c->play_id!=null)success @else danger @endif">@if($c->play_id!=null) <i class="fa fa-check"></i> @else <i class="fa fa-close"></i>@endif</td>
                                 <td>
+                                    <div class="btn-group">
+                                    <a href="/shop/detail?id={{$c->id}}" class="btn btn-primary btn-sm">جزپیات</a>
                                     <a href="/shop/edit?id={{$c->id}}" class="btn btn-success btn-sm">ویرایش</a>
                                     <a href="/shop/delete?id={{$c->id}}" class="btn btn-danger btn-sm">حذف</a>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
