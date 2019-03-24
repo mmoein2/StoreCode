@@ -70,7 +70,7 @@ body
                 </div>
                 <div class="col-md-12" style="direction: rtl;text-align: right">
                     <label class="title">مشخصات مشتری :</label>
-                    <label>{{$subcode->customer->fullname ?? ''}} |</label>
+                    <label>{{$subcode->customer->fullname ?? ''}} </label>
                     <label>کد </label>
                     <lable>{{$subcode->customer->id ?? ''}} |</lable>
                     <label> امتیاز کل </label>
@@ -86,6 +86,8 @@ body
                 <div class="col-md-6">
                     <label class="title">تاریخ فعالسازی توسط مشتری :</label>
                     <label>{{$subcode->getPerisanCustomerDate() ?? ''}}</label>
+                    |
+
                     <label>کد </label>
                     <label>{{$subcode->customer->id ?? ''}}</label>
                     |

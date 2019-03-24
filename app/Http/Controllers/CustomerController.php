@@ -68,11 +68,13 @@ class CustomerController extends Controller
 
         if($request->command)
         {
-
+            if(auth()->user()->role->name_en!='admin')
+                return back()->withErrors(['دسترسی غیر مجاز']);
             $message = ($request->message);
 
             if($request->command=="message")
             {
+
                 $customers=$customers->pluck('mobile');
                 $res = Smsirlaravel::send($message,$customers->toArray());
                 if($res['IsSuccessful']==true)

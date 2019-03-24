@@ -38,24 +38,28 @@
 
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">علیرضا حسینی زاده</span>
+                            <i class="fa fa-user" style="font-size: 30px"></i>
+                            <span class="hidden-xs">{{auth()->user()->name}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <i class="fa fa-user" style="font-size: 50px"></i>
 
                                 <p>
-                                    علیرضا حسینی زاده
-                                    <small>مدیریت کل سایت</small>
+                                    {{auth()->user()->name}}
+                                    <small>{{auth()->user()->role->name_fa}}</small>
                                 </p>
                             </li>
 
                             <li class="user-footer">
 
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">خروج</a>
+                                    <form method="post" action="/logout">
+                                        {{{csrf_field()}}}
+                                        <button type="submit" class="btn btn-default btn-flat">خروج</button>
+
+                                    </form>
                                 </div>
                             </li>
                         </ul>
@@ -73,10 +77,10 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-right image">
-                    <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <i class="fa fa-user" style="font-size: 50px;color: white"></i>
                 </div>
                 <div class="pull-right info">
-                    <p>علیرضا حسینی زاده</p>
+                    <p>{{auth()->user()->name}}</p>
                     <a href="#"><i class="fa fa-circle text-success"></i> آنلاین</a>
                 </div>
             </div>
@@ -94,6 +98,7 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">منو</li>
+                @if(auth()->user()->role->name_en=='admin')
                 <li @if(strpos(request()->route()->uri,"subcode")!==false) class="active" @endif>
                     <a href="/subcode">
                         <i class="fa fa-code"></i> <span>کدهای فرعی</span>
@@ -104,7 +109,7 @@
                         <i class="fa fa-users"></i> <span>کدهای اصلی</span>
                     </a>
                 </li>
-
+                @endif
                 <li @if(strpos(request()->route()->uri,"shop")!==false) class="active" @endif>
                     <a href="/shop">
                         <i class="fa fa-shopping-cart"></i> <span>فروشگاه</span>
@@ -115,11 +120,14 @@
                         <i class="fa fa-user"></i> <span>مشتریان</span>
                     </a>
                 </li>
+                @if(auth()->user()->role->name_en=='admin')
+
                 <li @if(strpos(request()->route()->uri,"prize")!==false) class="active" @endif>
                     <a href="/prize">
                         <i class="fa fa-star"></i> <span>جوایز</span>
                     </a>
                 </li>
+
                 <li class="header">پیام ها</li>
 
                 <li @if(strpos(request()->route()->uri,"message")!==false) class="active" @endif>
@@ -154,6 +162,22 @@
 
                 </a>
                 </li>
+
+                <li class="header">کاربران</li>
+                <li>
+                    <a href="/user/change/password">
+                        <i class="fa fa-user"></i> <span>تغییر رمز عبور سایت</span>
+
+                    </a>
+                </li>
+                <li>
+                    <a href="/user">
+                        <i class="fa fa-user"></i> <span>ایجاد کاربر سایت</span>
+
+                    </a>
+                </li>
+
+                    @endif
             </ul>
         </section>
         <!-- /.sidebar -->

@@ -52,7 +52,8 @@ class ShopController extends Controller
         $shops=$shops->orderBy($request->sort_field??'created_at',$request->sort??'desc');
         if($request->command)
         {
-
+            if(auth()->user()->role->name_en!='admin')
+                return back()->withErrors(['دسترسی غیر مجاز']);
             $message = ($request->message);
             if($request->command=="message")
             {
