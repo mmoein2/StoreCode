@@ -6,6 +6,7 @@ use App\Customer;
 use App\CustomerShop;
 use App\Post;
 use App\Shop;
+use App\SubCode;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -68,5 +69,54 @@ class CustomerController extends Controller
             'data'=>$shops
         ];
 
+    }
+
+    public function getSubCodes(Request $request)
+    {
+        $customer = auth()->user();
+        $query = SubCode::with('shop_customer')->where('customer_id',$customer->id);
+
+        if($request->code)
+        {
+            $query=$query->where('code',$request->code);
+        }
+        if($request->shop_name)
+        {
+            $query=$query->whereHas('shop',function ($q)use($request){
+                $q->where('name','like','%'.$request->shop_name.'%');
+            });
+        }
+        if($request->scoreFrom)
+        {
+            $query=$query->where('score','>=',$request->scoreFrom);
+
+        }
+        if($request->scoreTo)
+        {
+            $query=$query->where('score','<=',$request->scoreTo);
+        }
+
+        if($request->customerDateFrom)
+        {
+            $query=$query->where('customer_date','>=',$request->customerDateFrom);
+
+        }
+        if($request->customerDateTo)
+        {
+            $query=$query->where('customer_date','<=',$request->customerDateTo);
+        }
+
+        $query=$query->orderByDesc('id')->select([
+            'id',
+            'code',
+            'score',
+            'shop_id',
+            'customer_date',
+        ])
+            ->paginate();
+        return [
+            'status_code'=>0,
+            'data'=>$query
+        ];
     }
 }

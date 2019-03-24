@@ -75,6 +75,10 @@ class SubCode extends Model
     {
         return $this->belongsTo(Shop::class,'shop_id','id');
     }
+    public function shop_customer()
+    {
+        return $this->belongsTo(Shop::class,'shop_id','id')->select(['id','name','city']);
+    }
     public function customer()
     {
         return $this->belongsTo(Customer::class,'customer_id','id');
