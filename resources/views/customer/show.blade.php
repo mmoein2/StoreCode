@@ -119,6 +119,28 @@
                     <label>{{$customer->getPersianRegistrationDate()}}</label>
                 </div>
 
+                <div class="col-md-4">
+                    <label class="title">کد ملی :</label>
+                    <label>{{$customer->national_code}}</label>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="title">شهر :</label>
+                    <label>{{$customer->city}}</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="title">جنسیت :</label>
+                    <label>
+                        @if(isset($customer->IsMan))
+                        @if(($customer->IsMan==true))
+                         <label>مرد</label>
+                        @elseif(($customer->IsMan==false))
+                            <label>زن</label>
+
+                        @endif
+                            @endif
+                    </label>
+                </div>
 
 
             </div>

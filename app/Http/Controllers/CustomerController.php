@@ -98,7 +98,6 @@ class CustomerController extends Controller
     {
         $id =  $request->id;
         $customer = Customer::find($id);
-
         $subcodes = SubCode::with('shop')->with('customer')->where('status',2)->where('customer_id',$id);
         if($request->s_code)
         {

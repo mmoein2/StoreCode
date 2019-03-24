@@ -53,6 +53,7 @@ Route::group(['namespace'=>'Api','prefix'=>'customer','middleware'=>'auth:custom
     Route::post('maincode/all', 'MainCodeController@all');
     Route::post('maincode/index', 'MainCodeController@index');
     Route::post('message/store', 'CustomerController@storeMessage');
+    Route::post('profile/update', 'CustomerController@updateProfile');
 
 
 });

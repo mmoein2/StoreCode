@@ -10,6 +10,7 @@ use App\Shop;
 use App\SubCode;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
@@ -141,4 +142,38 @@ class CustomerController extends Controller
             'status_code'=>0,
         ];
     }
+
+    public function updateProfile(Request $request)
+    {
+        $customer  = auth()->user();
+        $request->validate([
+            'national_code'=>'sometimes|numeric|digits:10',
+        ]);
+        if($request->fullname)
+        {
+            $customer->fullname = $request->fullname;
+        }
+        if($request->city)
+        {
+            $customer->city = $request->city;
+        }
+        //1->man -1->woman
+        if($request->IsMan)
+        {
+            if($request->IsMan==1)
+                $customer->IsMan= true;
+            elseif($request->IsMan==-1)
+                $customer->IsMan= false;
+
+        }
+        if($request->national_code)
+        {
+            $customer->national_code= $request->national_code;
+
+        }
+
+        $customer->save();
+        return['status_code'=>0];
+    }
+
 }
