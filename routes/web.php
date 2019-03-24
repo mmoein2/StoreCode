@@ -30,6 +30,7 @@ Route::get('/shop/delete','ShopController@delete');
 Route::get('/shop/edit','ShopController@edit');
 Route::patch('/shop','ShopController@update');
 Route::get('/shop/detail','ShopController@detail');
+Route::get('/shop/password/sms','ShopController@passwordSms');
 
 Route::post('/shop/category/modify','ShopController@modifyCategory');
 

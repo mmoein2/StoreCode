@@ -8,6 +8,7 @@ use App\MainCode;
 use App\SubCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Ipecompany\Smsirlaravel\Smsirlaravel;
 use Morilog\Jalali\Jalalian;
 
 class CustomerController extends Controller
@@ -72,7 +73,12 @@ class CustomerController extends Controller
 
             if($request->command=="message")
             {
-                dd('send message');
+                $customers=$customers->pluck('mobile');
+                $res = Smsirlaravel::send($message,$customers->toArray());
+                if($res['IsSuccessful']==true)
+                    return back()->with(['message'=>'پیام با موفقیت ارسال شد']);
+                else
+                    return back()->withErrors([$res['Message']]);
 
             }
             elseif($request->command=="notification")

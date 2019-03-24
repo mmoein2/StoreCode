@@ -8,6 +8,7 @@ use App\SubCode;
 use App\Utility\FireBase;
 use foo\bar;
 use Illuminate\Http\Request;
+use Ipecompany\Smsirlaravel\Smsirlaravel;
 use Morilog\Jalali\Jalalian;
 
 class ShopController extends Controller
@@ -55,7 +56,12 @@ class ShopController extends Controller
             $message = ($request->message);
             if($request->command=="message")
             {
-                dd('send message');
+                $shops=$shops->pluck('mobile');
+                $res = Smsirlaravel::send($message,$shops->toArray());
+                if($res['IsSuccessful']==true)
+                    return back()->with(['message'=>'پیام با موفقیت ارسال شد']);
+                else
+                    return back()->withErrors([$res['Message']]);
             }
             elseif($request->command=="notification")
             {
@@ -214,6 +220,17 @@ class ShopController extends Controller
     {
         $shop = Shop::find($request->id);
         return view('shop.detail',compact('shop'));
+
+    }
+    public function passwordSms(Request $request)
+    {
+        $shop = Shop::find($request->id);
+        $res = Smsirlaravel::send('رمز عبور شما : '.$shop->password,[$shop->mobile]);
+        //dd($res);
+        if($res['IsSuccessful']==true)
+            return back()->with(['message'=>'رمز عبور با موفقیت ارسال شد']);
+        else
+            return back()->withErrors([$res['Message']]);
 
     }
 }

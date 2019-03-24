@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Ipecompany\Smsirlaravel\Smsirlaravel;
 
 class SubCodeController extends Controller
 {
@@ -18,6 +19,8 @@ class SubCodeController extends Controller
             'from'=>'required',
             'text'=>'required',
         ]);
+        $isFirstTime=false;
+
         $current_timestamp = Carbon::now()->isoFormat('x');
 
         DB::beginTransaction();
@@ -38,6 +41,7 @@ class SubCodeController extends Controller
 
         if($customer==null)
         {
+            $isFirstTime=true;
             $customer = new Customer();
             $customer->mobile=$request->from;
             $customer->score=0;
@@ -45,7 +49,6 @@ class SubCodeController extends Controller
             $customer->registration_date=$current_timestamp;
             $customer->status=true;
             $customer->save();
-            //send sms
         }
         if($customer->status==false)
         {
@@ -78,6 +81,11 @@ class SubCodeController extends Controller
             $cs->save();
 
         DB::commit();
+
+        if($isFirstTime)
+        {
+            Smsirlaravel::send('خوش آمدید. کد شما با موفقیت دریافت شد',[$customer->mobile]);
+        }
 
         return [
             'status_code' => 0

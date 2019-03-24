@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Ipecompany\Smsirlaravel\Smsirlaravel;
 
 class ApiCustomerAuthController extends Controller
 {
@@ -49,6 +50,8 @@ class ApiCustomerAuthController extends Controller
         $cc->token=substr(md5(uniqid(rand(), true)),0,4);
         $cc->customer_id=$customer->id;
         $cc->save();
+
+        Smsirlaravel::send('رمز موقت شما : '.$cc->token,[$customer->mobile]);
 
         return [
             'status_code' =>0,

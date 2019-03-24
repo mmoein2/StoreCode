@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Ipecompany\Smsirlaravel\Smsirlaravel;
 
 class ApiShopAuthController extends Controller
 {
@@ -75,7 +76,7 @@ class ApiShopAuthController extends Controller
         $cs->token=substr(md5(uniqid(rand(), true)),0,4);
         $cs->save();
 
-        //send sms
+        Smsirlaravel::send('رمز موقت شما : '.$cs->token,[$shop->mobile]);
 
         return [
             'status_code' =>0,
