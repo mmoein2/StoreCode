@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Customer;
 use App\CustomerShop;
+use App\CustomerSupport;
 use App\Post;
 use App\Shop;
 use App\SubCode;
@@ -117,6 +118,27 @@ class CustomerController extends Controller
         return [
             'status_code'=>0,
             'data'=>$query
+        ];
+    }
+    public function storeMessage(Request $request)
+    {
+        $request->validate([
+            'title'=>'required',
+            'text'=>'required',
+        ]);
+
+        $title = $request->title;
+        $text = $request->text;
+
+        $message = new CustomerSupport();
+        $message->title = $title;
+        $message->text = $text;
+        $message->customer_id= auth()->id();
+        $message->status=false;
+
+        $message->save();
+        return [
+            'status_code'=>0,
         ];
     }
 }

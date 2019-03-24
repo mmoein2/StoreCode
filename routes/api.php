@@ -38,6 +38,7 @@ Route::group(['prefix' => 'auth/shop','namespace'=>'Api'], function ($router) {
 //api for sms
 Route::group(['namespace'=>'Api'], function ($router) {
     Route::get('subcode/register', 'SubCodeController@register');
+    Route::get('slider', 'SliderController@index');
 
 });
 
@@ -51,6 +52,7 @@ Route::group(['namespace'=>'Api','prefix'=>'customer','middleware'=>'auth:custom
     Route::post('subcode/index', 'CustomerController@getSubCodes');
     Route::post('maincode/all', 'MainCodeController@all');
     Route::post('maincode/index', 'MainCodeController@index');
+    Route::post('message/store', 'CustomerController@storeMessage');
 
 
 });
