@@ -47,6 +47,7 @@ Route::group(['namespace'=>'Api','prefix'=>'customer','middleware'=>'auth:custom
     Route::post('maincode/register', 'MainCodeController@register');
     Route::post('posts/show', 'CustomerController@showPosts');
     Route::post('follow', 'CustomerController@follow');
+    Route::post('shops', 'CustomerController@shops');
 
 });
 

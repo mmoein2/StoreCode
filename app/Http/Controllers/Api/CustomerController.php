@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Customer;
 use App\CustomerShop;
 use App\Post;
+use App\Shop;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -47,5 +48,25 @@ class CustomerController extends Controller
         return [
             'status_code'=>0
         ];
+    }
+    public function shops(Request $request)
+    {
+        $shops = Shop::with('category');
+        if($request->category_name)
+        {
+            $shops = $shops->whereHas('category',function ($q)use($request){
+                $q->where('name','like','%'.$request->category_name.'%');
+            });
+        }
+        if($request->city)
+        {
+            $shops = $shops->where('city','like','%'.$request->city.'%');
+        }
+        $shops=$shops->select(['name','person','desc','city','shop_category_id'])->latest()->paginate();
+        return[
+            'status_code'=>0,
+            'data'=>$shops
+        ];
+
     }
 }
