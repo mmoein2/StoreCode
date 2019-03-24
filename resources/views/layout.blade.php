@@ -120,13 +120,16 @@
                         <i class="fa fa-star"></i> <span>جوایز</span>
                     </a>
                 </li>
+                <li class="header">پیام ها</li>
 
                 <li @if(strpos(request()->route()->uri,"message")!==false) class="active" @endif>
                     <a href="/message">
                         <i class="fa fa-paper-plane"></i> <span>پیام های فروشگاه</span>
                         @if($message_count>0)
+                            <span class="pull-left-container">
                         <small style="font-size: 14px" class="label pull-left bg-yellow">
                             <b> {{$message_count}}</b>
+                            </span>
                         </small>
                         @endif
                     </a>
@@ -135,11 +138,21 @@
                     <a href="/customersupport">
                         <i class="fa fa-hand-paper-o"></i> <span>پشتیبانی کاربران</span>
                         @if($customersupport_count>0)
+                            <span class="pull-left-container">
+
                             <small style="font-size: 14px" class="label pull-left bg-yellow">
                                 <b> {{$customersupport_count}}</b>
                             </small>
+                            </span>
                         @endif
                     </a>
+                </li>
+                <li class="header">تنظیمات اپلیکیشن</li>
+                <li>
+                <a href="/slider">
+                    <i class="fa fa-list"></i> <span>اسلایدر</span>
+
+                </a>
                 </li>
             </ul>
         </section>
