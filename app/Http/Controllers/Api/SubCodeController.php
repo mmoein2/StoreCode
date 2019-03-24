@@ -84,7 +84,7 @@ class SubCodeController extends Controller
 
         if($isFirstTime)
         {
-            Smsirlaravel::send('خوش آمدید. کد شما با موفقیت دریافت شد',[$customer->mobile]);
+            Smsirlaravel::send('تبریک! شما عضو سیستم شدید. امتیاز فعلی شما '.$customer->score,[$customer->mobile]);
         }
 
         return [
