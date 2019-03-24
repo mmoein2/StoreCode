@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class MainCodeController extends Controller
 {
@@ -63,5 +64,44 @@ class MainCodeController extends Controller
             'status_code' => 0
         ];
 
+    }
+    public function all(Request $request)
+    {
+        $customer = auth()->user();
+        $query = MainCode::with('prize');
+        $query = $query->where('status',false);
+
+        $query=$query->orderByDesc('id')->select([
+            'code',
+            'score',
+            'expiration_date',
+            'prize_id'
+        ])->paginate();
+
+        return [
+            'status_code'=>0,
+            'data'=>$query
+        ];
+
+    }
+    public function index()
+    {
+        $customer = auth()->user();
+        $query = MainCode::with('prize');
+        $query = $query->where('status',true);
+        $query=$query->where('customer_id',$customer->id);
+
+        $query=$query->orderByDesc('id')->select([
+            'id',
+            'code',
+            'score',
+            'customer_date',
+            'expiration_date',
+            'prize_name',
+        ])->paginate();
+        return [
+            'status_code'=>0,
+            'data'=>$query
+        ];
     }
 }
