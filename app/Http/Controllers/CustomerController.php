@@ -154,7 +154,7 @@ class CustomerController extends Controller
                 $q->where('name','like','%'.$request->shop_name.'%');
             });
         }
-        $subcodes = $subcodes->orderByDesc('id')->paginate(null,['*'],'subcode_page');
+        $subcodes = $subcodes->orderBy('id','asc')->paginate(null,['*'],'subcode_page');
 
 
         $subcodes->setPageName('subcode_page');
@@ -193,7 +193,7 @@ class CustomerController extends Controller
             $maincodes=$maincodes->where('customer_date','<=',$ts);
         }
 
-        $maincodes = $maincodes->orderBy($request->sort_field??'created_at',$request->sort??'desc')->paginate(null,['*'],'maincode_page');
+        $maincodes = $maincodes->orderBy($request->sort_field??'id',$request->sort??'asc')->paginate(null,['*'],'maincode_page');
 
         $maincodes->setPageName('maincode_page');
 

@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/','Auth\LoginController@showLoginForm');
+
 Route::middleware('auth')->group(function (){
 
 

@@ -156,7 +156,7 @@
                     <tbody>
                     @foreach($codes as $c)
                         <tr>
-                            <td>{{$c->code}}</td>
+                            <td><a href="/subcode/show?id={{$c->id}}"> {{$c->code}} </a></td>
                             <td>{{$c->serial}}</td>
                             <td>{{$c->score}}</td>
                             <td>{{$c->getPerisanShopDate()}}</td>
