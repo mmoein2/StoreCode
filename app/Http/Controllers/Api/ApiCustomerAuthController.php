@@ -32,7 +32,7 @@ class ApiCustomerAuthController extends Controller
     {
 
         $request->validate([
-            'mobile'=>'required|min:11|max:11'
+            'mobile'=>'required'
         ]);
 
         $mobile = $request->mobile;

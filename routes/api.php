@@ -55,6 +55,8 @@ Route::group(['namespace'=>'Api','prefix'=>'customer','middleware'=>'auth:custom
     Route::post('message/store', 'CustomerController@storeMessage');
     Route::post('profile/update', 'CustomerController@updateProfile');
 
+    Route::post('prize/all', 'MainCodeController@getPrizeCategory');
+
 
 });
 

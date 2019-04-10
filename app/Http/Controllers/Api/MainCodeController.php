@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Customer;
 use App\MainCode;
+use App\Prize;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,8 +23,8 @@ class MainCodeController extends Controller
 
         DB::beginTransaction();
         $maincode = MainCode::with('prize')->where('code',$request->code)
-            ->where('status',false)->where('customer_id',null)
-            ->where('expiration_date','>=',$current_timestamp)->first();
+            ->where('status',false)->where('customer_id',null);
+        //    ->where('expiration_date','>=',$current_timestamp)->first();
 
         if($maincode==null)
         {
@@ -41,7 +42,7 @@ class MainCodeController extends Controller
             ];
         }
 
-        if($customer->score-$customer->used_score  <  $maincode->score)
+        if($customer->score-$customer->used_score  <  $maincode->prize->score)
         {
             return [
                 'status_code'=>'2',
@@ -52,6 +53,7 @@ class MainCodeController extends Controller
         $maincode->status=true;
         $maincode->customer_id=$customer->id;
         $maincode->prize_name = $maincode->prize->name;
+        $maincode->score= $maincode->prize->score;
 
         $customer->used_score += $maincode->score;
 
@@ -84,12 +86,17 @@ class MainCodeController extends Controller
         ];
 
     }
-    public function index()
+    public function index(Request $request)
     {
         $customer = auth()->user();
         $query = MainCode::with('prize');
         $query = $query->where('status',true);
         $query=$query->where('customer_id',$customer->id);
+
+        if($request->prize_id)
+        {
+            $query=$query->where('prize_id',$request->prize_id);
+        }
 
         $query=$query->orderByDesc('id')->select([
             'id',
@@ -102,6 +109,14 @@ class MainCodeController extends Controller
         return [
             'status_code'=>0,
             'data'=>$query
+        ];
+    }
+    public function getPrizeCategory()
+    {
+        $prizes = Prize::get();
+        return[
+            'status_code'=>0,
+            'data' => $prizes
         ];
     }
 }
