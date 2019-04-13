@@ -23,7 +23,7 @@ class MainCodeController extends Controller
 
         DB::beginTransaction();
         $maincode = MainCode::with('prize')->where('code',$request->code)
-            ->where('status',false)->where('customer_id',null);
+            ->where('status',false)->where('customer_id',null)->first();
         //    ->where('expiration_date','>=',$current_timestamp)->first();
 
         if($maincode==null)
@@ -54,6 +54,7 @@ class MainCodeController extends Controller
         $maincode->customer_id=$customer->id;
         $maincode->prize_name = $maincode->prize->name;
         $maincode->score= $maincode->prize->score;
+        $maincode->expiration_date = Carbon::now()->addDays($maincode->expiration_day)->isoFormat('x');
 
         $customer->used_score += $maincode->score;
 
@@ -69,15 +70,19 @@ class MainCodeController extends Controller
     }
     public function all(Request $request)
     {
-        $customer = auth()->user();
         $query = MainCode::with('prize');
         $query = $query->where('status',false);
 
+        if($request->prize_id)
+        {
+            $query=$query->where('prize_id',$request->prize_id);
+        }
+
+
         $query=$query->orderByDesc('id')->select([
             'code',
-            'score',
-            'expiration_date',
-            'prize_id'
+            'prize_id',
+            'expiration_day',
         ])->paginate();
 
         return [
@@ -89,13 +94,29 @@ class MainCodeController extends Controller
     public function index(Request $request)
     {
         $customer = auth()->user();
-        $query = MainCode::with('prize');
+        $query = MainCode::query();
         $query = $query->where('status',true);
         $query=$query->where('customer_id',$customer->id);
 
         if($request->prize_id)
         {
             $query=$query->where('prize_id',$request->prize_id);
+        }
+
+        if($request->date_from)
+        {
+            $query=$query->where('customer_date','>=',$request->date_from);
+
+        }
+        if($request->date_to)
+        {
+            $query=$query->where('customer_date','<=',$request->date_to);
+
+        }
+        if($request->score)
+        {
+            $query=$query->where('score',$request->score);
+
         }
 
         $query=$query->orderByDesc('id')->select([

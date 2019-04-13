@@ -10,6 +10,7 @@ use App\Shop;
 use App\SubCode;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
@@ -43,10 +44,49 @@ class CustomerController extends Controller
             ];
 
         }
+        DB::beginTransaction();
+
         $cs = new CustomerShop();
         $cs->customer_id=$customer->id;
         $cs->shop_id=$request->shop_id;
+
+        $shop = Shop::find($request->shop_id);
+        $shop->followers++;
+        $shop->save();
+
         $cs->save();
+
+        DB::commit();
+
+        return [
+            'status_code'=>0
+        ];
+    }
+    public function unFollow(Request $request)
+    {
+        $request->validate([
+            'shop_id'=>'required|numeric'
+        ]);
+
+        $customer = auth()->user();
+        $cs = CustomerShop::where('shop_id',$request->shop_id)->where('customer_id',$customer->id)->first();
+        if($cs==null)
+        {
+            return [
+                'status_code'=>1,
+                'message'=>'شما این فروشگاه را دنبال نمی کنید'
+            ];
+
+        }
+        DB::beginTransaction();
+
+        $shop = Shop::find($request->shop_id);
+        $shop->followers--;
+        $shop->save();
+
+        $cs->delete();
+
+        DB::commit();
 
         return [
             'status_code'=>0
@@ -65,7 +105,18 @@ class CustomerController extends Controller
         {
             $shops = $shops->where('city','like','%'.$request->city.'%');
         }
-        $shops=$shops->select(['name','person','desc','city','shop_category_id'])->latest()->paginate();
+        $shops=$shops->select(['id','name','person','desc','city','shop_category_id','address','lat','lng','images','followers']);
+        if($request->id)
+        {
+            $shops = $shops->where('id',$request->id);
+            $shops=$shops->get();
+
+        }
+        else
+        {
+            $shops=$shops->latest()->paginate();
+
+        }
         return[
             'status_code'=>0,
             'data'=>$shops

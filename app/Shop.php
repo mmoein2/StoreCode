@@ -15,6 +15,24 @@ class Shop extends Authenticatable implements JWTSubject
     protected $casts=[
         'images'=>'array'
     ];
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        if(auth()->check())
+        {
+            $this->appends=['is_followed'];
+        }
+    }
+
+    public function getIsFollowedAttribute()
+    {
+        if(auth()->check()) {
+            $cs = CustomerShop::where('shop_id', $this->id)->where('customer_id', auth()->id())->exists();
+            return $cs==true ? 1 : 0;
+        }
+    }
+
     public function category()
     {
         return $this->belongsTo(ShopCategory::class,'shop_category_id','id');
