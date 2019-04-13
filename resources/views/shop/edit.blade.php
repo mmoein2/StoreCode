@@ -45,8 +45,29 @@
                             <input value="{{$shop->person}}" name="person"  class="form-control" id="exampleInputPassword1" >
                         </div>
                         <div class="form-group">
+                            <label for="">استان</label>
+                            <select id="province" class="form-control" style="height: 50px" onchange="province_id.value=(this.value);provice_form.submit();">
+                                <option>انتخاب کنید</option>
+
+                                @foreach($provinces as $p)
+                                    <option value="{{$p->id}}"  @if(isset($_GET['province_id'])) @if($_GET['province_id']==$p->id) selected  @endif @elseif($shop->province_id==$p->id) selected @endif>
+                                        {{$p->name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="">شهر</label>
-                            <input value="{{$shop->city}}" name="city"  class="form-control" id="exampleInputPassword1" >
+                            <select name="city_id" class="form-control" style="height: 50px;">
+                                <option selected>انتخاب کنید</option>
+                                @foreach($cities as $c)
+                                    <option value="{{$c->id}}" @if($c->id==$shop->city_id) selected @endif>
+                                        {{$c->name}}
+                                    </option>
+                                @endforeach
+
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="">آدرس</label>
@@ -59,6 +80,10 @@
                     <div class="box-footer">
                         <button type="submit"  class="btn btn-success">تخصیص کد</button>
                     </div>
+                </form>
+                <form name="provice_form" action="/shop/edit" method="get">
+                    <input type="hidden" name="id" value="{{$shop->id}}">
+                    <input id="province_id" type="hidden" name="province_id" value="">
                 </form>
             </div>
             <!-- /.box -->

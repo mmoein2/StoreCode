@@ -15,7 +15,7 @@ class CustomerController extends Controller
 {
     public function index(Request $request)
     {
-        $customers = Customer::query();
+        $customers = Customer::with(['province','city']);
 
         if($request->id)
         {
@@ -111,7 +111,7 @@ class CustomerController extends Controller
     public function show(Request $request)
     {
         $id =  $request->id;
-        $customer = Customer::find($id);
+        $customer = Customer::with(['city','province'])->find($id);
         $subcodes = SubCode::with('shop')->with('customer')->where('status',2)->where('customer_id',$id);
         if($request->s_code)
         {

@@ -30,27 +30,49 @@
 
                         <div style="margin-top: 10px" class="form-group">
                             <label for="">نام فروشگاه</label>
-                            <input name="name"  class="form-control" id="exampleInputEmail1">
+                            <input name="name" value="{{old('name')}}" class="form-control" id="exampleInputEmail1">
                         </div>
                         <div class="form-group">
                             <label for="">موبایل</label>
-                            <input name="mobile" class="form-control" id="exampleInputPassword1" >
+                            <input name="mobile" value="{{old('mobile')}}" class="form-control" id="exampleInputPassword1" >
                         </div>
                         <div class="form-group">
                             <label for="">تلفن</label>
-                            <input name="phone" class="form-control" id="exampleInputPassword1" >
+                            <input name="phone" value="{{old('phone')}}" class="form-control" id="exampleInputPassword1" >
                         </div>
                         <div class="form-group">
                             <label for="">متصدی</label>
-                            <input name="person"  class="form-control" id="exampleInputPassword1" >
+                            <input name="person" value="{{old('person')}}" class="form-control" id="exampleInputPassword1" >
                         </div>
+
+                        <div class="form-group">
+                            <label for="">استان</label>
+                            <select id="province" class="form-control" style="height: 50px" onchange="province_id.value=(this.value);provice_form.submit();">
+                                <option>انتخاب کنید</option>
+
+                            @foreach($provinces as $p)
+                                    <option value="{{$p->id}}"  @if(isset($_GET['province_id'])&&$_GET['province_id']==$p->id) selected @endif>
+                                        {{$p->name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label for="">شهر</label>
-                            <input name="city"  class="form-control" id="exampleInputPassword1" >
+                            <select name="city_id" class="form-control" style="height: 50px;">
+                                <option selected>انتخاب کنید</option>
+                                @foreach($cities as $c)
+                                    <option value="{{$c->id}}">
+                                        {{$c->name}}
+                                    </option>
+                                @endforeach
+
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="">آدرس</label>
-                            <textarea class="form-control" style="height: 200px" name="address"></textarea>
+                            <textarea class="form-control" style="height: 200px" name="address">{{old('address')}}</textarea>
                         </div>
 
                     </div>
@@ -59,6 +81,9 @@
                     <div class="box-footer">
                         <button type="submit"  class="btn btn-success">ثبت فروشگاه</button>
                     </div>
+                </form>
+                <form name="provice_form" action="/shop/create" method="get">
+<input id="province_id" type="hidden" name="province_id" value="">
                 </form>
             </div>
             <!-- /.box -->

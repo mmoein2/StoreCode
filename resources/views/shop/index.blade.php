@@ -115,6 +115,7 @@
                         <tr style="background-color: rgba(227,227,227,0.28)">
                             <th>کد فروشگاه</th>
                             <th>نام فروشگاه</th>
+                            <th>استان</th>
                             <th>شهر</th>
                             <th>تلفن همراه</th>
                             <th>رده</th>
@@ -131,7 +132,8 @@
                             <tr>
                                 <td>{{$c->id}}</td>
                                 <td><a href="/shop/show?id={{$c->id}}">{{$c->name}}</a></td>
-                                <td>{{$c->city}}</td>
+                                <td>{{$c->province->name ?? ''}}</td>
+                                <td>{{$c->city->name ?? ''}}</td>
                                 <td>{{$c->mobile}}</td>
                                 <td>{{$c->category->name}}</td>
                                 <td>{{$c->score}}</td>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
+use App\Province;
 use App\Shop;
 use App\ShopCategory;
 use App\SubCode;
@@ -79,14 +81,19 @@ class ShopController extends Controller
 
             }
         }
-        $shops = $shops->with('category')->paginate();
+        $shops = $shops->with(['category','province','city'])->paginate();
         return view('shop.index',compact('shops','shop_categories'));
     }
-    public function create()
+    public function create(Request $request)
     {
         $shop_categories = ShopCategory::get();
-
-        return view('shop.create',compact('shop_categories'));
+        $provinces = Province::get();
+        $cities=[];
+        if($request->province_id)
+        {
+            $cities = City::where('province_id',$request->province_id)->get();
+        }
+        return view('shop.create',compact('shop_categories','provinces','cities'));
     }
     public function store(Request $request)
     {
@@ -97,13 +104,21 @@ class ShopController extends Controller
             'phone' => 'required|numeric',
             'person' => 'required',
             'address' => 'required',
-            'city' => 'required',
+            'city_id' => 'required',
         ]);
 
         $shop = new Shop($request->all());
         $shop->password= substr(md5(uniqid(rand(), true)),0,4);
         $shop->score=0;
         $shop->used_score=0;
+        $shop->followers=0;
+
+        $city = City::find($request->city_id);
+        if($city==null)
+        {
+            return back()->withInput($request->all())->withErrors(['شهر را انتخاب کنید']);
+        }
+        $shop->province_id=$city->province_id;
         $shop->save();
         return redirect('/shop');
 
@@ -197,21 +212,48 @@ class ShopController extends Controller
     public function edit(Request $request)
     {
         $shop_categories = ShopCategory::get();
-
+        $provinces = Province::get();
         $shop = Shop::find($request->id);
-        return view('shop.edit',compact('shop','shop_categories'));
+
+        $cities=null;
+        if($request->province_id)
+        {
+            $cities = City::where('province_id',$request->province_id)->get();
+        }
+        else
+        {
+            $cities = City::where('province_id',$shop->province_id)->get();
+        }
+        return view('shop.edit',compact('shop','shop_categories','provinces','cities'));
 
     }
     public function update(Request $request)
     {
+        $request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'shop_category_id' => 'required|numeric',
+            'mobile' => 'required|numeric',
+            'phone' => 'required|numeric',
+            'person' => 'required',
+            'address' => 'required',
+            'city_id' => 'required',
+        ]);
         $shop = Shop::find($request->id);
+        $city = City::find($request->city_id);
+        if($city==null)
+        {
+            return back()->withInput($request->all())->withErrors(['شهر را انتخاب کنید']);
+        }
         $shop->shop_category_id=$request->shop_category_id;
         $shop->name=$request->name;
         $shop->mobile=$request->mobile;
         $shop->phone=$request->phone;
         $shop->person=$request->person;
         $shop->address=$request->address;
-        $shop->city=$request->city;
+        $shop->city_id=$city->id;
+        $shop->province_id=$city->province_id;
+
 
         $shop->save();
         return redirect('/shop');
