@@ -14,7 +14,7 @@ class RemoveCityFromShops extends Migration
     public function up()
     {
         Schema::table('shops', function (Blueprint $table) {
-            //$table->dropColumn(['city','province_id','city_id']);
+            $table->dropColumn(['city']);
 
             $table->bigInteger('city_id')->unsigned();
             $table->bigInteger('province_id')->unsigned();
