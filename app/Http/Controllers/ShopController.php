@@ -51,7 +51,7 @@ class ShopController extends Controller
         {
             $shops=$shops->where('used_score','<=',$request->usedscoreTo);
         }
-        $shops=$shops->orderBy($request->sort_field??'created_at',$request->sort??'desc');
+        $shops=$shops->orderBy($request->sort_field??'created_at',$request->sort??'asc');
         if($request->command)
         {
             if(auth()->user()->role->name_en!='admin')

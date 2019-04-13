@@ -68,7 +68,7 @@
                         <thead>
 
                         <tr style="background-color: rgba(227,227,227,0.28)">
-                            <th>کد مشتری</th>
+                            <th>ردیف</th>
                             <th>شماره همراه</th>
                             <th>استان</th>
                             <th>شهر</th>
@@ -84,7 +84,7 @@
                         <tbody>
                         @foreach($customers as $c)
                             <tr>
-                                <td><a href="/customer/show?id={{$c->id}}">{{$c->id}}</a></td>
+                                <td>{{$c->id}}</td>
                                 <td> <a href="/customer/show?id={{$c->id}}"> {{$c->mobile}}</a></td>
                                 <td>{{$c->province->name ?? ''}}</td>
                                 <td>{{$c->city->name ?? '' }}</td>

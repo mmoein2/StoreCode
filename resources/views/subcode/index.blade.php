@@ -125,6 +125,7 @@
             <table class="table table-hover">
                     <thead>
                     <tr style="background-color: rgba(227,227,227,0.28)">
+                        <th> ردیف</th>
                         <th> <a href="#" onclick="sortForm('code')">کد فرعی</a></th>
                         <th><a href="#" onclick="sortForm('serial')">سریال</a></th>
                         <th><a href="#" onclick="sortForm('score')">امتیاز</a></th>
@@ -137,6 +138,7 @@
 <tbody>
                     @foreach($codes as $c)
                     <tr>
+                        <td>{{$c->id}}</td>
                         <td><a href="/subcode/show?id={{$c->id}}"> {{$c->code}} </a></td>
                         <td>{{$c->serial}}</td>
                         <td>{{$c->score}}</td>

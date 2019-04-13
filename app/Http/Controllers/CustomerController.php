@@ -63,7 +63,7 @@ class CustomerController extends Controller
         else
         {
 
-            $customers = $customers->orderBy($request->sort_field??'created_at',$request->sort??'desc');
+            $customers = $customers->orderBy($request->sort_field??'created_at',$request->sort??'asc');
         }
 
         if($request->command)

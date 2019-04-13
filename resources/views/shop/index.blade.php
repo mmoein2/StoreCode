@@ -113,7 +113,7 @@
                     <table class="table table-hover">
                         <thead>
                         <tr style="background-color: rgba(227,227,227,0.28)">
-                            <th>کد فروشگاه</th>
+                            <th>ردیف</th>
                             <th>نام فروشگاه</th>
                             <th>استان</th>
                             <th>شهر</th>
