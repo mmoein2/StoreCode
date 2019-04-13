@@ -42,6 +42,15 @@ class Customer extends Authenticatable implements JWTSubject
             return "success";
 
     }
+    public function city()
+    {
+        return $this->belongsTo(City::class,'city_id','id');
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class,'province_id','id');
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

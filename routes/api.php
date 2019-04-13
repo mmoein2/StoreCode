@@ -40,6 +40,10 @@ Route::group(['namespace'=>'Api'], function ($router) {
     Route::get('subcode/register', 'SubCodeController@register');
     Route::get('slider', 'SliderController@index');
 
+    Route::post('province', 'CustomerController@getProvince');
+    Route::post('city', 'CustomerController@getCity');
+
+
 });
 
 //api for customer

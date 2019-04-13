@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\City;
 use App\Customer;
 use App\CustomerShop;
 use App\CustomerSupport;
 use App\Post;
+use App\Province;
 use App\Shop;
 use App\SubCode;
 use Illuminate\Http\Request;
@@ -94,7 +96,7 @@ class CustomerController extends Controller
     }
     public function shops(Request $request)
     {
-        $shops = Shop::with('category');
+        $shops = Shop::with(['category','province','city']);
         if($request->category_name)
         {
             $shops = $shops->whereHas('category',function ($q)use($request){
@@ -105,7 +107,7 @@ class CustomerController extends Controller
         {
             $shops = $shops->where('city','like','%'.$request->city.'%');
         }
-        $shops=$shops->select(['id','name','person','desc','city','shop_category_id','address','lat','lng','images','followers']);
+        $shops=$shops->select(['id','name','person','desc','shop_category_id','address','lat','lng','images','followers','city_id','province_id']);
         if($request->id)
         {
             $shops = $shops->where('id',$request->id);
@@ -199,6 +201,7 @@ class CustomerController extends Controller
         $customer  = auth()->user();
         $request->validate([
             'national_code'=>'sometimes|numeric|digits:10',
+            'city_id'=>'sometimes|numeric',
         ]);
         if($request->fullname)
         {
@@ -222,9 +225,43 @@ class CustomerController extends Controller
             $customer->national_code= $request->national_code;
 
         }
+        if($request->city_id)
+        {
+            $city = City::find($request->city_id);
+            if($city==null)
+            {
+             return ['status_code'=>1,'message'=>'شهر نا معتبر است'];
+            }
+            $customer->province_id=$city->province_id;
+            $customer->city_id=$city->id;
+
+        }
 
         $customer->save();
         return['status_code'=>0];
+    }
+
+    public function getProvince()
+    {
+        $provinces = Province::get();
+        return [
+            'status_code' =>0,
+            'data'=>$provinces
+        ];
+    }
+
+    public function getCity(Request $request)
+    {
+        $request->validate([
+            'province_id'=>'required|numeric'
+        ]);
+
+        $cities = City::where('province_id',$request->province_id)->select(['id','province_id','name'])->get();
+
+        return [
+            'status_code' =>0,
+            'data'=>$cities
+        ];
     }
 
 }
