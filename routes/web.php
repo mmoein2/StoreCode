@@ -32,6 +32,15 @@ Route::middleware('auth')->group(function (){
     Route::get('/shop','ShopController@index');
     Route::get('/shop/show','ShopController@show');
 
+
+    Route::post('/subcode/delete/all','SubCodeController@deleteAll');
+    Route::post('/subcode/edit/all','SubCodeController@editAll');
+    Route::post('/subcode/update/all','SubCodeController@updateAll');
+
+    Route::post('/maincode/delete/all','MainCodeController@deleteAll');
+    Route::post('/maincode/edit/all','MainCodeController@editAll');
+    Route::post('/maincode/update/all','MainCodeController@updateAll');
+
     Route::middleware('role:admin')->group(function () {
         Route::get('/shop/create','ShopController@create');
         Route::post('/shop','ShopController@store');

@@ -6,6 +6,7 @@ use App\Exports\InvoiceMainCode;
 use App\Imports\MainCodeImport;
 use App\MainCode;
 use App\Prize;
+use DemeterChain\Main;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -109,4 +110,58 @@ class MainCodeController extends Controller
         return back();
     }
 
+    public function deleteAll(Request $request)
+    {
+        $array = $request->data;
+        $array = explode(',',$array);
+
+
+        DB::beginTransaction();
+        foreach ($array as $item)
+        {
+            $maincode = MainCode::find($item);
+            if($maincode->status==false)
+                $maincode->delete();
+            else
+                return back()->withErrors(['کد با شماره ردیف '.$maincode->id.' قابل حذف نیست ']);
+
+        }
+        DB::commit();
+        return back()->with(['message'=>'تعداد '.count($array).' مورد با موفقیت حذف شد']);
+    }
+
+    public function editAll(Request $request)
+    {
+        $array = $request->data;
+        $array = explode(',',$array);
+
+
+
+        return view('maincode.edit_all',compact('array'));
+    }
+    public function updateAll(Request $request)
+    {
+        $array = $request->data;
+
+        $request->validate([
+            'day'=>'required|min:1|numeric',
+            'score' =>'required|min:1|numeric'
+        ]);
+        $score= $request->score;
+        $expiration_day = $request->day;
+
+        DB::beginTransaction();
+        foreach ($array as $item)
+        {
+            $s = MainCode::find($item);
+            if($s->status==true)
+                return back()->withErrors(['کد با شماره ردیف '.$s->id.' قابل حذف نیست ']);
+            $s->score = $score;
+            $s->expiration_day = $expiration_day;
+            $s->save();
+        }
+        DB::commit();
+
+        return redirect('/maincode');
+    }
 }
