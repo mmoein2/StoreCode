@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function (){
     Route::post('/maincode/edit/all','MainCodeController@editAll');
     Route::post('/maincode/update/all','MainCodeController@updateAll');
 
+    Route::get('/chart','ChartController@index');
+
+
     Route::middleware('role:admin')->group(function () {
         Route::get('/shop/create','ShopController@create');
         Route::post('/shop','ShopController@store');

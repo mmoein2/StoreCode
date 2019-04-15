@@ -128,6 +128,12 @@
                     </a>
                 </li>
 
+                    <li @if(strpos(request()->route()->uri,"chart")!==false) class="active" @endif>
+                        <a href="/chart">
+                            <i class="fa fa-area-chart"></i> <span>نمودار</span>
+                        </a>
+                    </li>
+
                 <li class="header">پیام ها</li>
 
                 <li @if(strpos(request()->route()->uri,"message")!==false) class="active" @endif>
@@ -156,7 +162,7 @@
                     </a>
                 </li>
                 <li class="header">تنظیمات اپلیکیشن</li>
-                <li>
+                <li @if(strpos(request()->route()->uri,"slider")!==false) class="active" @endif>
                 <a href="/slider">
                     <i class="fa fa-list"></i> <span>اسلایدر</span>
 
@@ -164,13 +170,13 @@
                 </li>
 
                 <li class="header">کاربران</li>
-                <li>
+                <li @if(strpos(request()->route()->uri,"user/change/password")!==false) class="active" @endif>
                     <a href="/user/change/password">
                         <i class="fa fa-user"></i> <span>تغییر رمز عبور سایت</span>
 
                     </a>
                 </li>
-                <li>
+                <li @if(request()->route()->uri=="user") class="active" @endif>
                     <a href="/user">
                         <i class="fa fa-user"></i> <span>ایجاد کاربر سایت</span>
 
