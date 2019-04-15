@@ -274,6 +274,7 @@
                         <th>
                             <button onclick="edit_data()" id="edit_button" class="btn btn-sm btn-success" disabled><i class="fa fa-pencil"></i></button>
                             <button id="delete_button" onclick="delete_data()" class="btn btn-sm btn-danger" disabled><i class="fa fa-close"></i></button>
+                            <button id="restore_button" onclick="restore_data()" class="btn btn-sm btn-warning" disabled><i class="fa fa-refresh"></i></button>
                         </th>
                         <th> ردیف</th>
                         <th> <a href="#" onclick="sortForm('code')">کد فرعی</a></th>
@@ -291,7 +292,7 @@
                     <tr>
                         <td>
                             <label class="pure-material-checkbox" style="direction: ltr">
-                                <input type="checkbox" onclick="selectRdf({{$c->id}},this)" @if($c->status!=0) disabled @endif >
+                                <input type="checkbox" onclick="selectRdf({{$c->id}},this,@if($c->status==1)1 @elseif($c->status==0)0 @endif)" @if($c->status==2 ) disabled @endif >
                                 <span>&nbsp;</span>
                             </label>
                         </td>
@@ -308,6 +309,9 @@
                                 <a class="btn btn-sm btn-success" href="/subcode/edit?id={{$c->id}}">ویرایش</a>
                                 <a class="btn btn-sm btn-danger" href="/subcode/delete?id={{$c->id}}">حذف</a>
                                 </div>
+                            @elseif ($c->status==1)
+                                <a class="btn btn-sm btn-warning" href="/subcode/return?id={{$c->id}}">حذف از فروشگاه</a>
+
                             @endif
                         </td>
                     </tr>
@@ -331,17 +335,41 @@
     @csrf
 </form>
 
+<form action="/subcode/restore/all" method="post" id="restore_form_all">
+    <input type="hidden" name="data" id="input_restore_data">
+    @csrf
+</form>
+
 <script>
     var data=[];
-    function selectRdf(id,item) {
+    var modify_code=0;
+    var restore_code=0;
+    function selectRdf(id,item,token) {
+
 
         if(item.checked)
         {
             data.push(id);
-
+            if(token==0)
+            {
+                modify_code++;
+            }
+            else if(token==1)
+            {
+                restore_code++;
+            }
         }
         else
         {
+            if(token==0)
+            {
+                modify_code--;
+            }
+            else if(token==1)
+            {
+                restore_code--;
+            }
+
             var j=0;
             for(j=0;j<data.length;j++)
             {
@@ -352,17 +380,27 @@
                 }
             }
         }
-        if(data.length>0)
+        if(modify_code>0 && restore_code==0)
         {
             document.getElementById("delete_button").disabled=false;
             document.getElementById("edit_button").disabled=false;
+            document.getElementById("restore_button").disabled=true;
+
         }
-        else {
+        else if(modify_code==0 && restore_code>0)
+        {
             document.getElementById("delete_button").disabled=true;
             document.getElementById("edit_button").disabled=true;
+            document.getElementById("restore_button").disabled=false;
+
         }
+        else if((restore_code==0 && modify_code==0) || (modify_code>0 && restore_code>0))
+        {
+            document.getElementById("delete_button").disabled=true;
+            document.getElementById("edit_button").disabled=true;
+            document.getElementById("restore_button").disabled=true;
 
-
+        }
 
     }
     function delete_data() {
@@ -372,6 +410,11 @@
     function edit_data() {
         input_edit_data.value=data;
         edit_form_all.submit();
+    }
+    function restore_data() {
+
+        input_restore_data.value=data;
+        restore_form_all.submit();
     }
 
 

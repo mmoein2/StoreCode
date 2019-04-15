@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function (){
         Route::post('/subcode','SubCodeController@store');
         Route::get('/subcode/delete','SubCodeController@delete');
         Route::get('/subcode/edit','SubCodeController@edit');;
+        Route::get('/subcode/return','SubCodeController@restore');;
         Route::patch('/subcode/update','SubCodeController@update');
 
         Route::get('/assign','AssignSubCodeController@index');
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function (){
     Route::post('/subcode/delete/all','SubCodeController@deleteAll');
     Route::post('/subcode/edit/all','SubCodeController@editAll');
     Route::post('/subcode/update/all','SubCodeController@updateAll');
+    Route::post('/subcode/restore/all','SubCodeController@restoreAll');
 
     Route::post('/maincode/delete/all','MainCodeController@deleteAll');
     Route::post('/maincode/edit/all','MainCodeController@editAll');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\InvoiceSubCode;
 use App\Imports\SubCodeImport;
+use App\Shop;
 use App\SubCode;
 use foo\bar;
 use Illuminate\Http\Request;
@@ -178,4 +179,63 @@ class SubCodeController extends Controller
 
         return redirect('/subcode');
     }
+
+    public function restore(Request $request)
+    {
+
+        DB::beginTransaction();
+        $id = $request->id;
+        $subcode = SubCode::find($id);
+        if($subcode->status!=1)
+        {
+            return back()->withErrors(['امکان آزادسازی کد وجود ندارد']);
+        }
+
+        $shop = Shop::find($subcode->shop_id);
+
+        $subcode->shop_id=null;
+        $subcode->status=0;
+        $subcode->shop_date=0;
+        $subcode->expiration_date=0;
+
+        $shop->score -= $subcode->score;
+
+        $shop->save();
+        $subcode->save();
+
+        DB::commit();
+
+        return back();
+
+    }
+    public function restoreAll(Request $request)
+    {
+        $array = $request->data;
+        $array = explode(',',$array);
+
+
+        DB::beginTransaction();
+        foreach ($array as $item)
+        {
+            $subcode = SubCode::find($item);
+
+            if($subcode->status!=1)
+                return back()->withErrors(['کد '.$subcode->code.' قابل حذف نیست']);
+
+            $shop = Shop::find($subcode->shop_id);
+            $subcode->shop_id=null;
+            $subcode->status=0;
+            $subcode->shop_date=0;
+            $subcode->expiration_date=0;
+
+            $shop->score -= $subcode->score;
+
+            $shop->save();
+            $subcode->save();
+        }
+        DB::commit();
+
+        return back();
+    }
+
 }
