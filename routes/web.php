@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function (){
 
     Route::get('/customer','CustomerController@index');
     Route::get('/customer/show','CustomerController@show');
+    Route::get('/customer/show','CustomerController@show');
 
 
     Route::middleware('role:admin')->group(function (){

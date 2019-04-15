@@ -78,7 +78,7 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit"  class="btn btn-success">تخصیص کد</button>
+                        <button type="submit"  class="btn btn-success">ثبت</button>
                     </div>
                 </form>
                 <form name="provice_form" action="/shop/edit" method="get">
@@ -90,3 +90,42 @@
         </div>
     </div>
 @endsection
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">افزودن / حذف دسته بندی</h4>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" action="/shop/category/modify" method="post" id="modalForm">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <label>نام دسته بندی</label>
+                        <input type="hidden" id="command" name="command">
+                        <input list="category_list" name="name" type="text" class="form-control">
+                        <datalist id="category_list">
+
+                            @foreach($shop_categories as $c)
+                                <option value="{{$c->name}}">
+
+                                </option>
+
+
+                            @endforeach
+
+                        </datalist>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="command.value='register';modalForm.submit();" class="btn btn-success">ثبت</button>
+                <button type="button" onclick="command.value='delete';modalForm.submit();" class="btn btn-danger">حذف</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -177,6 +177,7 @@ class ShopController extends Controller
 
     public function modifyCategory(Request $request)
     {
+        $request->validate(['command'=>'required','name'=>'required']);
         $command = $request->command;
         if($command=='register')
         {

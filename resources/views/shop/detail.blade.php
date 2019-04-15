@@ -32,8 +32,12 @@
                             <input value="{{$shop->person}}"  class="form-control" id="exampleInputPassword1" readonly>
                         </div>
                         <div class="form-group">
+                            <label for="">استان</label>
+                            <input value="{{$shop->province->name ?? ''}}"  class="form-control" id="exampleInputPassword1" readonly>
+                        </div>
+                        <div class="form-group">
                             <label for="">شهر</label>
-                            <input value="{{$shop->city}}"  class="form-control" id="exampleInputPassword1" readonly>
+                            <input value="{{$shop->city->name ?? '' }}"  class="form-control" id="exampleInputPassword1" readonly>
                         </div>
                         <div class="form-group">
                             <label for="">آدرس</label>
@@ -44,7 +48,7 @@
                             <textarea class="form-control" style="height: 200px" name="address" readonly>{{$shop->desc}}</textarea>
                         </div>
                         <div class="row">
-                        @foreach($shop->images as $key=>$img)
+                        @foreach($shop->images?? [] as $key=>$img)
                                 <div class="col-md-3">
                                     <label for="">عکس  {{$key}}</label>
                                     <a href="{{$img}}" target="_blank"><img src="{{$img}}" style="width: 100%;height: 300px"></a>

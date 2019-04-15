@@ -77,7 +77,7 @@ body
 
                 <div class="col-md-6">
                     <label class="title">مشخصات مشتری :</label>
-                    <label>{{$maincode->customer->fullname ??''}}</label>
+                    <label><a href="/customer/show?id={{$maincode->customer->id ??''}}">{{$maincode->customer->fullname ??''}}</a></label>
 
                 </div>
 

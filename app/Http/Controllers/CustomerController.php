@@ -206,4 +206,11 @@ class CustomerController extends Controller
         $c->save();
         return back();
     }
+    public function detail(Request $request)
+    {
+        $customer = Customer::find($request->id);
+        return view('customer.detail',compact('customer'));
+
+    }
+
 }

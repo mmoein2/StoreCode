@@ -63,19 +63,26 @@ body
                 </div>
                 <div class="col-md-12">
                     <label class="title">مشخصات فروشگاه :</label>
+                    @if($subcode->shop != null)
+                    <a href="/shop/detail?id={{$subcode->shop->id}}">
                     <label>{{$subcode->shop->name ?? ''}}</label>
                     <label>کد </label>
                     <lable>{{$subcode->shop->id ?? ''}}</lable>
+                    </a>
+                        @endif
 
                 </div>
                 <div class="col-md-12" style="direction: rtl;text-align: right">
                     <label class="title">مشخصات مشتری :</label>
+                    @if($subcode->customer != null)
+                    <a href="/customer/show?id={{$subcode->customer->id}}">
                     <label>{{$subcode->customer->fullname ?? ''}} </label>
                     <label>کد </label>
                     <lable>{{$subcode->customer->id ?? ''}} |</lable>
                     <label> امتیاز کل </label>
                     <lable>{{$subcode->customer->score ?? ''}}</lable>
-
+                    </a>
+                        @endif
                 </div>
                 <hr>
                 <div class="col-md-6">

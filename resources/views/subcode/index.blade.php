@@ -273,7 +273,7 @@
                     <tr style="background-color: rgba(227,227,227,0.28)">
                         <th>
                             <button onclick="edit_data()" id="edit_button" class="btn btn-sm btn-success" disabled><i class="fa fa-pencil"></i></button>
-                            <button id="delete_button" onclick="delete_data()" class="btn btn-sm btn-danger" disabled><i class="fa fa-close"></i></button>
+                            <button id="delete_button" onclick="delete_data()" class="btn btn-sm btn-danger" style="margin: 0px" disabled><i class="fa fa-close"></i></button>
                             <button id="restore_button" onclick="restore_data()" class="btn btn-sm btn-warning" disabled><i class="fa fa-refresh"></i></button>
                         </th>
                         <th> ردیف</th>

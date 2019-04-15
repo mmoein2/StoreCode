@@ -17,11 +17,8 @@ class Customer extends Authenticatable implements JWTSubject
     {
         if($this->registration_date==0)
             return "";
-        $date = Jalalian::forge($this->registration_date/1000);
-        $y=$date->getYear();
-        $m=$date->getMonth();
-        $d=$date->getDay();
-        return "$y/$m/$d";
+        $date = Jalalian::forge($this->registration_date/1000)->format('Y/m/d');
+        return $date;
     }
 
     public function getStatus()

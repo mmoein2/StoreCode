@@ -196,7 +196,7 @@
                     </tr>
                     @foreach($subcodes as $s)
                     <tr>
-                        <td>{{$s->code}}</td>
+                        <td><a href="/subcode/show?id={{$s->id}}">{{$s->code}}</a></td>
                         <td>{{$s->serial}}</td>
                         <td>{{$s->score}}</td>
                         <td>{{$s->getPerisanCustomerDate()}}</td>
@@ -255,7 +255,7 @@
                     </tr>
                     @foreach($maincodes as $s)
                         <tr>
-                            <td>{{$s->code}}</td>
+                            <td><a href="/maincode/show?id={{$s->id}}">{{$s->code}}</a></td>
                             <td>{{$s->serial}}</td>
                             <td>{{$s->prize->name}}</td>
                             <td>{{$s->getPerisanCustomerDate()}}</td>

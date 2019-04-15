@@ -12,11 +12,8 @@ class SubCode extends Model
     {
         if($this->expiration_date==0)
             return "";
-        $date = Jalalian::forge($this->expiration_date/1000);
-        $y=$date->getYear();
-        $m=$date->getMonth();
-        $d=$date->getDay();
-        return "$y/$m/$d";
+        $date = Jalalian::forge($this->expiration_date/1000)->format('Y/m/d');
+        return $date;
     }
     public function getStatus()
     {
@@ -44,21 +41,15 @@ class SubCode extends Model
     {
         if($this->shop_date==0)
             return "";
-        $date = Jalalian::forge($this->shop_date/1000);
-        $y=$date->getYear();
-        $m=$date->getMonth();
-        $d=$date->getDay();
-        return "$y/$m/$d";
+        $date = Jalalian::forge($this->shop_date/1000)->format('Y/m/d');
+      return $date;
     }
     public function getPerisanCustomerDate()
     {
         if($this->customer_date==0)
             return "";
-        $date = Jalalian::forge($this->customer_date/1000);
-        $y=$date->getYear();
-        $m=$date->getMonth();
-        $d=$date->getDay();
-        return "$y/$m/$d";
+        $date = Jalalian::forge($this->customer_date/1000)->format('Y/m/d');
+        return $date;
     }
     public function getCustomerTime()
     {
