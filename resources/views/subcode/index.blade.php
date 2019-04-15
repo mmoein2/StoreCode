@@ -228,15 +228,21 @@
                     <input type="hidden" name="sort" value="{{$_GET['sort'] ?? 'desc'}}">
                     <input type="hidden" name="sort_field" value="{{$_GET['sort_field'] ?? 'code'}}">
                 <div class="row" style="margin: 10px">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label>کد :</label><input value="{{$_GET['code']??''}}" name="code" class="form-control" type="text">
                     </div>
-                    <div class="col-md-3">
+
+                    <div class="col-md-2">
                         <label>سریال از :</label><input value="{{$_GET['serialFrom']??''}}" name="serialFrom" class="form-control" type="text">
                         <label> تا </label><input value="{{$_GET['serialTo']??''}}" class="form-control" name="serialTo" type="text">
-
                     </div>
-                    <div class="col-md-3">
+
+                    <div class="col-md-2">
+                        <label>امتیاز از :</label><input value="{{$_GET['scoreFrom']??''}}" name="scoreFrom" class="form-control" type="text">
+                        <label> تا </label><input value="{{$_GET['scoreTo']??''}}" class="form-control" name="scoreTo" type="text">
+                    </div>
+
+                    <div class="col-md-2">
                         <label> وضعیت </label>
                         <select name="status" class="form-control">
                             <option value="0" @if(isset($_GET['status'])&&$_GET['status']==0) selected @endif>
@@ -310,7 +316,7 @@
                 </table>
             </div>
         </div>
-                {{$codes->links()}}
+                {{$codes->appends($_GET)->links()}}
             </div>
 </div>
 

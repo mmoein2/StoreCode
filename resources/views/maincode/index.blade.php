@@ -238,6 +238,11 @@
                             </div>
 
                             <div class="col-md-2">
+                                <label>امتیاز از :</label><input value="{{$_GET['scoreFrom']??''}}" name="scoreFrom" class="form-control" type="text">
+                                <label> تا </label><input value="{{$_GET['scoreTo']??''}}" class="form-control" name="scoreTo" type="text">
+
+                            </div>
+                            <div class="col-md-2">
                                 <label>نوع جوایز</label>
                                 <select name="prize" class="form-control">
                                     <option value="0" @if(isset($_GET['prize'])&&$_GET['prize']==0) selected @endif>

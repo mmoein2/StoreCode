@@ -28,6 +28,14 @@ class SubCodeController extends Controller
         {
             $codes=$codes->where('serial','<=',$request->serialTo);
         }
+        if($request->scoreFrom)
+        {
+            $codes=$codes->where('score','>=',$request->scoreFrom);
+        }
+        if($request->scoreTo)
+        {
+            $codes=$codes->where('score','<=',$request->scoreTo);
+        }
         if($request->status)
         {
             $s=$request->status;
