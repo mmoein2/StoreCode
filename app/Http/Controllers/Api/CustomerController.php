@@ -23,7 +23,7 @@ class CustomerController extends Controller
 
         $shops = CustomerShop::where('customer_id',$customer->id)->select(['shop_id']);
 
-        $post = Post::with('shop')->whereIn('shop_id',$shops)->latest()->paginate();
+        $post = Post::with('shop')->whereIn('shop_id',$shops)->orWhere('is_special',true)->latest()->paginate();
 
         return[
             'status_code'=>0,
