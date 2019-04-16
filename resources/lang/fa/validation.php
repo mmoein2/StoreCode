@@ -160,6 +160,7 @@ return array(
         'member_id' => 'کاربر',
         'type' => 'نوع',
         'spinner_value' => 'اسپینر',
-        'city_id' =>'شهر'
+        'city_id' =>'شهر',
+        'code' =>'کد',
     ),
 );

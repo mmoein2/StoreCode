@@ -35,7 +35,10 @@ class SubCodeImport implements ToModel,WithValidation,WithHeadingRow
     public function rules(): array
     {
         return [
-            'code' => Rule::unique('sub_codes','code'),
+            'code' => 'required',
+            'code' => 'unique:sub_codes',
+            'serial' =>'required|numeric|unique:main_codes',
+            'score'  => 'required|numeric'
         ];
     }
 

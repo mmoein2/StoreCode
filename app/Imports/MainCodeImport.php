@@ -39,7 +39,9 @@ class MainCodeImport implements ToModel,WithHeadingRow,WithValidation
     public function rules(): array
     {
         return [
-            'code' => Rule::unique('main_codes','code'),
+            'code' => 'required|unique:main_codes',
+            'serial' => 'required|numeric|unique:main_codes',
+            'type' => 'required',
         ];
     }
 }
