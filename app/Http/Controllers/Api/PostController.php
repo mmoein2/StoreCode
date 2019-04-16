@@ -55,7 +55,7 @@ class PostController extends Controller
         }
         $post->save();
         return [
-            'status_code'=>0
+            'message'=>'0'
         ];
 
     }

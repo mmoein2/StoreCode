@@ -29,7 +29,6 @@ class MainCodeController extends Controller
         if($maincode==null)
         {
             return[
-                'status_code'=>1,
                 'message'=>'کد وارد شده در سیستم پیدا نشد'
             ];
         }
@@ -37,7 +36,6 @@ class MainCodeController extends Controller
         if($customer->status==false)
         {
             return [
-                'status_code'=>'1',
                 'message' =>'خدمات سایت برای شما غیر فعال شده است'
             ];
         }
@@ -45,7 +43,6 @@ class MainCodeController extends Controller
         if($customer->score-$customer->used_score  <  $maincode->prize->score)
         {
             return [
-                'status_code'=>'2',
                 'message' =>'امتیاز شما کافی نیست'
             ];
         }
@@ -64,7 +61,7 @@ class MainCodeController extends Controller
         DB::commit();
 
         return [
-            'status_code' => 0
+            'message'=>'0'
         ];
 
     }
@@ -86,7 +83,7 @@ class MainCodeController extends Controller
         ])->paginate();
 
         return [
-            'status_code'=>0,
+            'message'=>'0',
             'data'=>$query
         ];
 
@@ -128,7 +125,7 @@ class MainCodeController extends Controller
             'prize_name',
         ])->paginate();
         return [
-            'status_code'=>0,
+            'message'=>'0',
             'data'=>$query
         ];
     }
@@ -136,7 +133,7 @@ class MainCodeController extends Controller
     {
         $prizes = Prize::get();
         return[
-            'status_code'=>0,
+            'message'=>'0',
             'data' => $prizes
         ];
     }

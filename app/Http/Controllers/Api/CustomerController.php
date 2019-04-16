@@ -26,7 +26,7 @@ class CustomerController extends Controller
         $post = Post::with('shop')->whereIn('shop_id',$shops)->orWhere('is_special',true)->latest()->paginate();
 
         return[
-            'status_code'=>0,
+            'message'=>'0',
             'data'=>$post
         ];
 
@@ -41,7 +41,6 @@ class CustomerController extends Controller
         if(CustomerShop::where('shop_id',$request->shop_id)->where('customer_id',$customer->id)->exists())
         {
             return [
-                'status_code'=>1,
                 'message'=>'شما در حال دنبال کردن این فروشگاه هستید'
             ];
 
@@ -61,7 +60,7 @@ class CustomerController extends Controller
         DB::commit();
 
         return [
-            'status_code'=>0
+            'message'=>'0',
         ];
     }
     public function unFollow(Request $request)
@@ -75,7 +74,6 @@ class CustomerController extends Controller
         if($cs==null)
         {
             return [
-                'status_code'=>1,
                 'message'=>'شما این فروشگاه را دنبال نمی کنید'
             ];
 
@@ -91,7 +89,7 @@ class CustomerController extends Controller
         DB::commit();
 
         return [
-            'status_code'=>0
+            'message'=>'0',
         ];
     }
     public function shops(Request $request)
@@ -120,7 +118,7 @@ class CustomerController extends Controller
 
         }
         return[
-            'status_code'=>0,
+            'message'=>'0',
             'data'=>$shops
         ];
 
@@ -170,7 +168,7 @@ class CustomerController extends Controller
         ])
             ->paginate();
         return [
-            'status_code'=>0,
+            'message'=>'0',
             'data'=>$query
         ];
     }
@@ -192,7 +190,7 @@ class CustomerController extends Controller
 
         $message->save();
         return [
-            'status_code'=>0,
+            'message'=>'0',
         ];
     }
 
@@ -230,7 +228,7 @@ class CustomerController extends Controller
             $city = City::find($request->city_id);
             if($city==null)
             {
-             return ['status_code'=>1,'message'=>'شهر نا معتبر است'];
+             return ['message'=>'شهر نا معتبر است'];
             }
             $customer->province_id=$city->province_id;
             $customer->city_id=$city->id;
@@ -238,14 +236,14 @@ class CustomerController extends Controller
         }
 
         $customer->save();
-        return['status_code'=>0];
+        return['message'=>'0'];
     }
 
     public function getProvince()
     {
         $provinces = Province::get();
         return [
-            'status_code' =>0,
+            'message'=>'0',
             'data'=>$provinces
         ];
     }
@@ -259,7 +257,7 @@ class CustomerController extends Controller
         $cities = City::where('province_id',$request->province_id)->select(['id','province_id','name'])->get();
 
         return [
-            'status_code' =>0,
+            'message'=>'0',
             'data'=>$cities
         ];
     }

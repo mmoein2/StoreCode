@@ -33,7 +33,6 @@ class SubCodeController extends Controller
         if($subcode==null)
         {
             return[
-                'status_code'=>1,
                 'message'=>'کد وارد شده در سیستم پیدا نشد'
             ];
         }
@@ -53,7 +52,6 @@ class SubCodeController extends Controller
         if($customer->status==false)
         {
             return [
-                'status_code'=>'1',
                 'message' =>'خدمات سایت برای شما غیر فعال شده است'
             ];
         }
@@ -88,7 +86,7 @@ class SubCodeController extends Controller
         }
 
         return [
-            'status_code' => 0
+            'message'=>'0'
         ];
 
     }

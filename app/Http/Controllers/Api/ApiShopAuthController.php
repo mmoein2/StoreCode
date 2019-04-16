@@ -37,7 +37,6 @@ class ApiShopAuthController extends Controller
         if($shop==null)
         {
             return [
-                'status_code'=>1,
                 'message'=>'شماره موبایل یا پسورد صحیح نیست'
             ];
         }
@@ -51,7 +50,7 @@ class ApiShopAuthController extends Controller
         }
         $token = (auth()->login($shop));
         return [
-            'status_code'=>0,
+            'message'=>'0',
             'access_token'=>$token
         ];
     }
@@ -67,7 +66,6 @@ class ApiShopAuthController extends Controller
         if($shop==null)
         {
             return [
-                'status_code' =>1,
                 'message' =>'شماره موبایل در سیستم وجود ندارد'
             ];
         }
@@ -79,7 +77,7 @@ class ApiShopAuthController extends Controller
         Smsirlaravel::send('رمز موقت شما : '.$cs->token,[$shop->mobile]);
 
         return [
-            'status_code' =>0,
+            'message'=>'0'
         ];
     }
 
@@ -94,7 +92,6 @@ class ApiShopAuthController extends Controller
         if($cs==null)
         {
             return [
-                'status_code' =>1,
                 'message' =>'کد ارسالی اشتباه است'
             ];
         }
@@ -106,7 +103,7 @@ class ApiShopAuthController extends Controller
         $token = auth()->login($shop);
 
         return [
-            'status_code' =>0,
+            'message'=>'0',
             'access_token' =>$token
         ];
     }
@@ -144,19 +141,4 @@ class ApiShopAuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            //'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
-    }
 }

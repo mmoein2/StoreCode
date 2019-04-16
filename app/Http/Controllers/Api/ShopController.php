@@ -51,7 +51,7 @@ class ShopController extends Controller
 
         $query=$query->orderByDesc('id')->paginate();
         return [
-            'status_code'=>0,
+            'message'=>'0',
             'data'=>$query
         ];
     }
@@ -73,7 +73,7 @@ class ShopController extends Controller
 
         $message->save();
         return [
-            'status_code'=>0,
+            'message'=>'0',
         ];
     }
     public function updateProfile(Request $request)
@@ -93,7 +93,7 @@ class ShopController extends Controller
         }
 
         $store->save();
-        return['status_code'=>0];
+        return['message'=>'0'];
     }
     public function updateImages(Request $request)
     {
@@ -134,6 +134,6 @@ class ShopController extends Controller
         }
         $shop->images = $images;
         $shop->save();
-        return['status_code'=>0];
+        return['message'=>'0'];
     }
 }

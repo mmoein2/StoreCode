@@ -40,7 +40,6 @@ class ApiCustomerAuthController extends Controller
         if($customer==null)
         {
             return [
-                'status_code'=>1,
                 'message'=>'شماره موبایل در سیستم وجود ندارد'
             ];
 
@@ -54,7 +53,7 @@ class ApiCustomerAuthController extends Controller
         Smsirlaravel::send('رمز موقت شما : '.$cc->token,[$customer->mobile]);
 
         return [
-            'status_code' =>0,
+            'message'=>'0'
         ];
 
 
@@ -70,7 +69,6 @@ class ApiCustomerAuthController extends Controller
         if($cc==null)
         {
             return [
-                'status_code' =>1,
                 'message' =>'کد ارسالی اشتباه است'
             ];
         }
@@ -89,7 +87,7 @@ class ApiCustomerAuthController extends Controller
         $token = auth()->login($customer);
 
         return [
-            'status_code' =>0,
+            'message'=>'0',
             'access_token' =>$token
         ];
     }
@@ -129,19 +127,5 @@ class ApiCustomerAuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            //'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
-    }
+
 }

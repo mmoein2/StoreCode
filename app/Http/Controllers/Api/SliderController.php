@@ -12,7 +12,7 @@ class SliderController extends Controller
     {
         $sliders = Slider::latest()->get();
         return [
-            'status_code'=>0,
+            'message'=>'0',
             'data'=>$sliders
         ];
     }

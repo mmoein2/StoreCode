@@ -207,11 +207,11 @@
         </section>
         <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.content-wrapper
     <footer class="main-footer text-left">
-        <strong>Copyleft &copy; 2014-2017 <a href="https://adminlte.io">Almsaeed Studio</a> & <a href="http://hosseinizadeh.ir/adminlte">Alireza Hosseinizadeh</a></strong>
-    </footer>
 
+    </footer>
+-->
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
