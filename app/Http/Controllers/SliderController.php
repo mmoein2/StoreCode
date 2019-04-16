@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class SliderController extends Controller
 {
@@ -36,10 +37,11 @@ class SliderController extends Controller
 
         $image = $request->file('image');
         $postfix = $image->getClientOriginalExtension();
+
         $name= uniqid().'.'.$postfix;
         $url = "/upload/slider/";
 
-        $image->move(public_path($url),$name);
+        Image::make($image)->resize(380,150)->save(public_path($url.$name));
 
         $slider = new Slider();
         $slider->image_address = $url.$name;

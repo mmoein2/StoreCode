@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Ipecompany\Smsirlaravel\SmsirlaravelServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -228,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Smsirlaravel' => Ipecompany\Smsirlaravel\SmsirlaravelFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
 
     ],
