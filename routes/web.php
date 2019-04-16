@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function (){
 
     Route::get('/chart','ChartController@index');
 
+    Route::get('/post/amount','PostController@index');
+    Route::post('/post/amount','PostController@store');
+
 
     Route::middleware('role:admin')->group(function () {
         Route::get('/shop/create','ShopController@create');

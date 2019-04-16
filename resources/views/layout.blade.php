@@ -169,6 +169,13 @@
                 </a>
                 </li>
 
+                    <li @if(strpos(request()->route()->uri,"post/amount")!==false) class="active" @endif>
+                        <a href="/post/amount">
+                            <i class="fa fa-dollar"></i> <span>مبلغ پست ویژه</span>
+
+                        </a>
+                    </li>
+
                 <li class="header">کاربران</li>
                 <li @if(strpos(request()->route()->uri,"user/change/password")!==false) class="active" @endif>
                     <a href="/user/change/password">

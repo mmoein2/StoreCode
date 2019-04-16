@@ -162,5 +162,6 @@ return array(
         'spinner_value' => 'اسپینر',
         'city_id' =>'شهر',
         'code' =>'کد',
+        'amount' =>'کد',
     ),
 );

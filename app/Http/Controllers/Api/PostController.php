@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Post;
+use App\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -57,5 +58,22 @@ class PostController extends Controller
             'status_code'=>0
         ];
 
+    }
+    public function getPostAmount(Request $request)
+    {
+        $setting = Setting::first();
+        if($setting==null)
+        {
+            return ['message'=>'این بخش غیر فعال است'];
+        }
+        if($setting->special_post_amount==0)
+        {
+            return ['message'=>'درحال حاضر این بخش غیرفعال است'];
+        }
+
+        return[
+            'message'=>'0',
+            'special_post_amount'=>$setting->special_post_amount
+        ];
     }
 }

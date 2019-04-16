@@ -62,6 +62,9 @@ Route::group(['namespace'=>'Api','prefix'=>'customer','middleware'=>'auth:custom
 
     Route::post('prize/all', 'MainCodeController@getPrizeCategory');
 
+    Route::post('posts/special/amount', 'PostController@getPostAmount');
+
+
 
 });
 
