@@ -86,8 +86,13 @@ class MainCodeController extends Controller
 
         $import=new MainCodeImport($day);
         DB::beginTransaction();
-        Excel::import($import, $file);
 
+        try {
+            Excel::import($import, $file);
+        }
+        catch(\Maatwebsite\Excel\Validators\ValidationException $e) {
+            return back()->withErrors($e->errors());
+        }
 
         if( count($import->errors)>0)
         {
