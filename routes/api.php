@@ -76,4 +76,6 @@ Route::group(['namespace'=>'Api','prefix'=>'shop','middleware'=>'auth:shop_api']
     Route::post('post/store', 'PostController@storePost');
     Route::post('profile/update', 'ShopController@updateProfile');
     Route::post('profile/images/update', 'ShopController@updateImages');
+
+    Route::post('payment/token', 'PaymentController@getToken');
 });

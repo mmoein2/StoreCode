@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/','Auth\LoginController@showLoginForm');
+
 
 Route::middleware('auth')->group(function (){
 
@@ -47,6 +49,7 @@ Route::middleware('auth')->group(function (){
 
     Route::get('/post/amount','PostController@index');
     Route::post('/post/amount','PostController@store');
+    Route::post('/payment/redirect','PaymentController@redirect');
 
 
     Route::middleware('role:admin')->group(function () {
