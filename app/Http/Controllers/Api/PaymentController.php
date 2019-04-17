@@ -48,7 +48,7 @@ class PaymentController extends Controller
         if(empty($token) || strlen($token)<5)
         {
             return [
-                'در حال حاضر امکان اتصال به درگاه وجود ندارد'
+                'message'=>'در حال حاضر امکان اتصال به درگاه وجود ندارد'
             ];
         }
 
