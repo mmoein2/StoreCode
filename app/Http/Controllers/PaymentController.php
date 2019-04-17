@@ -16,9 +16,8 @@ class PaymentController extends Controller
         $state = $request->State;
         $res_num = $request->ResNum;
         $ref_num = $request->RefNum;
-        $trace_no = $request->TRACENO;
+        $trace_no = $request->TraceNo;
         //$secure_pan = $request->SecurePan;
-
         $payment = Payment::where('is_used',false)->where('id',$res_num)->first();
         if($payment==null)
         {
