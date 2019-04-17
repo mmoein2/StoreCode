@@ -98,41 +98,54 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">منو</li>
-
+                @can('subcode')
                 <li @if(strpos(request()->route()->uri,"subcode")!==false) class="active" @endif>
                     <a href="/subcode">
                         <i class="fa fa-code"></i> <span>کدهای فرعی</span>
                     </a>
                 </li>
+                @endcan
+                @can('maincode')
+
                 <li @if(strpos(request()->route()->uri,"maincode")!==false) class="active" @endif>
                     <a href="/maincode">
                         <i class="fa fa-users"></i> <span>کدهای اصلی</span>
                     </a>
                 </li>
-
+                @endcan
+                @can('shop')
                 <li @if(strpos(request()->route()->uri,"shop")!==false) class="active" @endif>
                     <a href="/shop">
                         <i class="fa fa-shopping-cart"></i> <span>فروشگاه</span>
                     </a>
                 </li>
+                @endcan
+                @can('customer')
+
                 <li @if(strpos(request()->route()->uri,"customer")!==false) class="active" @endif>
                     <a href="/customer">
                         <i class="fa fa-user"></i> <span>مشتریان</span>
                     </a>
                 </li>
+                @endcan
 
+                @can('prize')
 
                 <li @if(strpos(request()->route()->uri,"prize")!==false) class="active" @endif>
                     <a href="/prize">
                         <i class="fa fa-star"></i> <span>جوایز</span>
                     </a>
                 </li>
+                @endcan
+                @can('chart')
 
                     <li @if(strpos(request()->route()->uri,"chart")!==false) class="active" @endif>
                         <a href="/chart">
                             <i class="fa fa-area-chart"></i> <span>نمودار</span>
                         </a>
                     </li>
+                @endcan
+                @can('shop-support')
 
                 <li class="header">پیام ها</li>
 
@@ -148,6 +161,9 @@
                         @endif
                     </a>
                 </li>
+                @endcan
+                @can('customer-support')
+
                 <li @if(strpos(request()->route()->uri,"customersupport")!==false) class="active" @endif>
                     <a href="/customersupport">
                         <i class="fa fa-hand-paper-o"></i> <span>پشتیبانی کاربران</span>
@@ -161,13 +177,19 @@
                         @endif
                     </a>
                 </li>
+                @endcan
+
                 <li class="header">تنظیمات اپلیکیشن</li>
+                @can('slider')
+
                 <li @if(strpos(request()->route()->uri,"slider")!==false) class="active" @endif>
                 <a href="/slider">
                     <i class="fa fa-list"></i> <span>اسلایدر</span>
 
                 </a>
                 </li>
+                @endcan
+                @can('special-post')
 
                     <li @if(strpos(request()->route()->uri,"post/amount")!==false) class="active" @endif>
                         <a href="/post/amount">
@@ -175,20 +197,27 @@
 
                         </a>
                     </li>
+                @endcan
 
                 <li class="header">کاربران</li>
+                @can('change-password')
+
                 <li @if(strpos(request()->route()->uri,"user/change/password")!==false) class="active" @endif>
                     <a href="/user/change/password">
                         <i class="fa fa-user"></i> <span>تغییر رمز عبور سایت</span>
 
                     </a>
                 </li>
+                @endcan
+                @can('insert-user')
+
                 <li @if(request()->route()->uri=="user") class="active" @endif>
                     <a href="/user">
                         <i class="fa fa-user"></i> <span>ایجاد کاربر سایت</span>
 
                     </a>
                 </li>
+                @endcan
 
 
             </ul>

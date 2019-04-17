@@ -284,8 +284,13 @@
                         <thead>
                         <tr style="background-color: rgba(227,227,227,0.28)">
                             <th>
+                                @can('edit-maincode')
                                 <button onclick="edit_data()" id="edit_button" class="btn btn-sm btn-success" disabled><i class="fa fa-pencil"></i></button>
-                                <button id="delete_button" onclick="delete_data()" class="btn btn-sm btn-danger" disabled><i class="fa fa-close"></i></button>
+                                @endcan
+                                    @can('delete-maincode')
+
+                                    <button id="delete_button" onclick="delete_data()" class="btn btn-sm btn-danger" disabled><i class="fa fa-close"></i></button>
+                                        @endcan
                             </th>
                             <th>ردیف</th>
                             <th><a href="#" onclick="sortForm('code')">کد اصلی</a></th>
@@ -322,9 +327,12 @@
                                 <td>{{$c->expiration_day}}</td>
                                 <td>{{$c->getPerisanExpireDate()}}</td>
                                 <td>
+                                    @can('delete-maincode')
+
                                     @if($c->status==false)
                                         <a class="btn btn-sm btn-danger" href="/maincode/delete?id={{$c->id}}">حذف</a>
                                     @endif
+                                        @endcan
                                 </td>
                             </tr>
                         @endforeach

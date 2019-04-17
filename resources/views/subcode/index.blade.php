@@ -272,9 +272,15 @@
                     <thead>
                     <tr style="background-color: rgba(227,227,227,0.28)">
                         <th>
+                            @can('edit-subcode')
+
                             <button onclick="edit_data()" id="edit_button" class="btn btn-sm btn-success" disabled><i class="fa fa-pencil"></i></button>
-                            <button id="delete_button" onclick="delete_data()" class="btn btn-sm btn-danger" style="margin: 0px" disabled><i class="fa fa-close"></i></button>
+                            @endcan
+                                @can('delete-subcode')
+
+                                <button id="delete_button" onclick="delete_data()" class="btn btn-sm btn-danger" style="margin: 0px" disabled><i class="fa fa-close"></i></button>
                             <button id="restore_button" onclick="restore_data()" class="btn btn-sm btn-warning" disabled><i class="fa fa-refresh"></i></button>
+                                    @endcan
                         </th>
                         <th> ردیف</th>
                         <th> <a href="#" onclick="sortForm('code')">کد فرعی</a></th>
@@ -306,13 +312,22 @@
                         <td>
                             @if($c->status==0)
                                 <div class="btn-group">
-                                <a class="btn btn-sm btn-success" href="/subcode/edit?id={{$c->id}}">ویرایش</a>
-                                <a class="btn btn-sm btn-danger" href="/subcode/delete?id={{$c->id}}">حذف</a>
+                                    @can('edit-subcode')
+
+                                    <a class="btn btn-sm btn-success" href="/subcode/edit?id={{$c->id}}">ویرایش</a>
+                                    @endcan
+                                        @can('delete-subcode')
+
+                                    <a class="btn btn-sm btn-danger" href="/subcode/delete?id={{$c->id}}">حذف</a>
+                                            @endcan
                                 </div>
-                            @elseif ($c->status==1)
+                                @can('delete-subcode')
+
+                                @elseif ($c->status==1)
                                 <a class="btn btn-sm btn-warning" href="/subcode/return?id={{$c->id}}">حذف از فروشگاه</a>
 
                             @endif
+                                @endcan
                         </td>
                     </tr>
                    @endforeach
