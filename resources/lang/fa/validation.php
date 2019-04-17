@@ -103,7 +103,7 @@ return array(
     'attributes' => array(
         "name" => "نام",
         "username" => "نام کاربری",
-        "email" => "پست الکترونیکی",
+        "email" => "نام کاربری",
         "first_name" => "نام",
         "last_name" => "نام خانوادگی",
         "password" => "رمز عبور",

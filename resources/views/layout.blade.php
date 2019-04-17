@@ -48,7 +48,7 @@
 
                                 <p>
                                     {{auth()->user()->name}}
-                                    <small>{{auth()->user()->role->name_fa}}</small>
+
                                 </p>
                             </li>
 
@@ -98,7 +98,7 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">منو</li>
-                @if(auth()->user()->role->name_en=='admin')
+
                 <li @if(strpos(request()->route()->uri,"subcode")!==false) class="active" @endif>
                     <a href="/subcode">
                         <i class="fa fa-code"></i> <span>کدهای فرعی</span>
@@ -109,7 +109,7 @@
                         <i class="fa fa-users"></i> <span>کدهای اصلی</span>
                     </a>
                 </li>
-                @endif
+
                 <li @if(strpos(request()->route()->uri,"shop")!==false) class="active" @endif>
                     <a href="/shop">
                         <i class="fa fa-shopping-cart"></i> <span>فروشگاه</span>
@@ -120,7 +120,7 @@
                         <i class="fa fa-user"></i> <span>مشتریان</span>
                     </a>
                 </li>
-                @if(auth()->user()->role->name_en=='admin')
+
 
                 <li @if(strpos(request()->route()->uri,"prize")!==false) class="active" @endif>
                     <a href="/prize">
@@ -190,7 +190,7 @@
                     </a>
                 </li>
 
-                    @endif
+
             </ul>
         </section>
         <!-- /.sidebar -->

@@ -150,15 +150,16 @@
     @endif
     <div class="row">
         <div class="col-md-12">
-            <form action="/user" method="post">
+            <form action="/user/update" method="post">
                 {{csrf_field()}}
+                <input class="form-control" value="{{$user->id}}" type="hidden" name="id">
 
                 <div class="box box-info">
                     <div class="box-body">
 
                         <div class="form-group">
                             <label>نام  کاربر</label>
-                            <input class="form-control" type="text" name="email">
+                            <input class="form-control" value="{{$user->email}}" type="text" name="email">
                         </div>
                         <div class="form-group">
                             <label>رمز عبور</label>
@@ -166,24 +167,40 @@
                         </div>
                         <div class="form-group">
                             <label>نام  و نام خانوادگی</label>
-                            <input class="form-control" type="text" name="name">
+                            <input class="form-control" value="{{$user->name}}" type="text" name="name">
                         </div>
                         <label>سطوح دسترسی</label>
 
                         <div class="form-group">
 
+
                             @foreach($permissions as $key=>$p)
                                 <div class="col-md-6" style="margin-top: 15px">
 
-                                <label class="pure-material-checkbox" style="direction: ltr">
-                                    <input type="checkbox" name="permissions[]" value="{{$p->name_en}}">
-                                    <span>{{$p->name_fa}}</span>
-                                </label>
+                                    <label class="pure-material-checkbox" style="direction: ltr">
+                                        <?php $flag=false; ?>
+                                        @foreach($user_permissions as $up)
+
+
+                                            @if($p->name_en == $up->permission->name_en )
+                                            <input type="checkbox" name="permissions[]" value="{{$p->name_en}}" checked>
+                                                <?php  $flag=true; ?>
+                                                @endif
+                                        @endforeach
+                                            @if(!$flag)
+                                                <input type="checkbox" name="permissions[]" value="{{$p->name_en}}" >
+
+                                            @endif
+
+                                        <span>{{$p->name_fa}}</span>
+
+                                    </label>
                                 </div>
 
-
-
                             @endforeach
+
+
+
                         </div>
 
 

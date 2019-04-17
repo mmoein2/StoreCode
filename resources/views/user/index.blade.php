@@ -33,7 +33,6 @@
                             <tr style="background-color: rgba(227,227,227,0.28)">
                             <th>نام کاربری</th>
                                 <th>نام</th>
-                            <th>سطح دسترسی</th>
                                 <th>عملیات</th>
 
                             </tr>
@@ -43,8 +42,10 @@
                                 <tr>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->name}}</td>
-                                    <td>{{$user->role->name_fa}}</td>
                                     <td>
+                                        <a class="btn btn-sm btn-primary" href="/user/edit?id={{$user->id}}">
+                                            ویرایش
+                                        </a>
                                         <a class="btn btn-sm btn-danger" href="/user/delete?id={{$user->id}}">
                                             حذف
                                         </a>
