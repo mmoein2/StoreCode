@@ -121,6 +121,14 @@ Route::middleware('auth')->group(function (){
         Route::get('/user/edit', 'UserController@edit');
         Route::post('/user/update', 'UserController@update');
     });
+    Route::middleware('permission:update')->group(function () {
+
+        Route::get('update', 'UpdateController@index');
+        Route::get('update/delete', 'UpdateController@destroy');
+        Route::get('update/create', 'UpdateController@create');
+        Route::post('update', 'UpdateController@store');
+        Route::post('update/update', 'UpdateController@update');
+    });
 
 });
 

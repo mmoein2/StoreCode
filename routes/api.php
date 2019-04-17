@@ -79,3 +79,5 @@ Route::group(['namespace'=>'Api','prefix'=>'shop','middleware'=>'auth:shop_api']
 
     Route::post('payment/token', 'PaymentController@getToken');
 });
+
+Route::post('/update/check', 'Api\UpdateController@checkUpdate');

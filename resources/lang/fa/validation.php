@@ -101,6 +101,8 @@ return array(
     |
     */
     'attributes' => array(
+        "version_code" => "کد ورژن",
+        "version_name" => "نام ورژن",
         "name" => "نام",
         "username" => "نام کاربری",
         "email" => "نام کاربری",

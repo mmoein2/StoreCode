@@ -78,5 +78,9 @@ class PermissionSeeder extends Seeder
                 'name_en' =>'delete-maincode'
             ],
         ]);
+        \App\Permission::insert([
+            'name_fa'=>'بروزرسانی',
+            'name_en'=>'update',
+        ]);
     }
 }

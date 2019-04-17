@@ -189,6 +189,16 @@
                 </a>
                 </li>
                 @endcan
+                @can('update')
+
+                <li @if(strpos(request()->route()->uri,"update")!==false) class="active" @endif>
+                    <a href="/update">
+                        <i class="fa fa-mobile"></i> <span>بروزرسانی</span>
+
+                    </a>
+                </li>
+                @endcan
+
                 @can('special-post')
 
                     <li @if(strpos(request()->route()->uri,"post/amount")!==false) class="active" @endif>
