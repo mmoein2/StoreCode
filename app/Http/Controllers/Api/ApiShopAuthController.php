@@ -116,7 +116,9 @@ class ApiShopAuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $id = auth()->id();
+        $shop=Shop::with(['city','province'])->find($id);
+        return response()->json($shop);
     }
 
     /**

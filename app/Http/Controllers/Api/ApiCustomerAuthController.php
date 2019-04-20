@@ -102,7 +102,9 @@ class ApiCustomerAuthController extends Controller
     public function me()
     {
 
-        return response()->json(auth()->user());
+        $id = auth()->id();
+        $customer=Customer::with(['city','province'])->find($id);
+        return response()->json($customer);
     }
 
     /**
