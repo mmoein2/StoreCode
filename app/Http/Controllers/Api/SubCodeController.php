@@ -28,14 +28,15 @@ class SubCodeController extends Controller
             ->where('status',1)->where('customer_id',null)
             ->where('expiration_date','>=',$current_timestamp)->first();
 
-        $shop = $subcode->shop;
-
         if($subcode==null)
         {
             return[
                 'message'=>'کد وارد شده در سیستم پیدا نشد'
             ];
         }
+        $shop = $subcode->shop;
+
+
         $customer = Customer::where('mobile',$request->from)->first();
 
         if($customer==null)
