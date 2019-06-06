@@ -120,5 +120,10 @@ class AuthServiceProvider extends ServiceProvider
             return PermissionUser::where('user_id',$user->id)
                 ->where('permission_id',$id)->exists();
         });
+        Gate::define('edit-shop',function ($user){
+            $id = Permission::where('name_en','edit-shop')->first()->id;
+            return PermissionUser::where('user_id',$user->id)
+                ->where('permission_id',$id)->exists();
+        });
     }
 }

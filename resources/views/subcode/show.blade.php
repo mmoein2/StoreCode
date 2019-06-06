@@ -64,7 +64,7 @@ body
                 <div class="col-md-12">
                     <label class="title">مشخصات فروشگاه :</label>
                     @if($subcode->shop != null)
-                    <a href="/shop/detail?id={{$subcode->shop->id}}">
+                    <a href="/shop?id={{$subcode->shop->id}}">
                     <label>{{$subcode->shop->name ?? ''}}</label>
                     <label>کد </label>
                     <lable>{{$subcode->shop->id ?? ''}}</lable>

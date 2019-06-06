@@ -60,7 +60,11 @@
                             @foreach($messages as $c)
                                 <tr>
                                     <td>{{$c->title}}</td>
-                                    <td>{{$c->shop->name}}</td>
+                                    <td>
+                                        <a href="/shop?id={{$c->shop->id}}">
+                                        {{$c->shop->name}}
+                                        </a>
+                                    </td>
                                     <td>{{$c->getPersianCreatedAt()}}</td>
                                     <td class="{{$c->getColorForStatus()}}">{{$c->getStatus()}}</td>
                                     <td><a class="btn btn-sm btn-success" href="/message/show?id={{$c->id}}">مشاهده</a></td>

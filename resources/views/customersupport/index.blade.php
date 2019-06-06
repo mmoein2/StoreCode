@@ -60,7 +60,9 @@
                             @foreach($customer as $c)
                                 <tr>
                                     <td>{{$c->title}}</td>
-                                    <td>{{$c->customer->fullname}}</td>
+                                    <td>
+                                       <a href="/customer/show?id={{$c->customer->id}}"> {{$c->customer->fullname}}</a>
+                                    </td>
                                     <td>{{$c->getPersianCreatedAt()}}</td>
                                     <td class="{{$c->getColorForStatus()}}">{{$c->getStatus()}}</td>
                                     <td><a class="btn btn-sm btn-success" href="/customersupport/show?id={{$c->id}}">مشاهده</a></td>

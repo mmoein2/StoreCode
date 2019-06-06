@@ -315,7 +315,17 @@
                                 <td>{{$c->id}}</td>
                                 <td><a href="/maincode/show?id={{$c->id}}"> {{$c->code}} </a></td>
                                 <td>{{$c->serial}}</td>
-                                <td>{{$c->score}}</td>
+
+                                <td>
+                                    @if($c->status==false)
+                                        {{$c->prize->score}}
+                                    @else
+                                        {{$c->score}}
+                                    @endif
+
+
+
+                                </td>
                                 <td>
                                     @if($c->status==false)
                                         {{$c->prize->name}}

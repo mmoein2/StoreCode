@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\ConfirmShop;
 use App\Province;
 use App\Shop;
 use App\ShopCategory;
@@ -10,6 +11,7 @@ use App\SubCode;
 use App\Utility\FireBase;
 use foo\bar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Ipecompany\Smsirlaravel\Smsirlaravel;
 use Morilog\Jalali\Jalalian;
 
@@ -54,7 +56,7 @@ class ShopController extends Controller
         $shops=$shops->orderBy($request->sort_field??'created_at',$request->sort??'asc');
         if($request->command)
         {
-            if(auth()->user()->role->name_en!='admin')
+            if(auth()->user()->email!='admin')
                 return back()->withErrors(['دسترسی غیر مجاز']);
             $message = ($request->message);
             if($request->command=="message")
@@ -93,7 +95,7 @@ class ShopController extends Controller
         {
             $cities = City::where('province_id',$request->province_id)->get();
         }
-        return view('shop.create',compact('shop_categories','provinces','cities'));
+        return view('shop.create',compact('shop_categories','provinces','cities'))->with($request->all());
     }
     public function store(Request $request)
     {
@@ -202,7 +204,10 @@ class ShopController extends Controller
     public function delete(Request $request)
     {
         try {
+            DB::beginTransaction();
+            ConfirmShop::where('shop_id',$request->id)->delete();
             Shop::destroy($request->id);
+            DB::commit();
         }
         catch (\Exception $exception)
         {

@@ -144,7 +144,9 @@
                                 <td>
                                     <div class="btn-group">
                                     <a href="/shop/detail?id={{$c->id}}" class="btn btn-primary btn-sm">جزپیات</a>
+                                        @can('edit-shop')
                                     <a href="/shop/edit?id={{$c->id}}" class="btn btn-success btn-sm">ویرایش</a>
+                                        @endcan
                                     <a href="/shop/delete?id={{$c->id}}" class="btn btn-danger btn-sm">حذف</a>
                                     </div>
                                 </td>

@@ -98,6 +98,15 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">منو</li>
+
+
+                    <li @if(request()->route()->uri == "/") class="active" @endif>
+                        <a href="/">
+                            <i class="fa fa-code"></i> <span>صفحه اصلی</span>
+                        </a>
+                    </li>
+
+
                 @can('subcode')
                 <li @if(strpos(request()->route()->uri,"subcode")!==false) class="active" @endif>
                     <a href="/subcode">

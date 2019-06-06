@@ -16,6 +16,7 @@ Route::get('/','Auth\LoginController@showLoginForm');
 Route::post('/payment/redirect', 'PaymentController@redirect');
 
 Route::middleware('auth')->group(function (){
+    Route::get('/','HomeController@index');
 
 
     Route::middleware('permission:subcode')->group(function (){
@@ -43,8 +44,12 @@ Route::middleware('auth')->group(function (){
         Route::get('/shop/create','ShopController@create');
         Route::post('/shop','ShopController@store');
         Route::get('/shop/delete','ShopController@delete');
-        Route::get('/shop/edit','ShopController@edit');
-        Route::patch('/shop','ShopController@update');
+
+        Route::middleware('permission:edit-shop')->group(function () {
+
+            Route::get('/shop/edit', 'ShopController@edit');
+            Route::patch('/shop', 'ShopController@update');
+        });
         Route::get('/shop/detail','ShopController@detail');
         Route::get('/shop/password/sms','ShopController@passwordSms');
         Route::post('/shop/category/modify','ShopController@modifyCategory');

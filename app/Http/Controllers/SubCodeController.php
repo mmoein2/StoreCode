@@ -158,10 +158,6 @@ class SubCodeController extends Controller
     {
         $array = $request->data;
 
-        $request->validate([
-            'day'=>'required|min:1|numeric',
-            'score' =>'required|min:1|numeric'
-        ]);
         $score= $request->score;
         $expiration_day = $request->day;
 
@@ -171,8 +167,10 @@ class SubCodeController extends Controller
             $s = SubCode::find($item);
             if($s->status!=0)
                 return back()->withErrors(['کد با شماره ردیف '.$s->id.' قابل حذف نیست ']);
-            $s->score = $score;
-            $s->expiration_day = $expiration_day;
+            if($score != null)
+                $s->score = $score;
+            if($expiration_day != null)
+                $s->expiration_day = $expiration_day;
             $s->save();
         }
         DB::commit();

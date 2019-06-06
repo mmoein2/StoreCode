@@ -47,7 +47,8 @@
 
                         <div class="form-group">
                             <label for="">استان</label>
-                            <select id="province" class="form-control" style="height: 50px" onchange="province_id.value=(this.value);provice_form.submit();">
+                            {{--<select id="province" class="form-control" style="height: 50px" onchange="province_id.value=(this.value);provice_form.submit();">--}}
+                            <select id="province" class="form-control" style="height: 50px" onchange="changeState(this.value)">
                                 <option>انتخاب کنید</option>
 
                             @foreach($provinces as $p)
@@ -60,7 +61,7 @@
 
                         <div class="form-group">
                             <label for="">شهر</label>
-                            <select name="city_id" class="form-control" style="height: 50px;">
+                            <select id="cities" name="city_id" class="form-control" style="height: 50px;">
                                 <option selected>انتخاب کنید</option>
                                 @foreach($cities as $c)
                                     <option value="{{$c->id}}">
@@ -129,3 +130,19 @@
 
     </div>
 </div>
+<script>
+    function changeState(id) {
+        cities.innerHTML="<option selected> ... </option>";
+        var data="<option selected>انتخاب کنید</option>";
+        $.post("/api/city",{province_id:id}).then(function (respo) {
+            var i;
+            for(i=0;i<respo.data.length;i++)
+            {
+                data+="<option value='"+respo.data[i].id+"'>";
+                data+=respo.data[i].name;
+                data+="</option>";
+            }
+            cities.innerHTML=data;
+        });
+    }
+</script>
