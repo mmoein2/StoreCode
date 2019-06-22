@@ -81,6 +81,12 @@ Route::group(['namespace'=>'Api','prefix'=>'shop','middleware'=>'auth:shop_api']
     Route::post('payment/token', 'PaymentController@getToken');
     Route::post('customers', 'ShopController@customers');
     Route::post('subcode/variaty', 'ShopController@getSubcodeVariaty');
+    Route::post('discount', 'ShopController@registerDiscount');
+    Route::post('discount/history', 'ShopController@historyDiscount');
+    Route::post('discount/burn', 'ShopController@discountBurned');
+
+    Route::post('send/message', 'ShopController@registerMessage');
+
 
 });
 Route::post('/shop/register', 'Api\ShopController@register');

@@ -23,6 +23,22 @@
                             <label>تومان</label>
                         </div>
 
+                        <div style="margin-top: 10px" class="form-group">
+                            <label for="">مبلغ نوتیفیکیشن </label>
+                            <br>
+                            <input style="width: 90%;float: right;margin-left: 10px" name="notification_money" value="{{$setting->notification_money??''}}"  class="form-control"  id="exampleInputEmail1">
+                            <label>تومان</label>
+                        </div>
+
+
+                        <div style="margin-top: 10px" class="form-group">
+                            <label for="">مبلغ پیامک</label>
+                            <br>
+                            <input style="width: 90%;float: right;margin-left: 10px" name="sms_money" value="{{$setting->sms_money ??''}}"  class="form-control"  id="exampleInputEmail1">
+                            <label>تومان</label>
+                        </div>
+
+
 
 
                     </div>

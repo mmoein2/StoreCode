@@ -66,14 +66,12 @@ class PostController extends Controller
         {
             return ['message'=>'این بخش غیر فعال است'];
         }
-        if($setting->special_post_amount==0)
-        {
-            return ['message'=>'درحال حاضر این بخش غیرفعال است'];
-        }
 
         return[
             'message'=>'0',
-            'special_post_amount'=>$setting->special_post_amount
+            'special_post_amount'=>$setting->special_post_amount,
+            'notification'=>$setting->notification_money,
+            'sms'=>$setting->sms_money,
         ];
     }
 }

@@ -188,6 +188,24 @@
                 </li>
                 @endcan
 
+                @can('customer-support')
+
+                    <li @if(strpos(request()->route()->uri,"customersupport")!==false) class="active" @endif>
+                        <a href="/notiORmessage">
+                            <i class="fa fa-hand-paper-o"></i> <span>درخواست پیام</span>
+                            <?php $nc= (\App\NotiOrMessage::where('is_admin_show',false)->where('status',1))->count()  ?>
+                            @if($nc>0)
+                                <span class="pull-left-container">
+
+                            <small style="font-size: 14px" class="label pull-left bg-yellow">
+                                <b> {{$nc}}</b>
+                            </small>
+                            </span>
+                            @endif
+                        </a>
+                    </li>
+                @endcan
+
                 <li class="header">تنظیمات اپلیکیشن</li>
                 @can('slider')
 
@@ -212,7 +230,7 @@
 
                     <li @if(strpos(request()->route()->uri,"post/amount")!==false) class="active" @endif>
                         <a href="/post/amount">
-                            <i class="fa fa-dollar"></i> <span>مبلغ پست ویژه</span>
+                            <i class="fa fa-dollar"></i> <span>تعیین مبالغ</span>
 
                         </a>
                     </li>

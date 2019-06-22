@@ -16,7 +16,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:0'
+            'amount' => 'required|numeric|min:0',
         ]);
 
         $setting = Setting::first();
@@ -25,6 +25,8 @@ class PostController extends Controller
             $setting = new Setting();
         }
         $setting->special_post_amount=$request->amount;
+        $setting->sms_money=$request->sms_money;
+        $setting->notification_money=$request->notification_money;
 
         $setting->save();
         return back();

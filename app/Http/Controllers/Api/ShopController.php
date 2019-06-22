@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\City;
 use App\Customer;
+use App\Discount;
+use App\DiscountMember;
 use App\Message;
+use App\NotiOrMessage;
+use App\NotiOrMessageMember;
 use App\Shop;
 use App\SubCode;
+use Carbon\Carbon;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -218,17 +223,16 @@ class ShopController extends Controller
             });
 
         }
-        if($request->date_to)
-        {
 
-        }
+        $data_count = $customers->count();
 
 
         $customers = $customers->with('latestSubCode')->paginate();
-        return $customers;
+
         return[
             'message'=>'0',
-            'data'=>$customers
+            'data'=>$customers,
+            'customer_count'=>$data_count
         ];
 
     }
@@ -271,6 +275,231 @@ class ShopController extends Controller
             'data'=>$bar_lables
         ];
 
+    }
+
+    public function registerDiscount(Request $request)
+    {
+        $shop = auth()->user();
+        $request->validate([
+            'type'=>'required|max:2|min:1|integer',
+            'discount'=>'required|integer|min:1',
+            'expiration_date'=>'required|integer|min:1',
+
+        ]);
+        DB::beginTransaction();
+
+        $type = $request->type;
+        $expiration_date = $request->expiration_date;
+        $discount = $request->discount;
+        //based on checked customers
+        if($type==1)
+        {
+            $request->validate([
+                'customers'=>'required',
+            ]);
+            $array = explode(',',($request->customers));
+            $d = new Discount();
+            $d->shop_id= $shop->id;
+            $d->discount= $discount;
+            $d->expiration_date = $expiration_date;
+            $d->save();
+            foreach ($array as $item)
+            {
+                $dm = new DiscountMember();
+                $dm->customer_id = $item;
+                if(!Customer::where('id',$item)->exists())
+                {
+                    return [
+                        'message'=>'مشتری با کد انتخابی '.$item.' وجود ندارد '
+                    ];
+                }
+                $dm->discount_id =  $d->id;
+
+                $dm->save();
+            }
+
+        }
+        //based on query
+        elseif($type==2)
+        {
+            $request->validate([
+                'qty'=>'required|integer|min:1',
+                'city_id'=>'sometimes|required|integer|min:1',
+                'province_id'=>'required|integer|min:1',
+
+            ]);
+
+            $qty = $request->qty;
+            $city_id = $request->city_id;
+            $province_id = $request->province_id;
+
+            $customers = Customer::where('province_id',$province_id);
+            if($request->city_id)
+            {
+                $customers = $customers->where('city_id',$city_id);
+            }
+            $d = new Discount();
+            $d->shop_id= $shop->id;
+            $d->discount= $discount;
+            $d->expiration_date = $expiration_date;
+
+            $d->save();
+            $customers=$customers->latest()->take($qty)->get();
+            $ct=0;
+            foreach ($customers as $customer)
+            {
+                $ct++;
+                $dm = new DiscountMember();
+                $dm->customer_id = $customer->id;
+                $dm->discount_id =  $d->id;
+
+                $dm->save();
+            }
+            if($ct==0)
+            {
+                return[
+                    'message'=>'هیچ شخصی با این مشخصات وجود ندارد'
+                ];
+            }
+
+
+
+        }
+        DB::commit();
+
+        return ['message'=>'0'];
+    }
+    public function historyDiscount(Request $request)
+    {
+        $shop = auth()->user();
+
+        $res = Discount::where('shop_id',$shop->id)->orderByDesc('id')->paginate();
+        return[
+            'message'=>'0',
+            'data'=>$res
+        ];
+
+    }
+    public function discountBurned(Request $request)
+    {
+        $shop = auth()->user();
+
+        $request->validate([
+            'customer_id'=>'required'
+        ]);
+        $customer_id = $request->customer_id;
+
+        $dm = DiscountMember::where('customer_id',$customer_id)->latest()->first();
+        if($dm==null)
+        {
+            return['message'=>'چنین کد تخفیفی صادر نشده است'];
+        }
+        if($dm->is_burned==true)
+        {
+            return['message'=>'کد تخفیف قبلا استفاده شده است'];
+        }
+        $d = $dm->discount;
+        if($d->expiration_date<Carbon::now()->timestamp*1000)
+        {
+            return['message'=>'تاریخ انقضا گذشته است'];
+        }
+        if($d->shop_id!=$shop->id)
+        {
+            return['message'=>'کد تخفیف مربوط به فروشگاه دیگری است'];
+        }
+        $dm->is_burned=true;
+        $dm->save();
+        return[
+            'message'=>'0'
+        ];
+
+    }
+
+    public function registerMessage(Request $request)
+    {
+        $shop = auth()->user();
+        $request->validate([
+            'type1'=>'required|max:2|min:1|integer',//checked or no
+            'type2'=>'required|max:2|min:1|integer',
+            'text'=>'required',
+
+        ]);
+        DB::beginTransaction();
+
+        $type1 = $request->type1;
+
+        //1->noti,2=>message
+        $type2 = $request->type2;
+        $text = $request->text;
+
+        $d = new NotiOrMessage();
+        $d->type = $type2;
+        $d->text= $text;
+        $d->status= 0;
+        $d->save();
+
+        //checked
+        if($type1==1) {
+            $array = explode(',', ($request->customers));
+            foreach ($array as $item) {
+                $dm = new NotiOrMessageMember();
+                $dm->customer_id = $item;
+                if (!Customer::where('id', $item)->exists()) {
+                    return [
+                        'message' => 'مشتری با کد انتخابی ' . $item . ' وجود ندارد '
+                    ];
+                }
+                $dm->noti_or_message_id = $d->id;
+
+                $dm->save();
+            }
+        }
+        elseif ($type1==2)
+        {
+            $request->validate([
+                'qty'=>'required|integer|min:1',
+                'city_id'=>'sometimes|required|integer|min:1',
+                'province_id'=>'required|integer|min:1',
+
+            ]);
+            $qty = $request->qty;
+            $city_id = $request->city_id;
+            $province_id = $request->province_id;
+
+            $customers = Customer::where('province_id',$province_id);
+            if($request->city_id)
+            {
+                $customers = $customers->where('city_id',$city_id);
+            }
+
+
+            $customers=$customers->latest()->take($qty)->get();
+            $ct=0;
+            foreach ($customers as $customer)
+            {
+                $ct++;
+                $dm = new NotiOrMessageMember();
+                $dm->customer_id = $customer->id;
+                $dm->noti_or_message_id =  $d->id;
+
+                $dm->save();
+            }
+            if($ct==0)
+            {
+                return[
+                    'message'=>'هیچ شخصی با این مشخصات وجود ندارد'
+                ];
+            }
+            if($ct<=50)
+            {
+                $d->status=1;
+                $d->save();
+            }
+        }
+
+           DB::commit();
+
+        return ['message'=>'0','noti_message_id'=>$d->id];
     }
 
 }

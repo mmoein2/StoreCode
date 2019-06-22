@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\NotiOrMessage;
 use App\Payment;
 use App\Post;
 use App\Utility\SamanPayment;
@@ -42,10 +43,17 @@ class PaymentController extends Controller
                 {
                     $payment->status=true;
 
-                    $post = $payment->post;
-                    $post->is_special=true;
-                    $post->save();
-
+                    if($payment->noti_message_id!=null)
+                    {
+                        $n = NotiOrMessage::find($payment->noti_message_id);
+                        $n->status=1;
+                        $n->save();
+                    }
+                    else {
+                        $post = $payment->post;
+                        $post->is_special = true;
+                        $post->save();
+                    }
                 }
                 else
                 {

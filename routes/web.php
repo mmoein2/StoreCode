@@ -103,6 +103,10 @@ Route::middleware('auth')->group(function (){
     Route::middleware('permission:customer-support')->group(function () {
         Route::get('/customersupport', 'CustomerSupportController@index');
         Route::get('/customersupport/show', 'CustomerSupportController@show');
+        Route::get('/notiORmessage', 'NotiOrMessageController@index');
+        Route::get('/notiORmessage/verify/{id}', 'NotiOrMessageController@verify');
+
+
     });
 
     Route::middleware('permission:slider')->group(function () {

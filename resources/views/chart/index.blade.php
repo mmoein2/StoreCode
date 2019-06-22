@@ -56,6 +56,18 @@
                     <div class="col-md-12" style="margin-top: 100px">
                     <canvas id="myChart"  style="width: 100%;height: 700px"></canvas>
                     </div>
+
+                    <div class="col-md-12" style="margin-top: 100px">
+                        <canvas id="lineChart1"  style="width: 100%;height: 700px"></canvas>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top: 100px">
+                        <canvas id="lineChart2"  style="width: 100%;height: 700px"></canvas>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top: 100px">
+                        <canvas id="lineChart3"  style="width: 100%;height: 700px"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -202,6 +214,84 @@
 
             }
 
+
+        });
+    </script>
+
+    <script>
+        var ctx1 = $("#lineChart1");
+        Chart.defaults.global.defaultFontFamily = "Vazir";
+
+
+        var myChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+
+                datasets: [{
+                    label: 'نمودار ثبت کدهای فرعی',
+                    data:  {{json_encode($subcode_series)}},
+
+
+                    borderWidth: 1,
+                    borderColor:'orange',
+                    lineTension: 0
+
+
+                }],
+
+                labels: ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"]
+            }
+
+        });
+
+        var ctx2 = $("#lineChart2");
+        Chart.defaults.global.defaultFontFamily = "Vazir";
+
+
+        var myChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+
+                datasets: [{
+                    label: 'نمودار مشتریان',
+                    data:  {{json_encode($customer_series)}},
+
+
+                    borderWidth: 1,
+                    borderColor:'orange',
+                    lineTension: 0
+
+                }],
+
+                labels: ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"]
+            },
+            lineTension: 0,
+            cubicInterpolationMode: 'monotone'
+
+        });
+
+        var ctx3 = $("#lineChart3");
+        Chart.defaults.global.defaultFontFamily = "Vazir";
+
+
+        var myChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+
+                datasets: [{
+                    label: 'نمودار فروشگاه ها',
+                    data:  {{json_encode($shop_series)}},
+
+
+                    borderWidth: 1,
+                    borderColor:'orange',
+                    lineTension: 0
+
+
+                }],
+
+                labels: ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"]
+            }
 
         });
     </script>
