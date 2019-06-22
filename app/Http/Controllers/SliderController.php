@@ -45,6 +45,7 @@ class SliderController extends Controller
 
         $slider = new Slider();
         $slider->image_address = $url.$name;
+        $slider->link = $request->link;
 
         $slider->save();
         return redirect('/slider');

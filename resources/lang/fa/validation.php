@@ -165,5 +165,7 @@ return array(
         'city_id' =>'شهر',
         'code' =>'کد',
         'amount' =>'کد',
+        'time_from' =>'زمان شروع',
+        'time_to' =>'زمان پایان',
     ),
 );

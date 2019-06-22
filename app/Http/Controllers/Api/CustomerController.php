@@ -9,7 +9,9 @@ use App\CustomerSupport;
 use App\Post;
 use App\Province;
 use App\Shop;
+use App\ShopCategory;
 use App\SubCode;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -94,16 +96,62 @@ class CustomerController extends Controller
     }
     public function shops(Request $request)
     {
+        $id = auth()->id();
+
         $shops = Shop::with(['category','province','city']);
+
+        if($request->isFollowed)
+        {
+            $flag = $request->isFollowed;
+
+            if($flag==1)
+            {
+                $array = CustomerShop::where('customer_id',$id)->select(['shop_id']);
+                $shops = $shops->whereIn('id',$array);
+            }
+            elseif($flag==2)
+            {
+                $array = CustomerShop::where('customer_id',$id)->select(['shop_id']);
+                $shops = $shops->whereNotIn('id',$array);
+            }
+        }
         if($request->category_name)
         {
             $shops = $shops->whereHas('category',function ($q)use($request){
                 $q->where('name','like','%'.$request->category_name.'%');
             });
         }
-        if($request->city)
+        if($request->city_id)
         {
-            $shops = $shops->where('city','like','%'.$request->city.'%');
+            $shops = $shops->where('city_id',$request->city_id);
+        }
+        if($request->shop_category_id)
+        {
+            $shops = $shops->where('shop_category_id',$request->shop_category_id);
+        }
+        if($request->text)
+        {
+            $text = $request->text;
+            $search_command = $request->search_command;
+            if($search_command)
+            {
+
+                if($search_command==1)
+                {
+                    $shops = $shops->where('name','like','%'.$text.'%');
+
+                }
+                elseif($search_command==2)
+                {
+                    $shops = $shops->where('desc','like','%'.$text.'%');
+                }
+                elseif($search_command==3)
+                {
+                    $shops = $shops->where('desc','like','%'.$text.'%')
+                    ->orWhere('name','like','%'.$text.'%');
+                }
+            }
+
         }
         $shops=$shops->select(['id','name','person','desc','shop_category_id','address','lat','lng','images','followers','city_id','province_id']);
         if($request->id)
@@ -200,7 +248,17 @@ class CustomerController extends Controller
         $request->validate([
             'national_code'=>'sometimes|numeric|digits:10',
             'city_id'=>'sometimes|numeric',
+            'thumbnail'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:2048',
+
         ]);
+        if($request->exists('thumbnail'))
+        {
+            $file = $request->file('thumbnail');
+            $url = '/upload/customers';
+            $name = uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path($url),$name);
+            $customer->thumbnail=$url.'/'.$name;
+        }
         if($request->fullname)
         {
             $customer->fullname = $request->fullname;
@@ -234,6 +292,16 @@ class CustomerController extends Controller
             $customer->city_id=$city->id;
 
         }
+        if($request->date_of_birth)
+        {
+            $customer->date_of_birth= $request->date_of_birth;
+
+        }
+        if($request->email)
+        {
+            $customer->email= $request->email;
+
+        }
 
         $customer->save();
         return['message'=>'0'];
@@ -260,6 +328,38 @@ class CustomerController extends Controller
             'message'=>'0',
             'data'=>$cities
         ];
+    }
+    public function shopCategory(Request $request){
+        $categories = ShopCategory::get();
+        return [
+            'message'=>'0',
+            'data'=>$categories
+        ];
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'mobile'=>'required|min:11|max:11|unique:customers',
+            'fullname'=>'required|max:50',
+            'isMan'=>'required|integer|min:0|max:1',
+            'city_id'=>'required|integer|min:1'
+        ]);
+        $customer = new Customer();
+        $customer->score=0;
+        $customer->fullname=$request->fullname;
+        $customer->mobile=$request->mobile;
+        $customer->used_score=0;
+        $customer->registration_date=Carbon::now()->isoFormat('x');
+        $customer->isMan=$request->isMan;
+        $customer->status=1;
+        $customer->city_id=$request->city_id;
+        $customer->province_id = City::find($request->city_id)->province->id;
+        $customer->card_count = 0;
+
+        $customer->save();
+
+        return['message'=>'0'];
     }
 
 }

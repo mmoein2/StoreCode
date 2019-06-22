@@ -62,6 +62,8 @@ Route::group(['namespace'=>'Api','prefix'=>'customer','middleware'=>'auth:custom
 
     Route::post('prize/all', 'MainCodeController@getPrizeCategory');
 
+    Route::post('shop/category', 'ShopController@shopCategory');
+
 
 
 
@@ -77,6 +79,9 @@ Route::group(['namespace'=>'Api','prefix'=>'shop','middleware'=>'auth:shop_api']
     Route::post('profile/images/update', 'ShopController@updateImages');
     Route::post('posts/special/amount', 'PostController@getPostAmount');
     Route::post('payment/token', 'PaymentController@getToken');
+    Route::post('customers', 'ShopController@customers');
 });
+Route::post('/shop/register', 'Api\ShopController@register');
+Route::post('/customer/register', 'Api\CustomerController@register');
 
 Route::post('/update/check', 'Api\UpdateController@checkUpdate');

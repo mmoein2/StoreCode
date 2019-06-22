@@ -70,6 +70,11 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="">ساعات کاری</label>
+                            <input class="form-control" value="{{$shop->time}}" name="time">
+
+                        </div>
+                        <div class="form-group">
                             <label for="">آدرس</label>
                             <textarea  class="form-control" style="height: 200px" name="address">{{$shop->address}}</textarea>
                         </div>

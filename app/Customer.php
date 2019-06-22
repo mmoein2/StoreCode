@@ -49,6 +49,11 @@ class Customer extends Authenticatable implements JWTSubject
         return $this->belongsTo(Province::class,'province_id','id');
     }
 
+    public function latestSubCode()
+    {
+        return $this->hasOne(SubCode::class,'customer_id','id')->orderByDesc('customer_date');
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

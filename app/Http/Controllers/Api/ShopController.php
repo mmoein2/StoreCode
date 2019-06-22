@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\City;
+use App\Customer;
 use App\Message;
 use App\Shop;
 use App\SubCode;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Ipecompany\Smsirlaravel\Smsirlaravel;
 
 class ShopController extends Controller
 {
@@ -91,6 +95,18 @@ class ShopController extends Controller
         {
             $store->lng= $request->lng;
         }
+        if($request->time)
+        {
+            $store->time= $request->time;
+        }
+        if($request->address)
+        {
+            $store->address= $request->address;
+        }
+        if($request->phone)
+        {
+            $store->address= $request->phone;
+        }
 
         $store->save();
         return['message'=>'0'];
@@ -109,9 +125,19 @@ class ShopController extends Controller
             'image8'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:10240',
             'image9'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:10240',
             'image10'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:10240',
+            'thumbnail'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:2048',
         ]);
+        if($request->exists('thumbnail'))
+        {
+            $file = $request->file('thumbnail');
+            $url = '/upload/shops';
+            $name = uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path($url),$name);
+            $shop->thumbnail=$url.'/'.$name;
+        }
 
-        $images= [];
+
+            $images= [];
         if($shop->images)
             $images=$shop->images;
         for($i=1;$i<=10;$i++)
@@ -136,4 +162,75 @@ class ShopController extends Controller
         $shop->save();
         return['message'=>'0'];
     }
+    public function customers(Request $request)
+    {
+        $shop_id = auth()->id();
+
+        $customers_id = SubCode::where('shop_id',$shop_id)->where('customer_id','!=',null)->select(['customer_id']);
+        $customers = Customer::whereIn('id',$customers_id);
+        if($request->scoreFrom)
+        {
+            $customers = $customers->where(DB::raw('score-used_score'),'>=',$request->scoreFrom);
+        }
+        if($request->scoreTo)
+        {
+            $customers = $customers->where(DB::raw('score-used_score'),'<=',$request->scoreTo);
+
+        }
+        if($request->card)
+        {
+            $data = SubCode::where('score',$request->card)->select('customer_id');
+            $customers=$customers->whereIn('id',$data);
+        }
+        if($request->city_id)
+        {
+            $customers=$customers->where('city_id',$request->city_id);
+        }
+        if($request->id)
+        {
+            $customers=$customers->where('id',$request->id);
+        }
+
+
+        $customers = $customers->with('latestSubCode')->paginate();
+        return $customers;
+        return[
+            'message'=>'0',
+            'data'=>$customers
+        ];
+
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'=>'required|max:30',
+            'shop_category_id'=>'required|integer|min:1',
+            'mobile'=>'required|min:11|max:11|unique:shops',
+            'phone'=>'required|min:7',
+            'address'=>'required|min:7',
+            'person'=>'required',
+            'city_id'=>'required|integer|min:1',
+        ]);
+        $shop = new Shop();
+        $shop->name = $request->name;
+        $shop->shop_category_id = $request->shop_category_id;
+        $shop->mobile = $request->mobile;
+        $shop->phone = $request->phone;
+        $shop->address = $request->address;
+        $shop->person = $request->person;
+        $shop->city_id = $request->city_id;
+        $shop->province_id = City::find($request->city_id)->province->id;
+        $shop->password= substr(md5(uniqid(rand(), true)),0,4);
+
+        $shop->score=0;
+        $shop->used_score=0;
+        $shop->followers=0;
+        $shop->save();
+        Smsirlaravel::send('رمز شما جهت ورود :'.$shop->password,$shop->mobile);
+
+        return['message'=>'0'];
+
+    }
+
 }

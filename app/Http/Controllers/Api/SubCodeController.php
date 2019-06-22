@@ -25,13 +25,18 @@ class SubCodeController extends Controller
 
         DB::beginTransaction();
         $subcode = SubCode::with('shop')->where('code',$request->text)
-            ->where('status',1)->where('customer_id',null)
-            ->where('expiration_date','>=',$current_timestamp)->first();
+            ->where('status',1)->where('customer_id',null)->first();
 
         if($subcode==null)
         {
             return[
-                'message'=>'کد وارد شده در سیستم پیدا نشد'
+                'message'=>'کد وارد شده نا معتبر است.\nلطفا مجددا تلاش نماپید.'
+            ];
+        }
+        if($subcode->expiration_date < $current_timestamp)
+        {
+            return[
+                'message'=>'تاریخ انقضای کد وارد شده به پایان رسیده است.'
             ];
         }
         $shop = $subcode->shop;
@@ -57,6 +62,7 @@ class SubCodeController extends Controller
             ];
         }
         $customer->score+=$subcode->score;
+        $customer->card_count++;
         $shop->used_score+=$subcode->score;
 
         $subcode->status=2;

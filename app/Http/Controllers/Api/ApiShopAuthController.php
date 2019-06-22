@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\ConfirmShop;
 use App\Shop;
+use App\SubCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -118,6 +119,7 @@ class ApiShopAuthController extends Controller
     {
         $id = auth()->id();
         $shop=Shop::with(['city','province'])->find($id);
+        $club_count = SubCode::where('shop_id',$id)->where('customer_id','!=',null )->distinct('customer_id')->count();
         return response()->json($shop);
     }
 

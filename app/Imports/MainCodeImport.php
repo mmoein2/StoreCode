@@ -28,6 +28,7 @@ class MainCodeImport implements ToModel,WithHeadingRow,WithValidation
         return new MainCode([
             'code'=>$row['code'],
             'serial'=>$row['serial'],
+            'name'=>$row['name'],
             'prize_id' =>$prize->id,
             'expiration_day'=>$this->day
         ]);
@@ -42,6 +43,7 @@ class MainCodeImport implements ToModel,WithHeadingRow,WithValidation
             'code' => 'required|unique:main_codes',
             'serial' => 'required|numeric|unique:main_codes',
             'type' => 'required',
+            'name' => 'required',
         ];
     }
 }

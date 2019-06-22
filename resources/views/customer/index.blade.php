@@ -34,7 +34,31 @@
                             <div class="col-md-2">
                                 <label>شماره همراه :</label><input value="{{$_GET['mobile']??''}}" name="mobile" class="form-control" type="text">
                             </div>
+                        <div class="col-md-2">
+                            <label>استان :</label>
+                            <select id="province" name="province_id" class="form-control" style="height: 50px" onchange="changeState(this.value)">
+                                <option value="0">انتخاب کنید</option>
 
+                                @foreach($provinces as $p)
+                                    <option value="{{$p->id}}"  @if(isset($_GET['province_id'])&&$_GET['province_id']==$p->id) selected @endif>
+                                        {{$p->name}}
+                                    </option>
+                                @endforeach
+                            </select>
+
+
+                            <label> شهر </label>
+                            <select id="cities" name="city_id" class="form-control" style="height: 50px;">
+                                <option value="0">انتخاب کنید</option>
+                                @foreach($cities as $c)
+                                    <option value="{{$c->id}}">
+                                        {{$c->name}}
+                                    </option>
+                                @endforeach
+
+                            </select>
+
+                        </div>
                         <div class="col-md-2">
                             <label>امتیاز کلی :</label><input value="{{$_GET['scoreFrom']??''}}" name="scoreFrom" class="form-control" type="text">
                             <label> تا </label><input value="{{$_GET['scoreTo']??''}}" class="form-control" name="scoreTo" type="text">
@@ -181,3 +205,19 @@
         }
     </script>
 @endsection
+<script>
+    function changeState(id) {
+        cities.innerHTML="<option selected> ... </option>";
+        var data="<option value='0' selected>انتخاب کنید</option>";
+        $.post("/api/city",{province_id:id}).then(function (respo) {
+            var i;
+            for(i=0;i<respo.data.length;i++)
+            {
+                data+="<option value='"+respo.data[i].id+"'>";
+                data+=respo.data[i].name;
+                data+="</option>";
+            }
+            cities.innerHTML=data;
+        });
+    }
+</script>

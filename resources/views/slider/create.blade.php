@@ -18,6 +18,11 @@
                             <input name="image" type="file" id="exampleInputEmail6">
                         </div>
 
+                        <div class="form-group">
+                            <label for="exampleInputEmail6">لینک </label>
+                            <input class="form-control" name="link" type="text" id="exampleInputEmail6">
+                        </div>
+
                     </div>
 
                     <!-- /.box-body -->

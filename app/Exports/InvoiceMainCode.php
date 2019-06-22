@@ -12,6 +12,6 @@ class InvoiceMainCode implements FromCollection
     */
     public function collection()
     {
-        return new Collection([['code','serial','type']]);
+        return new Collection([['code','name','serial','type']]);
     }
 }

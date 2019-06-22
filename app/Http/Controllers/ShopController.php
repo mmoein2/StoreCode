@@ -53,6 +53,14 @@ class ShopController extends Controller
         {
             $shops=$shops->where('used_score','<=',$request->usedscoreTo);
         }
+        if($request->province_id)
+        {
+            $shops=$shops->where('province_id',$request->province_id);
+        }
+        if($request->city_id)
+        {
+            $shops=$shops->where('city_id',$request->city_id);
+        }
         $shops=$shops->orderBy($request->sort_field??'created_at',$request->sort??'asc');
         if($request->command)
         {
@@ -83,8 +91,14 @@ class ShopController extends Controller
 
             }
         }
+        $provinces = Province::get();
+        $cities=[];
+        if($request->province_id)
+        {
+            $cities = City::where('province_id',$request->province_id)->get();
+        }
         $shops = $shops->with(['category','province','city'])->paginate();
-        return view('shop.index',compact('shops','shop_categories'));
+        return view('shop.index',compact('shops','shop_categories','provinces','cities'));
     }
     public function create(Request $request)
     {
@@ -107,6 +121,7 @@ class ShopController extends Controller
             'person' => 'required',
             'address' => 'required',
             'city_id' => 'required',
+            'time' => 'required',
         ]);
 
         $shop = new Shop($request->all());
@@ -244,6 +259,7 @@ class ShopController extends Controller
             'person' => 'required',
             'address' => 'required',
             'city_id' => 'required',
+            'time' => 'required',
         ]);
         $shop = Shop::find($request->id);
         $city = City::find($request->city_id);
@@ -259,6 +275,9 @@ class ShopController extends Controller
         $shop->address=$request->address;
         $shop->city_id=$city->id;
         $shop->province_id=$city->province_id;
+
+        $shop->time=$request->time;
+
 
 
         $shop->save();

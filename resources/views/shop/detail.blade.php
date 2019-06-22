@@ -40,6 +40,10 @@
                             <input value="{{$shop->city->name ?? '' }}"  class="form-control" id="exampleInputPassword1" readonly>
                         </div>
                         <div class="form-group">
+                            <label for="">ساعات کاری</label>
+                            <input value="{{$shop->time }}"  class="form-control" id="exampleInputPassword1" readonly>
+                        </div>
+                        <div class="form-group">
                             <label for="">آدرس</label>
                             <textarea class="form-control" style="height: 200px" name="address" readonly>{{$shop->address}}</textarea>
                         </div>

@@ -294,6 +294,7 @@
                             </th>
                             <th>ردیف</th>
                             <th><a href="#" onclick="sortForm('code')">کد اصلی</a></th>
+                            <th>نام</th>
                             <th><a href="#" onclick="sortForm('serial')">سریال</a></th>
                             <th><a href="#" onclick="sortForm('score')">امتیاز</a></th>
                             <th>نوع جوایز</th>
@@ -314,6 +315,7 @@
                                 </td>
                                 <td>{{$c->id}}</td>
                                 <td><a href="/maincode/show?id={{$c->id}}"> {{$c->code}} </a></td>
+                                <td>{{$c->name??''}}</td>
                                 <td>{{$c->serial}}</td>
 
                                 <td>

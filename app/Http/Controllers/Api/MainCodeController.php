@@ -78,6 +78,7 @@ class MainCodeController extends Controller
 
         $query=$query->orderByDesc('id')->select([
             'code',
+            'name',
             'prize_id',
             'expiration_day',
         ])->paginate();
@@ -120,6 +121,7 @@ class MainCodeController extends Controller
             'id',
             'code',
             'score',
+            'name',
             'customer_date',
             'expiration_date',
             'prize_name',

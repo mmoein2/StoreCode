@@ -21,7 +21,7 @@ class Shop extends Authenticatable implements JWTSubject
 
         if(auth()->check())
         {
-            $this->appends=['is_followed'];
+            $this->appends=['is_followed','club_count'];
         }
     }
 
@@ -32,6 +32,13 @@ class Shop extends Authenticatable implements JWTSubject
             return $cs==true ? 1 : 0;
         }
     }
+    public function getClubCountAttribute()
+    {
+        return SubCode::where('shop_id',$this->id)->where('customer_id','!=',null )->distinct('customer_id')->count();
+
+    }
+
+
 
     public function category()
     {

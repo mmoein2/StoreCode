@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
 use App\Customer;
+use App\Province;
 use App\Utility\FireBase;
 use App\MainCode;
 use App\SubCode;
@@ -55,6 +57,14 @@ class CustomerController extends Controller
             $ts =Jalalian::fromFormat('Y/m/d H:i:s',$request->registrationDateTo.' 23:59:59')->getTimestamp()*1000;
             $customers=$customers->where('registration_date','<=',$ts);
         }
+        if($request->province_id)
+        {
+            $customers=$customers->where('province_id',$request->province_id);
+        }
+        if($request->city_id)
+        {
+            $customers=$customers->where('city_id',$request->city_id);
+        }
         if($request->sort_field=='available_score')
         {
             $customers = $customers->orderBy(DB::raw('score - used_score'),$request->sort??'desc');
@@ -68,7 +78,7 @@ class CustomerController extends Controller
 
         if($request->command)
         {
-            if(auth()->user()->role->name_en!='admin')
+            if(auth()->user()->email!='admin')
                 return back()->withErrors(['دسترسی غیر مجاز']);
             $message = ($request->message);
 
@@ -102,8 +112,13 @@ class CustomerController extends Controller
         {
 
         $customers=$customers->paginate();
-
-        return view('customer.index',compact('customers'));
+            $provinces = Province::get();
+            $cities=[];
+            if($request->province_id)
+            {
+                $cities = City::where('province_id',$request->province_id)->get();
+            }
+        return view('customer.index',compact('customers','provinces','cities'));
         }
 
     }
