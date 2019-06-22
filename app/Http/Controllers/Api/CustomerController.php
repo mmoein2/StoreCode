@@ -357,6 +357,14 @@ class CustomerController extends Controller
         $customer->province_id = City::find($request->city_id)->province->id;
         $customer->card_count = 0;
 
+        if($request->reagent_code)
+        {
+            if(Customer::where('id',$request->reagent_code)->exists()==false)
+            {
+                return ['message'=>'کد معرف در سیستم وجود ندارد'];
+            }
+            $customer->reagent_code=$request->reagent_code;
+        }
         $customer->save();
 
         return['message'=>'0'];

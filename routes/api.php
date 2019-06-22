@@ -80,6 +80,8 @@ Route::group(['namespace'=>'Api','prefix'=>'shop','middleware'=>'auth:shop_api']
     Route::post('posts/special/amount', 'PostController@getPostAmount');
     Route::post('payment/token', 'PaymentController@getToken');
     Route::post('customers', 'ShopController@customers');
+    Route::post('subcode/variaty', 'ShopController@getSubcodeVariaty');
+
 });
 Route::post('/shop/register', 'Api\ShopController@register');
 Route::post('/customer/register', 'Api\CustomerController@register');

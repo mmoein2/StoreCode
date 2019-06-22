@@ -34,7 +34,7 @@ class Shop extends Authenticatable implements JWTSubject
     }
     public function getClubCountAttribute()
     {
-        return SubCode::where('shop_id',$this->id)->where('customer_id','!=',null )->distinct('customer_id')->count();
+         return SubCode::where('shop_id',$this->id)->where('customer_id','!=',null )->distinct('customer_id')->count();
 
     }
 

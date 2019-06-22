@@ -83,6 +83,18 @@ class ShopController extends Controller
     public function updateProfile(Request $request)
     {
         $store  = auth()->user();
+        $request->validate([
+            'thumbnail'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:2048',
+
+        ]);
+        if($request->exists('thumbnail'))
+        {
+            $file = $request->file('thumbnail');
+            $url = '/upload/shops';
+            $name = uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path($url),$name);
+            $store->thumbnail=$url.'/'.$name;
+        }
         if($request->desc)
         {
             $store->desc = $request->desc;
@@ -125,6 +137,8 @@ class ShopController extends Controller
             'image8'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:10240',
             'image9'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:10240',
             'image10'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:10240',
+            'image11'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:10240',
+            'image12'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:10240',
             'thumbnail'=>'sometimes|mimes:jpeg,png,bmp|min:10|max:2048',
         ]);
         if($request->exists('thumbnail'))
@@ -140,7 +154,7 @@ class ShopController extends Controller
             $images= [];
         if($shop->images)
             $images=$shop->images;
-        for($i=1;$i<=10;$i++)
+        for($i=1;$i<=12;$i++)
         {
             if($request->exists('image'.$i))
             {
@@ -190,6 +204,24 @@ class ShopController extends Controller
         {
             $customers=$customers->where('id',$request->id);
         }
+        if($request->date_from)
+        {
+            $customers=$customers->whereHas('latestSubCode',function ($q)use ($request){
+                $q->where('customer_date','>=',$request->date_from);
+            });
+
+        }
+        if($request->date_to)
+        {
+            $customers=$customers->whereHas('latestSubCode',function ($q)use ($request){
+                $q->where('customer_date','<=',$request->date_to);
+            });
+
+        }
+        if($request->date_to)
+        {
+
+        }
 
 
         $customers = $customers->with('latestSubCode')->paginate();
@@ -230,6 +262,14 @@ class ShopController extends Controller
         Smsirlaravel::send('رمز شما جهت ورود :'.$shop->password,$shop->mobile);
 
         return['message'=>'0'];
+
+    }
+    public function getSubcodeVariaty(){
+        $bar_lables = SubCode::groupBy('score')->select('score')->orderBy('score','asc')->get()->pluck('score');
+        return [
+            'message'=>'0',
+            'data'=>$bar_lables
+        ];
 
     }
 
